@@ -1,0 +1,80 @@
+[
+    {
+       "label":"Tutorials",
+       "route":"",
+       "child":[
+          {
+             "label":"HTML and CSS",
+             "route":""
+          },
+          {
+             "label":"Javascript",
+             "route":""
+          },
+          {
+             "label":"Programming",
+             "route":""
+          },
+          {
+             "label":"Server Side",
+             "route":""
+          },
+          {
+             "label":"Web Building",
+             "route":""
+          }
+       ]
+    },
+    {
+       "label":"References",
+       "route":"",
+       "child":[
+          {
+             "label":"HTML and CSS",
+             "route":""
+          },
+          {
+            "label":"Javascript",
+            "route":""
+         },
+         {
+            "label":"Programming",
+            "route":""
+         },
+         {
+            "label":"Server Side",
+            "route":""
+         },
+         {
+            "label":"Web Building",
+            "route":""
+         }
+       ]
+    },
+    {
+        "label":"Exercises",
+        "route":"",
+        "child":[
+         {
+            "label":"HTML and CSS",
+            "route":""
+         },
+         {
+            "label":"Javascript",
+            "route":""
+         },
+         {
+            "label":"Programming",
+            "route":""
+         },
+         {
+            "label":"Server Side",
+            "route":""
+         },
+         {
+            "label":"Web Building",
+            "route":""
+         }
+        ]
+     }
+ ]

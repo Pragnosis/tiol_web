@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "futura", "Helvetica", "Arial", sans-serif !important;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url(assets/font/Futura.ttc);
+}
+
+* {
+  transition: .2s;
+}
+
+body {
+  background-color: #fff !important;
+
+}
+
+body {
+  background-color: #fff !important;
+}
+
+
+.MuiBox-root MuiBox-root-535 {
+  height: 84% !important;
+
+}
