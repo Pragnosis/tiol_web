@@ -9,6 +9,7 @@ import { caseLawDynamicdata, caseLawFilterdata } from '../../../services'
 import CustomButton from '../../../component/CustomButton'
 import { Pagination } from '@mui/material'
 import { getErrorMessege } from '../../../component/Validator'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -22,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LandingDetailLayout = () => {
+const LandingCaseLaw = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
+
     const commonReducer = useSelector((state) => state.commonReducer);
     const [caseLawdata, setCaseLawdata] = useState([])
     const [oriData, setOriData] = useState([])
@@ -37,11 +40,6 @@ const LandingDetailLayout = () => {
     const [submitFlag, setSubmitFlag] = useState(false)
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
-
-
-    console.log('prevCount', prevCount)
-    console.log('nextCount', nextCount)
-
 
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
@@ -86,15 +84,13 @@ const LandingDetailLayout = () => {
         var errorMszDom = [];
         setTimeout(() => {
             errorMszDom = document.getElementsByClassName("validornot");
-            console.log('errorMszDom', errorMszDom.length)
             if (errorMszDom.length > 0) {
                 callBack()
             }
-        },1000);
+        }, 1000);
     }
 
-    const afterCallBack = ()=>{
-        console.log('afterCallBack', 'afterCallBack')
+    const afterCallBack = () => {
         dateFilterMutate(filterDate)
     }
 
@@ -112,6 +108,11 @@ const LandingDetailLayout = () => {
         setNextCount(Next)
         const localArray = oriData?.filter((o, i) => (Prev < i && i <= Next))
         setCaseLawdata(localArray)
+    }
+
+    const rowDataClickandler = (item) => {
+        console.log('itemccccccc', item)
+        navigate("/incometax/caselaw/sccases/details",{state:item})
     }
 
     return <Box>
@@ -135,7 +136,7 @@ const LandingDetailLayout = () => {
 
                             />
                             {
-                                submitFlag && getErrorMessege("From_Date", datedata?.From_Date) !="" && <Typography className='validornot' style={{ fontSize: "12px", color: "red", paddingLeft: "10px" }}>{getErrorMessege("From_Date", datedata?.From_Date)}</Typography>
+                                submitFlag && getErrorMessege("From_Date", datedata?.From_Date) != "" && <Typography className='validornot' style={{ fontSize: "12px", color: "red", paddingLeft: "10px" }}>{getErrorMessege("From_Date", datedata?.From_Date)}</Typography>
                             }
 
 
@@ -187,7 +188,7 @@ const LandingDetailLayout = () => {
                         caseLawdata?.length > 0 && caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
-                                    <Typography style={{ color: "#f86e38", borderBottom: "1px solid #ccc", padding: "5px 0px 10px 10px", backgroundColor: "rgb(239, 239, 239)", borderRadius: "20px 20px 0px 0px" }}>{item?.tiolCitation}</Typography>
+                                    <Typography style={{ color: "#f86e38", borderBottom: "1px solid #ccc", padding: "5px 0px 10px 10px", backgroundColor: "rgb(239, 239, 239)", borderRadius: "20px 20px 0px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.tiolCitation}</Typography>
                                     <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: '10px 10px 5px 10px' }}>{item?.header}</Typography>
                                     <Typography style={{ textAlign: "justify", padding: '10px 10px 5px 10px' }}>{item?.headlines}</Typography>
                                 </Box>
@@ -205,4 +206,4 @@ const LandingDetailLayout = () => {
     </Box>
 }
 
-export default LandingDetailLayout
+export default LandingCaseLaw;

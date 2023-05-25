@@ -8,6 +8,7 @@ import { HomeCard } from "./pages/shared/homeCard";
 import { VideoSection } from "./pages/shared/videoSection";
 import { Caselaw } from "./pages/shared/caselaw";
 import { LandingLayout } from "./pages/landinglayout";
+import { DetailedLayout } from "./pages/detaillayout";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
 
       <Route path="/" element={<Home />} />
       <Route path="/incometax/caselaw/sccases" element={<LandingLayout />} />
+      <Route path="/incometax/caselaw/sccases/details" element={<DetailedLayout />} />
     </Routes>
 
   );

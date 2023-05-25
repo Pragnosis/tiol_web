@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom'
 import LandingDetailLayout from './landing'
 import { Grid } from '@material-ui/core'
 import { Carts } from './landing/carts'
+import LandingCaseLaw from './landing'
 
 
 
@@ -54,7 +55,7 @@ export const LandingLayout = () => {
     return <Layout>
         <Grid container item>
             <Grid item xs='8'>
-                <LandingDetailLayout />
+                <LandingCaseLaw />
             </Grid>
             <Grid item xs='4'>
                 <Carts budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
