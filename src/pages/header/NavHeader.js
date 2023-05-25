@@ -15,10 +15,15 @@ import LanguageIcon from '@mui/icons-material/Language';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { updateState } from '../../redux/commonSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function NavHeader() {
   const menuItemRef = useRef(null)
+  const dispatch = useDispatch();
+  const commonReducer = useSelector((state) => state.commonReducer);
+
 
   const [headerArr, setHeaderArr] = useState([])
   const [currentNavText, setCurrentNavText] = useState('')
@@ -39,10 +44,10 @@ function NavHeader() {
 
   };
 
-  const handleItemClickhandler = () => {
+  const handleItemClickhandler = (item) => {
     setSubMenuPosition(null);
     setAnchorEl(null);
-
+    dispatch(updateState({ currentDynamicPaedata: item }))
   };
 
   const [drawer1, setDrawer1] = React.useState(false);
@@ -89,9 +94,6 @@ function NavHeader() {
   }
     , [headerData])
 
-
-
-
   return (
     <>
 
@@ -103,40 +105,43 @@ function NavHeader() {
                 <Grid container justifyContent='flex-end'>
                   {
                     headerArr.length > 0 && headerArr.map((item) => {
+                      // item?.title == "Income Tax" && console.log('item1111111', item)
                       return <>
-                        <Grid item>
-                          <Box>
-                            <CustomButton
-                              btnText={item.title}
-                              aria-controls="employee-menu"
-                              aria-haspopup="true"
-                              size="small"
-                              variant="text"
-                              style={{ padding: '2px 5px 2px 5px', textTransform: "capitalize" }}
-                              onClick={(e) => openMenu(e, item.title)}
-                            // endIcon={<KeyboardArrowDownIcon />}
-                            />
+                        <Box>
+                          <CustomButton
+                            btnText={item.title}
+                            aria-controls="employee-menu"
+                            aria-haspopup="true"
+                            size="small"
+                            variant="text"
+                            style={{ padding: '2px 5px 2px 5px', textTransform: "capitalize" }}
+                            onClick={(e) => openMenu(e, item.title)}
+                          // endIcon={<KeyboardArrowDownIcon />}
+                          />
 
-                            {
-                              item.subMenuItems.length > 0 ?
-                                <Menu
-                                  id="employee-menu"
-                                  open={currentNavText == item.title}
-                                  onClose={closeMenu}
-                                  anchorEl={anchorEl}
-                                >
-                                  {
-                                    item.subMenuItems.map((option) =>
+                          {
+                            item.subMenuItems.length > 0 ?
+                              <Menu
+                                id="employee-menu"
+                                open={currentNavText == item.title}
+                                onClose={closeMenu}
+                                anchorEl={anchorEl}
+                              >
+                                {
+                                  item.subMenuItems.map((option) => {
+                                    return <>
                                       <Link href={item?.apipath} target="_blank">
                                         <MenuItemComp ref={menuItemRef} item={option} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
                                       </Link>
-                                    )
+                                    </>
                                   }
-                                </Menu>
-                                : null
-                            }
-                          </Box>
-                        </Grid>
+
+                                  )
+                                }
+                              </Menu>
+                              : null
+                          }
+                        </Box>
                       </>
                     })
                   }

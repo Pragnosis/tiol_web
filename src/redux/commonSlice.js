@@ -17,6 +17,9 @@ const initialValue = {
     genderArr: [],
     candidateStatus: "",
     newRoleDepartment: null,
+    budjetList:[],
+    videList:[],
+    currentDynamicPaedata:{}
 }
 export const commonSlice = createSlice({
     name: 'common',

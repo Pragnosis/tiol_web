@@ -6,8 +6,11 @@ const axiosClient = axios.create({
   baseURL: baseUrl,
   headers: {
     Accept: "application/json",
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
+    'Access-Control-Allow-Origin': '*',
+'Access-Control-Allow-Credentials': 'true'
   },
+
 });
 
 //ADDED INTERCEPTOR FOR CLIETN CLASS

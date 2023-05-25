@@ -92,7 +92,6 @@ const MainHeader = (props) => {
                                                                     return item?.title == "SUBSCRIPTIONS" &&
                                                                         item?.subMenuItems?.length > 0 &&
                                                                         item?.subMenuItems?.map((item) => {
-                                                                            console.log('itemxxxxx3333333333', item)
                                                                             return <MenuItem onClick={hide} divider><Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>
                                                                                 {item?.title}
                                                                             </Typography></MenuItem>

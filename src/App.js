@@ -6,6 +6,8 @@ import MenuBarComp from "./pages/menubar/index";
 import { BudjetSection } from "./pages/shared/budjetSection";
 import { HomeCard } from "./pages/shared/homeCard";
 import { VideoSection } from "./pages/shared/videoSection";
+import { Caselaw } from "./pages/shared/caselaw";
+import { LandingLayout } from "./pages/landinglayout";
 
 const App = () => {
   return (
@@ -13,8 +15,7 @@ const App = () => {
     <Routes>
 
       <Route path="/" element={<Home />} />
-      <Route path="/MenuBarComp" element={<MenuBarComp />} />
-      <Route path="/Sidebar" element={<Sidebar />} />
+      <Route path="/incometax/caselaw/sccases" element={<LandingLayout />} />
     </Routes>
 
   );

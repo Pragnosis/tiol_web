@@ -9,6 +9,7 @@ import { Autoplay } from "swiper";
 import { Typography } from '@mui/material';
 import { Box, Container, Grid, makeStyles } from '@material-ui/core';
 import { NewsdetailModel } from './newsdetailModel';
+// import { NewsdetailModel } from './newsdetailModel';
 
 const useStyles = makeStyles(theme => ({
     papermanage: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         '& .wrap': {
             display: "inline-block",
             width: "48%",
-            marginTop: "30px"
+            marginTop: "30px",
         }
     }
 }));
@@ -115,33 +116,6 @@ const Newsupdate = (props) => {
                     }
                 </Box>
             </Typography>
-            <Grid item xs='12'>
-                {
-                    budjetList?.length > 0 &&
-                    budjetList?.map((item) => {
-                        return item?.categoryName == "Union Budget" &&
-                            <Grid container item xs='12' style={{ paddingBottom: "10px" }}>
-                                <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%" }}>
-                                    <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
-                                        <Grid alignItems='center' style={{ height: "50px", width: "100%" }}>
-                                            <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "40px" }}>
-                                                <Typography variant='h5'>{item?.categoryName}</Typography>
-                                            </Box>
-                                        </Grid>
-                                    </Box>
-                                    {
-                                        item?.secOtherdata?.length > 0 &&
-                                        item?.secOtherdata?.map((item) => {
-                                            return <>
-                                                <Box className={classes.budgetWrap} p={1} dangerouslySetInnerHTML={{ __html: item.description }} />
-                                            </>
-                                        })
-                                    }
-                                </Box>
-                            </Grid>
-                    })
-                }
-            </Grid>
             {
                 viewAll &&
                 <NewsdetailModel togglerhandler={setViewAll} />

@@ -9,10 +9,6 @@ export const HomeCards2 = (props) => {
 
     const { budjetList, videList, sectionTwoList, setSectionTwoList } = props;
 
-    console.log('sectionTwoList', sectionTwoList)
-
-
-
     return <Container>
         <Box my={1}>
             <Grid container spacing={2} >

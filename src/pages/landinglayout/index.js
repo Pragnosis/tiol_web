@@ -8,15 +8,20 @@ import { useQuery } from 'react-query'
 // import { Footer } from '../footer'
 import { useSelector } from 'react-redux'
 import BudjetSection from '../shared/budjetSection'
+import { useLocation } from 'react-router-dom'
+import LandingDetailLayout from './landing'
+import { Grid } from '@material-ui/core'
+import { Carts } from './landing/carts'
 
 
 
-export const Home = () => {
+export const LandingLayout = () => {
+    const location = useLocation();
     const [sectionOneListList, setSectionOneListList] = useState([])
     const [sectionTwoList, setSectionTwoList] = useState([])
     const [sectionAllList, setSectionAllList] = useState([])
 
-     const commonReducer = useSelector((state) => state.commonReducer);
+    const commonReducer = useSelector((state) => state.commonReducer);
 
     const { data: sectionOneData } = useQuery(["SectionOne"], () => sectionOne(), { enabled: true, retry: false })
 
@@ -34,7 +39,7 @@ export const Home = () => {
         }
     }, [sectionTwoData])
 
-   
+
 
     useEffect(() => {
         if (sectionOneListList && sectionTwoList) {
@@ -47,9 +52,14 @@ export const Home = () => {
     }, [sectionOneListList, sectionTwoList])
 
     return <Layout>
-        <BudjetSection budjetList={commonReducer.budjetList} />
-        <HomeCard sectionOneListList={sectionAllList} setSectionOneListList={setSectionOneListList} />
-        <VideoSection videList={commonReducer.videList} />
-        <HomeCards2 budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
+        <Grid container item>
+            <Grid item xs='8'>
+                <LandingDetailLayout />
+            </Grid>
+            <Grid item xs='4'>
+                <Carts budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
+            </Grid>
+        </Grid>
+
     </Layout>
 }

@@ -26,6 +26,13 @@ export const sectionThree = () => {
 export const getVideoItems = () => {
     return Request(apiConstant.getVideoItems, "Get",);
 }
+export const caseLawDynamicdata = (params) => {
+    return Request(params, "Get",);
+}
+
+export const caseLawFilterdata = (params) => {
+    return Request(params, "Get",);
+}
 
 
 // export const deleteDepartmentInConfigrution = (id) => commonDeleteService(id, 'departmentInConf');

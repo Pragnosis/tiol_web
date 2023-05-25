@@ -1,0 +1,16 @@
+export const caseLawArray = [{
+	"tiolCitation": "2016-TIOL-188-CUS",
+	"header": "CC Vs TEX AGE (Dated:September 05, 2016)",
+	"headlines": "Cus - Respondents engaged in export of Ready Made Garments - against these exports, entire remittance was received and respondents claimed duty drawback and other benefits - DRI alleged that exporter was engaged in fraudulent exports of low quality RMG by resorting to overvaluation in order to claim undue export benefits - SCN issued and allegations confirmed but CESTAT allowing appeal by arriving at a finding of fact to the extent that the allegations of flow back of the remittances by way of Hawala could not be proved by the Department; that the invoices etc. which were raised of particular amounts were duly checked by the Department at the time when the exports were being made and the entire amount as reflected in the said invoices was received by the respondents - Revenue challenging order before Supreme Court. Held: In view of the finding of fact recorded by Tribunal and in the absence of any evidence to show that the money was remitted by way of Hawala, Court is of the opinion that the case of over-invoicing has not been established by the Department - No infirmity in the order of the CESTAT - finding recorded is a pure question of fact and no question of law arises for consideration - Revenue Appeal dismissed: Supreme Court [para 3, 4]",
+	"caselaw_Url": "http://3.91.84.76:8081/api/CaselawIndexPage/GetCaselawById/120023"
+}, {
+	"tiolCitation": "2016-TIOL-189-CUS",
+	"header": "SURINDER SINGH (DEAD) Vs UoI (Dated:July 29, 2016)",
+	"headlines": "Drawback - Customs component - Rule 16A of Duty Drawback Rules, 1995 is a clarificatory provision clarifying the position of law which already exists in the form of Section 75 of the Customs Act, 1962, and therefore, will have retrospective effect - the effect of Section 75 of the Customs Act, 1962 is that in case value/price of the goods exported is not received, it is to be presumed as if no drawback was ever allowed and in that view of the matter, the duty drawback which was taken by the appellant had to be refunded - Appeal dismissed: Supreme Court [para 15]",
+	"caselaw_Url": "http://3.91.84.76:8081/api/CaselawIndexPage/GetCaselawById/120053"
+}, {
+	"tiolCitation": "2010-TIOL-75-CUS",
+	"header": "LML LTD Vs CC (Dated:September 21, 2010)",
+	"headlines": "Customs – Classification - 'CD ROM' containing images of drawing and designs of engineering goods – not classifiable under tariff Heading 49.06 or under Heading 49.11 or Sub-Heading 8524.39 or 8524.90 – CD-ROM containing images of drawings and designs of engineering goods are not classifiable under the Tariff Heading 49.06 or under Heading 49.11. as other printed matter. The alternative plea of the appellant for classifying the same under Sub-Heading 8524.39 or 8524.90 of the Tariff is also not acceptable. The Appellant is therefore not entitled for the benefit of Nil rate of duty under Notification No. 17/2001 dated 1.3.2001. ",
+	"caselaw_Url": "http://3.91.84.76:8081/api/CaselawIndexPage/GetCaselawById/76530"
+},]

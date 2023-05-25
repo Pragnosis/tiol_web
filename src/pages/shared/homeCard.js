@@ -25,9 +25,9 @@ export const HomeCard = (props) => {
                     sectionOneListList.length > 0 &&
                     sectionOneListList?.map((item, index) => {
                         return index < 3 && <Grid item xs='12' sm='6' md='4' lg='4' style={{ padding: "5px 20px 10px 10px", borderRadius: "20px" }} spacing={5} >
-                            <Box style={{ borderRight: "1px solid #efefef", borderLeft: "1px solid #efefef", height: "600px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", borderRadius: "20px", borderBottom: "1px solid #efefef", width: "100%" }} >
-                                <Box p={2} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "7vh" }}>
-                                    <Typography variant='h6' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item?.categoryName}</Typography>
+                            <Box style={{ border: "2px solid #000", minHeight: "600px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", borderRadius: "20px", width: "100%" }} >
+                                <Box p={2} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px">
+                                    <Typography variant='h6' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",padding:"3px" }}>{item?.categoryName}</Typography>
                                 </Box>
                                 {
                                     item?.sectionsdata?.length > 0 &&

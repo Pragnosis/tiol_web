@@ -32,7 +32,7 @@ const MenuItemComp = ({ item, position, handleItemClickhandler, ref }) => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              handleItemClickhandler={handleItemClickhandler}
+              handleItemClickhandler={()=>handleItemClickhandler(option)}
             />
           ))}
         </NestedMenuItem>
