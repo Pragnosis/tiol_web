@@ -17,11 +17,15 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { updateState } from '../../redux/commonSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
 
 
 function NavHeader() {
   const menuItemRef = useRef(null)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const commonReducer = useSelector((state) => state.commonReducer);
 
 
@@ -44,10 +48,17 @@ function NavHeader() {
 
   };
 
-  const handleItemClickhandler = (item) => {
+  const handleItemClickhandler = (item, routeTo) => {
+    console.log('item', item, routeTo)
+    var routeto = `/${routeTo}/${item.title.replace(" ", "_")}`.toLowerCase()
     setSubMenuPosition(null);
-    setAnchorEl(null);
-    dispatch(updateState({ currentDynamicPaedata: item }))
+    setCurrentNavText("")
+    // dispatch(updateState({ currentDynamicPaedata: item }));
+    // console.log('routeto', routeto);
+    navigate(routeto.replace(" ", "_"), { replace: true })
+    setTimeout(() => {
+      setAnchorEl(null);
+    }, 2000);
   };
 
   const [drawer1, setDrawer1] = React.useState(false);
@@ -66,6 +77,7 @@ function NavHeader() {
     setAnchorEl(null);
   };
 
+  console.log('anchorEl', anchorEl)
   const [signin, setSignin] = useState(null);
   const [on, setOn] = useState(false);
 
@@ -91,8 +103,38 @@ function NavHeader() {
 
   useEffect(() => {
     headerData && setHeaderArr(headerData)
-  }
-    , [headerData])
+
+  }, [headerData])
+
+  useEffect(() => {
+    var locationArr = location.pathname.split("/");
+    var localArr = [];
+    headerArr.length > 0 && headerArr.map((item) => {
+      if (item.title.replace(" ", "_").toLowerCase() === locationArr[1]) {
+        if (item.subMenuItems.length > 0) {
+          return item.subMenuItems.map((option) => {
+            if (option.title.replace(" ", "_").toLowerCase() === locationArr[2]) {
+              if (option.subMenuItems.length > 0) {
+                return option.subMenuItems.map((subItemOption) => {
+                  if (subItemOption.title.replace(" ", "_").toLowerCase() === locationArr[3]) {
+                    localArr.push(subItemOption)
+                  }
+                })
+              } else {
+                localArr.push(option)
+              }
+            }
+          })
+        } else {
+          localArr.push(item)
+        }
+      }
+
+    });
+    console.log('localArr', localArr)
+    dispatch(updateState({ currentDynamicPaedata: localArr[0] }));
+
+  }, [headerArr, location?.pathname])
 
   return (
     <>
@@ -129,11 +171,11 @@ function NavHeader() {
                               >
                                 {
                                   item.subMenuItems.map((option) => {
-                                    return <>
+                                    return <div key={item.label}>
                                       <Link href={item?.apipath} target="_blank">
-                                        <MenuItemComp ref={menuItemRef} item={option} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
+                                        <MenuItemComp ref={menuItemRef} item={option} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
                                       </Link>
-                                    </>
+                                    </div>
                                   }
 
                                   )

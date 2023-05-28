@@ -41,13 +41,17 @@ const LandingCaseLaw = () => {
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
 
+
+    // console.log('prevCount', prevCount)
+    // console.log('nextCount', nextCount)
+
+
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
             setPagedata(commonReducer.currentDynamicPaedata);
         }
     }, [commonReducer?.currentDynamicPaedata]);
-
-    const { data, error } = useQuery(['GetDynamicCaselawData'], () => caseLawDynamicdata(commonReducer?.currentDynamicPaedata?.apipath), { enabled: true, retry: false })
+    const { data, error } = useQuery(['GetDynamicCaselawData', pagedata?.apipath], () => caseLawDynamicdata(pagedata?.apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setOriData(data?.data)
@@ -91,6 +95,7 @@ const LandingCaseLaw = () => {
     }
 
     const afterCallBack = () => {
+        console.log('afterCallBack', 'afterCallBack')
         dateFilterMutate(filterDate)
     }
 
@@ -112,7 +117,7 @@ const LandingCaseLaw = () => {
 
     const rowDataClickandler = (item) => {
         console.log('itemccccccc', item)
-        navigate("/incometax/caselaw/sccases/details",{state:item})
+        navigate("/incometax/caselaw/sccases/details", { state: item })
     }
 
     return <Box>
