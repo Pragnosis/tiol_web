@@ -51,3 +51,7 @@ text-decoration: none;
   text-decoration: none !important;
   font-weight: bold !important;
 }
+
+.MuiOutlinedInput-input{
+  padding: 10px !important;
+}

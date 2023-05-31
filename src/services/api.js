@@ -31,11 +31,18 @@ export const caseLawDynamicdata = (params) => {
 }
 
 export const getDetailsData = (params) => {
-    return Request(params, "Get",);
+    return Request(params, "Post",);
 }
 
 export const caseLawFilterdata = (params) => {
     return Request(params, "Get",);
+}
+
+export const likeDetails = (params) => {
+    return Request(`${apiConstant.likeDetails}/${params?.url}`, "Post",);
+}
+export const dislikeDetails = (params) => {
+    return Request(`${apiConstant.dislikeDetails}/${params?.url}`, "Delete",);
 }
 
 

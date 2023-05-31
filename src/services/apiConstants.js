@@ -13,6 +13,8 @@ export const apiConstant = {
   sectionTwo: baseUrl + "/HomePageSections/GetHomePageSections",
   getVideoItems: baseUrl + "/HomePageBannerVideo/GetHomePageBannerVideo",
   sectionThree: baseUrl + "/HomePageOtherSectionData/GetHomePageOtherSectionsData",
+  likeDetails: baseUrl + "/Utility/PostLike",
+  dislikeDetails: baseUrl + "/Utility/PostDisLike",
 };
 
 // api/HomePageBannerVideo/GetHomePageBannerVideo
