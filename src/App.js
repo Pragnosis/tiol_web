@@ -15,9 +15,13 @@ const App = () => {
 
     <Routes>
 
+      {/* <Route path="/incometax/caselaw/sccases" element={<LandingLayout />} /> */}
+      <Route path="/:parent/:submenu1/:submenu2/:submenu3" element={<LandingLayout />} />
+      <Route path="/:parent/:submenu1/:submenu2" element={<LandingLayout />} />
+      <Route path="/:parent/:submenu1" element={<LandingLayout />} />
+      <Route path="/:parent" element={<LandingLayout />} />
       <Route path="/" element={<Home />} />
-      <Route path="/incometax/caselaw/sccases" element={<LandingLayout />} />
-      <Route path="/incometax/caselaw/sccases/details" element={<DetailedLayout />} />
+      {/* <Route path=":id/details" element={<LandingLayout />} /> */}
     </Routes>
 
   );

@@ -12,12 +12,12 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import tiol_logo from "../../assets/images/tiol_logo.png"
 
 
 
 const MainHeader = (props) => {
     const { drawerOpenFlag, setDrawerOpenFlag, footerList } = props;
-
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [drawer1, setDrawer1] = React.useState(false);
@@ -66,7 +66,7 @@ const MainHeader = (props) => {
                             <Grid container alignItems='flex-end' style={{ position: "relative", height: "90px" }}>
                                 <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Grid item style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 1200, margin: "0 auto", width: "155px", height: "105px", backgroundColor: "#fff", textAlign: "center" }}>
-                                        <img src='../Assets/tiol_logo.png' alt="logo" style={{ width: "92%", margin: "15px auto" }}></img>
+                                        <img src={tiol_logo} alt="logo" style={{ width: "92%", margin: "15px auto" }}></img>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs='6' style={{ justifyContent: 'flex-end' }} spacing={2}>

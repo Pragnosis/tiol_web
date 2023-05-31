@@ -16,7 +16,7 @@
 
 body {
   background-color: #fff !important;
-
+  overflow: auto !important;
 }
 
 body {
@@ -28,7 +28,7 @@ body {
   height: 84% !important;
 }
 
-.css-4t3x6l-MuiPaper-root-MuiDrawer-paper{
+.css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
   width: 240px !important;
 }
 
@@ -40,12 +40,12 @@ body {
   width: 0px;
 }
 
-.article-content a{
-color: rgba(0, 0, 0, 0.87) !important;
-text-decoration: none;
+.article-content a {
+  color: rgba(0, 0, 0, 0.87) !important;
+  text-decoration: none;
 }
 
-.makeStyles-footerBottomWrap-20 .text-icon-wrap .privacy-policy{
+.makeStyles-footerBottomWrap-20 .text-icon-wrap .privacy-policy {
   color: rgba(0, 0, 0, 0.87) !important;
   font-size: 15px !important;
   text-decoration: none !important;

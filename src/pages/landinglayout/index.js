@@ -21,7 +21,7 @@ export const LandingLayout = () => {
     const [sectionOneListList, setSectionOneListList] = useState([])
     const [sectionTwoList, setSectionTwoList] = useState([])
     const [sectionAllList, setSectionAllList] = useState([])
-
+    // console.log('location', location.pathname.split("/"))
     const commonReducer = useSelector((state) => state.commonReducer);
 
     const { data: sectionOneData } = useQuery(["SectionOne"], () => sectionOne(), { enabled: true, retry: false })

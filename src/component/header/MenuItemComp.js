@@ -7,8 +7,8 @@ import {
 import NestedMenuItem from "material-ui-nested-menu-item";
 
 
-const MenuItemComp = ({ item, position, handleItemClickhandler, ref }) => {
-  let { subMenuItems, title } = item;
+const MenuItemComp = ({ item, position, routeTo, handleItemClickhandler, ref }) => {
+  let { subMenuItems, title, } = item;
   return (
     <>
       {subMenuItems.length > 0 ? (
@@ -32,7 +32,7 @@ const MenuItemComp = ({ item, position, handleItemClickhandler, ref }) => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              handleItemClickhandler={()=>handleItemClickhandler(option)}
+              handleItemClickhandler={() => handleItemClickhandler(option, routeTo)}
             />
           ))}
         </NestedMenuItem>
