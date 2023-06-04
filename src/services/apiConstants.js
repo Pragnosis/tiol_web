@@ -15,6 +15,12 @@ export const apiConstant = {
   sectionThree: baseUrl + "/HomePageOtherSectionData/GetHomePageOtherSectionsData",
   likeDetails: baseUrl + "/Utility/PostLike",
   dislikeDetails: baseUrl + "/Utility/PostDisLike",
+
+
+  getBookmarked: baseUrl + "/Utility/GetBooKMark",
+  postBookmarked: baseUrl + "/Utility/PostBookMark",
+  unpostBookmarked: baseUrl + "/Utility/DeleteBooKMark",
+
 };
 
 // api/HomePageBannerVideo/GetHomePageBannerVideo

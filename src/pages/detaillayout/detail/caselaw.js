@@ -2,11 +2,13 @@ import { Box, Grid, Typography, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { useMutation, useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom'
-import { dislikeDetails, getDetailsData, likeDetails } from '../../../services';
+import { dislikeDetails, getBookmarked, getDetailsData, likeDetails, postBookmarked, unpostBookmarked } from '../../../services';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 export const DetailsCaselaw = () => {
     const location = useLocation();
@@ -17,13 +19,22 @@ export const DetailsCaselaw = () => {
     console.log('rowData', rowData)
 
     const [like, setLike] = useState(false)
+    const [bookmark, setBookmark] = useState(false)
 
     const { data, error } = useQuery(['GetAllDetailsData'], () => getDetailsData(rowData?.caselaw_Url), { enabled: true, retry: false })
     useEffect(() => {
-if(data){
-    setLike(data?.data?.likecount > 0 ? true : false)
-}
+        if (data) {
+            setLike(data?.data?.likecount > 0 ? true : false)
+        }
     }, [data])
+
+
+    const { data: getBookedmarkData } = useQuery(['GetAllBookmarked'], () => getBookmarked({ url: `${userID}/${caselawUrl}` }), { enabled: true, retry: false })
+    useEffect(() => {
+        if (getBookedmarkData) {
+            console.log('data', data)
+        }
+    }, [getBookedmarkData])
 
 
     const { mutate: likeMutate } = useMutation(likeDetails, {
@@ -59,11 +70,46 @@ if(data){
     }
 
 
+    const { mutate: bookmarkedMutatte } = useMutation(postBookmarked, {
+        onSuccess: (data, context, variable) => onSuccessBookmarked(data, context, variable),
+        onError: (data, context, variable) => onErrorBookmarked(data, context, variable),
+    })
+
+    const onSuccessBookmarked = () => {
+        setBookmark(!bookmark)
+    }
+    const onErrorBookmarked = () => {
+
+    }
+
+    const { mutate: unBookmarkMutate } = useMutation(unpostBookmarked, {
+        onSuccess: (data, context, variable) => onSuccessUnbookmarked(data, context, variable),
+        onError: (data, context, variable) => onErrorUnbookmarked(data, context, variable),
+    })
+
+    const onSuccessUnbookmarked = () => {
+        setBookmark(!bookmark)
+    }
+    const onErrorUnbookmarked = () => {
+
+    }
+
+
+    const bookmarkClickHandler = () => {
+        bookmarkedMutatte({ url: `${userID}/${caselawUrl}` });
+    }
+
+
+    const unbookmarkClickHandler = () => {
+        unBookmarkMutate({ url: `${userID}/${caselawUrl}` });
+    }
+
+
     return <Box>
         <Grid container>
             <Grid item xs='12'>
                 <Grid container item>
-                    <Grid item xs='4'>
+                    <Grid item xs='3'>
                         <Grid container item justifyContent='center'>
                             {
                                 like ? <Typography onClick={dislikeClickHandler} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
@@ -71,6 +117,18 @@ if(data){
                                 </Typography>
                                     : <Typography onClick={likeClickHandler} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                                         <ThumbUpIcon /> &nbsp; Like
+                                    </Typography>
+                            }
+                        </Grid>
+                    </Grid>
+                    <Grid item xs='3'>
+                        <Grid container item justifyContent='center'>
+                            {
+                                bookmark ? <Typography onClick={unbookmarkClickHandler} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                                    <BookmarkIcon style={{ position: 'relative', top: '0px', left: '0px' }} /> &nbsp; UnBookmark
+                                </Typography>
+                                    : <Typography onClick={bookmarkClickHandler} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                                        <BookmarkBorderIcon /> &nbsp; Bookmark
                                     </Typography>
                             }
                         </Grid>

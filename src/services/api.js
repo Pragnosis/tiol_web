@@ -46,4 +46,17 @@ export const dislikeDetails = (params) => {
 }
 
 
+
+export const getBookmarked = (params) => {
+    return Request(`${apiConstant.getBookmarked}/${params?.url}`, "Get",);
+}
+
+export const postBookmarked = (params) => {
+    return Request(`${apiConstant.postBookmarked}/${params?.url}`, "Post",);
+}
+export const unpostBookmarked = (params) => {
+    return Request(`${apiConstant.unpostBookmarked}/${params?.url}`, "Delete",);
+}
+
+
 // export const deleteDepartmentInConfigrution = (id) => commonDeleteService(id, 'departmentInConf');
