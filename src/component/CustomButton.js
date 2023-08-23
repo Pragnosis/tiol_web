@@ -24,7 +24,7 @@ const CustomButton = (props) => {
         <Button
             className={`${classes.root} ${props.newClassName}`}
             style={btnStyle}
-            fullWidth
+            // fullWidth
             {...props}
         >
             {btnText}

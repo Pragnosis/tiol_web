@@ -36,13 +36,12 @@ export const VideoSection = (props) => {
                 height='200px'
                 width='100%'
             />
-            <Typography style={{ textAlign: "center", padding: "4px" }}>{videoList?.title}</Typography>
+            <Typography style={{ textAlign: "center", padding: "4px" }}>{videoList?.title?.slice(0, 20)}</Typography>
         </Box>
     }
 
-
     return <Container>
-        <Grid container>
+        {/* <Grid container>
             {
                 videList?.length > 0 &&
                 videList?.map((videoList) => {
@@ -53,19 +52,27 @@ export const VideoSection = (props) => {
                     </Grid>
                 })
             }
-        </Grid>
+        </Grid> */}
         {
             videList?.length > 0 &&
             videList?.map((item) => {
                 return item?.sectionsdata?.length > 0 && item?.sectionsdata?.map((video) => {
-                    return video?.secBannerVideo?.length > 3 ?
-                        <Carousel infinite={true} deviceType={"Desktop"} itemClass="image-item" responsive={responsive}>
-                            {
-                                video.type == "Video" && video?.secBannerVideo?.length > 0 && video?.secBannerVideo?.map((videoList) => {
-                                    return _renderCarouselHtml(videoList?.video_Id, videoList)
-                                })
-                            }
-                        </Carousel>
+                    return video?.secBannerVideo?.length >= 3 ?
+                        <Grid item xs='12' style={{ padding: "5px 20px 10px 10px", borderRadius: "20px" }} spacing={5} >
+                            <Box style={{ border: "2px solid #000", minHeight: "350px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", borderRadius: "20px", width: "100%" }} >
+                                <Box p={2} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px">
+                                    <Typography variant='h6' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", padding: "3px" }}>{item?.categoryName}</Typography>
+                                </Box>
+                                <Carousel infinite={true} deviceType={"Desktop"} itemClass="image-item" responsive={responsive}>
+                                    {
+                                        video.type == "Video" && video?.secBannerVideo?.length > 0 && video?.secBannerVideo?.map((videoList) => {
+                                            return _renderCarouselHtml(videoList?.video_Id, videoList)
+                                        })
+                                    }
+                                </Carousel>
+
+                            </Box>
+                        </Grid>
                         : video.type == "Video" &&
                         <Grid container item xs='12' style={{ paddingBottom: "10px" }}>
                             <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%" }}>

@@ -2,63 +2,25 @@ import { Box, Container, Grid, Typography } from '@material-ui/core'
 import React from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomButton from '../../component/CustomButton';
+import { useSelector } from 'react-redux';
 
 
 
 export const HomeCards2 = (props) => {
-
     const { budjetList, videList, sectionTwoList, setSectionTwoList } = props;
+    const commonReducer = useSelector((state) => state.commonReducer);
 
     return <Container>
         <Box my={1}>
             <Grid container spacing={2} >
-                <Grid container item xs='12' sm='12' md='8' lg='8' xl='8' spacing={2}>
-                    {
-                        sectionTwoList.length > 0 &&
-                        sectionTwoList?.map((item, index) => {
-                            return (index >= 3 && item?.categoryName != "News Update" && item?.categoryName != "WHAT'S NEW (OTHERS)" && item?.categoryName != "WHAT'S NEW (GST)") ? <>
-                                <Grid item xs='12' md='6' lg='6'>
-                                    <Box border="1px solid #efefef" borderRadius="20px" style={{ height: "100%", width: "100%" }}>
-                                        <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
-                                            <Grid container alignItems='center' style={{ height: "40px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "30px" }}>
-                                                    <Typography variant='h6'>{item?.column_name}</Typography>
-                                                </Box>
-                                                <Typography variant='h7' >
-                                                    {
-                                                        item?.author &&
-                                                        <Box ml={1}>{`${"by"} ${item?.author}`}</Box>
-                                                    }
-                                                </Typography>
-                                            </Grid>
-                                        </Box>
-                                        <img src={item?.image_Path} alt='Assets/award.jpg' style={{ width: "100%" }} />
-                                        {
-                                            item?.sectionsdata?.length > 0 &&
-                                            item?.sectionsdata?.map((item) => {
-                                                return <Box p={2} >
-                                                    <Grid item xs='12'>
-                                                        <Typography>
-                                                            <Box color='orangered'>{item.date}</Box>
-                                                        </Typography>
-                                                        <Typography>
-                                                            <Box color='#000'>{item.headlines}</Box>
-                                                        </Typography>
-                                                    </Grid>
-                                                </Box>
-                                            })
-                                        }
-                                        <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
-                                            <Grid item>
-                                                <CustomButton btnText='View all' btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
-                                            </Grid>
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                            </>
-                                : (index > 3 && item?.categoryName != "News Update") ? <>
-                                    <Grid item xs='12' sm='12' md='6' lg='6' xl='6'>
-                                        <Box border="1px solid #efefef" borderRadius="20px" style={{ height: "100%", width: "100%" }}>
+                <Grid item xs='12' sm='12' md='8' lg='8' xl='8'>
+                    <Grid container item spacing={2}>
+                        {
+                            sectionTwoList.length > 0 &&
+                            sectionTwoList?.map((item, index) => {
+                                return (index >= 3 && item?.categoryName != "News Update" && item?.categoryName != "WHAT'S NEW (OTHERS)" && item?.categoryName != "WHAT'S NEW (GST)") ? <>
+                                    <Grid item xs='12' md='6' lg='6'>
+                                        <Box border="1px solid #efefef" borderRadius="20px">
                                             <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
                                                 <Grid container alignItems='center' style={{ height: "40px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                     <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "30px" }}>
@@ -72,29 +34,73 @@ export const HomeCards2 = (props) => {
                                                     </Typography>
                                                 </Grid>
                                             </Box>
-                                            {/* <img src={item?.image_Path} alt='Assets/award.jpg' style={{ width: "100%" }} /> */}
+                                            <Box style={{ minHeight: "200px" }}>
+                                                <img src={item?.image_Path} alt='Assets/award.jpg' style={{ width: "100%" }} />
+                                            </Box>
                                             {
                                                 item?.sectionsdata?.length > 0 &&
                                                 item?.sectionsdata?.map((item) => {
-                                                    return <Box p={1} >
-                                                        <Grid item xs='12' style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #efefef" }}>
+                                                    return <Box p={2} >
+                                                        <Grid item xs='12'>
                                                             <Typography>
-                                                                {item.headlines}
+                                                                <Box color='orangered'>{item.date}</Box>
                                                             </Typography>
                                                             <Typography>
-                                                                {item.notificationNo}
+                                                                <Box color='#000'>{item.headlines}</Box>
                                                             </Typography>
                                                         </Grid>
                                                     </Box>
                                                 })
                                             }
+
+                                            <Grid container item justifyContent='flex-end' style={{ paddingTop: "10px" }}>
+                                                <CustomButton btnText="View Today's Case" btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                            </Grid>
+                                            <Grid container item justifyContent='flex-end'>
+                                                <CustomButton btnText='View all' btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                            </Grid>
                                         </Box>
                                     </Grid>
                                 </>
-                                    : ""
-                        })
+                                    : (index > 3 && item?.categoryName != "News Update") ? <>
+                                        <Grid item xs='12' sm='12' md='6' lg='6' xl='6'>
+                                            <Box border="1px solid #efefef" borderRadius="20px" style={{ height: "100%", width: "100%" }}>
+                                                <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
+                                                    <Grid container alignItems='center' style={{ height: "40px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                        <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "30px" }}>
+                                                            <Typography variant='h6'>{item?.column_name}</Typography>
+                                                        </Box>
+                                                        <Typography variant='h7' >
+                                                            {
+                                                                item?.author &&
+                                                                <Box ml={1}>{`${"by"} ${item?.author}`}</Box>
+                                                            }
+                                                        </Typography>
+                                                    </Grid>
+                                                </Box>
+                                                {
+                                                    item?.sectionsdata?.length > 0 &&
+                                                    item?.sectionsdata?.map((item) => {
+                                                        return <Box p={1} >
+                                                            <Grid item xs='12' style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #efefef" }}>
+                                                                <Typography>
+                                                                    {item.headlines}
+                                                                </Typography>
+                                                                <Typography>
+                                                                    {item.notificationNo}
+                                                                </Typography>
+                                                            </Grid>
+                                                        </Box>
+                                                    })
+                                                }
+                                            </Box>
+                                        </Grid>
+                                    </>
+                                        : ""
+                            })
 
-                    }
+                        }
+                    </Grid>
                 </Grid>
                 <Grid item xs='12' sm='12' md='4' lg='4' xl='4'>
                     {

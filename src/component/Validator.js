@@ -1,6 +1,7 @@
 export const getErrorMessege = (type, value, value2) => {
 
     if (type == "From_Date") {
+        console.log('type', type)
         return value == "" ? "please enter from Date" : ""
     }
     if (type == "To_Date") {
@@ -18,7 +19,7 @@ export const getErrorMessege = (type, value, value2) => {
             }
         }
     }
-    
-    
-    
+
+
+
 }

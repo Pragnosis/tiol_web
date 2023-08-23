@@ -11,7 +11,7 @@ const styles = (theme) => ({
         margin: 0,
         padding: theme.spacing(2),
         textAlign: 'right',
-        background: '#ff4500',
+        background: 'rgb(227, 118, 60)',
         color: 'white',
         minHeight: "64px",
         position: "relative"

@@ -8,7 +8,7 @@ const axiosClient = axios.create({
     Accept: "application/json",
     "Content-Type": "multipart/form-data",
     'Access-Control-Allow-Origin': '*',
-'Access-Control-Allow-Credentials': 'true'
+    'Access-Control-Allow-Credentials': 'true'
   },
 
 });
@@ -21,9 +21,7 @@ axiosClient.interceptors.response.use(
   function (error) {
     let res = error.response;
     if (res.status == 401) {
-      console.log("YOU ARE NOT AUTHORIZED FOR THIS");
     }
-    console.error("HAVE ERROR WHILE FETCHING", res.status);
     return Promise.reject(error);
   }
 );

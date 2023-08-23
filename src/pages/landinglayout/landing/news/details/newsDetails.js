@@ -1,8 +1,8 @@
-import { Box, Grid, Typography, makeStyles } from '@material-ui/core'
+import { Box, Button, Grid, Typography, makeStyles } from '@material-ui/core'
 import React, { useRef } from 'react'
 import { useMutation, useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom'
-import { dislikeDetails, getBookmarked, getDetailsData, getLikeDetails, likeDetails, postBookmarked, unpostBookmarked } from '../../../services';
+// import { dislikeDetails, getBookmarked, getDetailsData, getLikeDetails, likeDetails, postBookmarked, unpostBookmarked } from '../../../services';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -11,22 +11,34 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import PrintIcon from '@material-ui/icons/Print';
 import ReactToPrint from 'react-to-print';
+import { dislikeDetails, getDetailsData, getLikeDetails, getNewsDetailsData, likeDetails, postBookmarked } from '../../../../../services';
+import { Layout } from '../../../../Layout';
+import { CommentModel } from '../../../../comment/commentModel';
+import { ViewAllCommentModel } from '../../../../comment/viewAllCommentModel';
 
-export const DetailsCaselaw = () => {
+export const NewsDetails = () => {
     const location = useLocation();
     const rowData = location?.state
-    const caselawUrl = rowData?.caselaw_Url?.replace(/\//g, '-')
+
+    const caselawUrl = rowData?.caselawDesc?.replace(/\//g, '-')
     const userID = 1
     const componentRef = useRef();
 
+    const [newsDetailsData, setNewsDetailsData] = useState([])
     const [bookmark, setBookmark] = useState(false)
+    const [comment, setComment] = useState(false)
     const [allLikes, setAllLikes] = useState(null)
     const [likeEnabled, setLikeEnabled] = useState(true)
+    const [viewAllComment, setViewAllComment] = useState(false)
+    const [dynamicNewsID, setDynamicNewsID] = useState('')
+    const [postDone, setPostDone] = useState(0)
 
-    const { data, error } = useQuery(['GetAllDetailsData'], () => getDetailsData(rowData?.caselaw_Url), { enabled: true, retry: false })
+    const { data, refetch: allDataRefetch } = useQuery([''], () => getNewsDetailsData(rowData?.news_Url), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
+            setNewsDetailsData(data?.data?.newsDesc)
             setAllLikes(data?.data?.likecount > 0 ? true : false)
+            setDynamicNewsID(data?.data?.news_Id)
         }
     }, [data])
 
@@ -89,6 +101,14 @@ export const DetailsCaselaw = () => {
         bookmarkedMutatte({ url: `${userID}/${caselawUrl}` });
     }
 
+    const postCommentClickHandler = () => {
+        setComment(true)
+    }
+
+    const ViewAllCommentClickHandler = () => {
+        setViewAllComment(true)
+    }
+
 
     return <Box>
         <Grid container>
@@ -139,8 +159,29 @@ export const DetailsCaselaw = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Box ref={componentRef} m={3} dangerouslySetInnerHTML={{ __html: data?.data?.caselawDesc }} />
+                <Box ref={componentRef} m={3} dangerouslySetInnerHTML={{ __html: newsDetailsData }} />
+            </Grid>
+            <Grid item xs='12' style={{ paddingTop: "20px" }}>
+                <Grid container item spacing={3} justifyContent='flex-end' style={{ paddingRight: "20px" }}>
+
+                    <Grid item xs='3'>
+                        <Button onClick={ViewAllCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>View All comment</Button>
+                    </Grid>
+                    <Grid item xs='3'>
+                        <Button onClick={postCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>Post your comment</Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
+
+        {
+            comment &&
+            <CommentModel togglerHandler={setComment} dynamicNewsID={dynamicNewsID} allDataRefetch={allDataRefetch} setPostDone={setPostDone} />
+        }
+        {
+            viewAllComment &&
+            <ViewAllCommentModel togglerHandler={setViewAllComment} dynamicNewsID={dynamicNewsID} />
+        }
+
     </Box>
 }

@@ -52,6 +52,241 @@ body {
   font-weight: bold !important;
 }
 
-.MuiOutlinedInput-input{
+.MuiOutlinedInput-input {
   padding: 10px !important;
+}
+
+.logo-animation {
+  animation: animated 3s alternate-reverse infinite;
+}
+
+@keyframes animated {
+  100% {
+    transform: scale(1.1);
+  }
+
+  0% {
+    transform: scale(1.8);
+  }
+}
+
+.navbar {
+  width: 50%;
+  height: 50px;
+  margin: 0px auto;
+}
+
+.navbar ul {
+  list-style: none;
+}
+
+.navbar ul li {
+  float: left;
+  width: 120px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 22px;
+  position: relative;
+  /* border: 1px solid #ccc; */
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+
+.navbar ul li a:hover {
+  color: red;
+}
+
+.navbar ul .ul-one {
+  position: absolute;
+  background-color: #ccc;
+  display: none;
+  width: 600px;
+  top: 50px;
+  text-align: justify;
+}
+
+.navbar ul .ul-one a {
+  color: #000;
+}
+
+.navbar ul li:hover>ul {
+  display: block;
+}
+
+.navbar ul .ul-two {
+  position: absolute;
+  background-color: #ccc;
+  display: none;
+  width: 400px;
+  top: 50px;
+  text-align: justify;
+}
+
+.navbar ul .ul-two a {
+  color: #000;
+}
+
+.navbar ul li:hover>ul {
+  display: block;
+}
+
+.navbar .paper-border {
+  border-radius: 0px !important;
+  border-bottom: 2px solid red;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-radius: 1px solid #fff;
+}
+
+.navbar ul .ul-zero {
+  position: absolute;
+  background-color: #ccc;
+  display: none;
+  width: 1000px;
+  top: 50px;
+  text-align: justify;
+}
+
+.navbar ul .ul-zero a {
+  color: #000;
+}
+
+.navbar ul li:hover>ul {
+  display: block;
+}
+
+.navbar .paper-border-two {
+  border-radius: 0px !important;
+  border-bottom: 2px solid red;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-radius: 1px solid #fff;
+  min-height: 200px;
+}
+
+.MuiBox-root-211 {
+  height: 80% !important;
+}
+
+.WithStyles\(ForwardRef\(DialogContent\)\)-root-795::-webkit-scrollbar {
+  width: 0px;
+}
+
+.comment-box {
+  background-color: #fff;
+  /* box-shadow: 3px 4px #ccc; */
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 50px;
+  margin: 10px 0px;
+  /* border: 1px solid #9d9393; */
+  border-radius: 40px 10px;
+  /* background-color: rgb(185 181 181 / 21%); */
+  background-color: #fff;
+  box-shadow: 6px 1px 3px #9d9393;
+  border-left: 2px solid chocolate;
+}
+
+.comment-by-userNme {
+  font-size: 25px !important;
+  color: #e3763c;
+  text-transform: capitalize;
+}
+
+.messege-of-comment {
+  font-size: 14px !important;
+  color: #2f1a1a;
+}
+
+
+.reply-of-comment-view:hover {
+  cursor: pointer;
+  color: #e3763c;
+}
+
+.reply-of-comment {
+  padding: 5px 20px;
+  border: 1px solid #ccc;
+}
+
+.reply-of-comment:hover {
+  cursor: pointer;
+  color: #e3763c;
+}
+
+.replyModel {
+  background-color: #fff !important;
+  height: 75px;
+  position: relative;
+  top: 9px;
+  border-radius: 10px !important;
+}
+
+.close-icon {
+  color: #000;
+  font-size: 25px !important;
+  margin: 10px 30px 0px 0px;
+  cursor: pointer;
+  transition: all 2s ease-in-out !important;
+  z-index: 999999;
+}
+
+.close-icon :hover {
+  transform: scale(1.2);
+  color: #e3763c;
+}
+
+.textField-effect {
+  width: 100%;
+  position: relative;
+  top: 8px;
+  left: 0px;
+  padding: 20px;
+}
+
+.replyModel .MuiInputBase-input {
+  padding: 24px !important;
+}
+
+.replyModel .MuiOutlinedInput-root {
+  border-radius: 10px !important;
+}
+
+.reply-send-or-close {
+  font-size: 14px !important;
+  border: 1px solid #Ccc;
+  cursor: pointer;
+  margin: 15px 10px 0px 10px !important;
+  padding: 3px 15px !important;
+}
+
+.reply-send-or-close:hover {
+  border-color: #e3763c;
+  color: #e3763c;
+}
+
+.edit-or-delete-icon:hover {
+  color: #e3763c;
+  cursor: pointer;
+}
+
+.caselaw-heading {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 10px 0px;
+  border-radius: 25px;
+  color: #e3763c;
+  background-color: #eee;
+  font-size: 20px !important;
+}
+
+.no-data-found {
+  text-align: center !important;
+  font-size: 25px !important;
+  color: #e3763c;
+  padding-top: 30px !important;
 }

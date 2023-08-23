@@ -16,7 +16,7 @@ export const Home = () => {
     const [sectionTwoList, setSectionTwoList] = useState([])
     const [sectionAllList, setSectionAllList] = useState([])
 
-     const commonReducer = useSelector((state) => state.commonReducer);
+    const commonReducer = useSelector((state) => state.commonReducer);
 
     const { data: sectionOneData } = useQuery(["SectionOne"], () => sectionOne(), { enabled: true, retry: false })
 
@@ -34,7 +34,6 @@ export const Home = () => {
         }
     }, [sectionTwoData])
 
-   
 
     useEffect(() => {
         if (sectionOneListList && sectionTwoList) {
@@ -50,6 +49,6 @@ export const Home = () => {
         <BudjetSection budjetList={commonReducer.budjetList} />
         <HomeCard sectionOneListList={sectionAllList} setSectionOneListList={setSectionOneListList} />
         <VideoSection videList={commonReducer.videList} />
-        <HomeCards2 budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
+        <HomeCards2 budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionTwoList} setSectionTwoList={setSectionTwoList} />
     </Layout>
 }

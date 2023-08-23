@@ -10,21 +10,32 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { getFooterList } from '../services';
 import { useQuery } from 'react-query';
+import { updateState } from '../redux/commonSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export const Footer = (props) => {
-    const { videList, budjetList, footerList, setFooterList } = props;
+    const { videList, budjetList, footerAPIEnabledFlag, setFooterAPIEnabledFlag } = props;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const classes = useStyles();
 
-
-    const { data: footerData, error: footerError } = useQuery(["Footer"], () => getFooterList(), { enabled: true, retry: false })
+    const { data: footerData, error: footerError } = useQuery(["Footer"], () => getFooterList(), { enabled: footerAPIEnabledFlag, retry: false })
 
     useEffect(() => {
         if (footerData) {
-            setFooterList(footerData?.data)
+            setFooterAPIEnabledFlag(false)
+            dispatch(updateState({ getAllFooterData: footerData?.data }))
+
         }
     }, [footerData])
+
+    const titleClickHandler = (item) => {
+        navigate(`/${(item?.title).toLowerCase().replace(/\s/g, '')}/news`, { state: item })
+    }
 
     return <Container>
         <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
@@ -48,8 +59,8 @@ export const Footer = (props) => {
                 <Grid container justifyContent='space-between'>
                     <Grid item xs='12' sm='6' md='6' lg='6' xl='6'>
                         {
-                            footerList?.length > 0 &&
-                            footerList?.map((item) => {
+                            footerData?.data?.length > 0 &&
+                            footerData?.data?.map((item) => {
                                 return (item?.title == "TIOL APPS") &&
                                     <Grid container justifyContent='space-between'>
                                         <Box display='flex' alignItems='center'>
@@ -71,8 +82,8 @@ export const Footer = (props) => {
                     </Grid>
                     <Grid item xs='12' sm='6' md='6' lg='6' xl='6'>
                         {
-                            footerList?.length > 0 &&
-                            footerList?.map((item) => {
+                            footerData?.data?.length > 0 &&
+                            footerData?.data?.map((item) => {
                                 return (item?.title == "Follow us") &&
                                     <Grid container alignItems='center'>
                                         <Typography variant='h6'>{item?.title}</Typography>
@@ -117,8 +128,8 @@ export const Footer = (props) => {
                     <Box p={3}>
                         <Grid container p='10px 0px 10px 0px'>
                             {
-                                footerList?.length > 0 &&
-                                footerList?.map((item) => {
+                                footerData?.data?.length > 0 &&
+                                footerData?.data?.map((item) => {
                                     return item?.title != "Follow us" && item?.title != "TIOL APPS" &&
                                         <Grid item xs='12' sm='6' md='3' lg='3' xl='3' style={{ padding: "10px" }}>
                                             <Typography style={{ fontSize: "14px" }}><Box pb={1}>{item.title}</Box></Typography>
@@ -128,7 +139,11 @@ export const Footer = (props) => {
                                                     return <Box >
                                                         <Box display='flex' alignItems='center'>
                                                             <Box className={classes.dot}></Box>
-                                                            <Link href='apipath' target='_blank' style={{ fontSize: "12px" }}>{item.title}</Link>
+                                                            <Link style={{ fontSize: "12px" }} >
+                                                                <Typography onClick={() => titleClickHandler(item)}>
+                                                                    {item.title}
+                                                                </Typography>
+                                                            </Link>
                                                         </Box>
 
                                                         {

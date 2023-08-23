@@ -13,11 +13,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import tiol_logo from "../../assets/images/tiol_logo.png"
+import { useSelector } from 'react-redux';
 
 
 
 const MainHeader = (props) => {
-    const { drawerOpenFlag, setDrawerOpenFlag, footerList } = props;
+    const { drawerOpenFlag, setDrawerOpenFlag } = props;
+    const commonReducer = useSelector((state) => state.commonReducer);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [drawer1, setDrawer1] = React.useState(false);
@@ -84,8 +86,8 @@ const MainHeader = (props) => {
 
                                                 <Grid p='10px 0px 10px 0px'>
                                                     {
-                                                        footerList?.length > 0 &&
-                                                        footerList?.map((item) => {
+                                                        commonReducer?.getAllFooterData?.length > 0 &&
+                                                        commonReducer?.getAllFooterData?.map((item) => {
                                                             return item?.title == "TIOL INFO" &&
                                                                 item?.subMenuItems?.length > 0 &&
                                                                 item?.subMenuItems?.map((item) => {

@@ -15,14 +15,14 @@ export const Layout = (props) => {
 
     const [videList, setVideList] = useState([])
     const [budjetList, setBudjetList] = useState([])
-    const [footerList, setFooterList] = useState([])
+    const [footerAPIEnabledFlag, setFooterAPIEnabledFlag] = useState(true)
     const [drawerOpenFlag, setDrawerOpenFlag] = React.useState(false)
 
     const { data: getVideoData, error: getVideoError } = useQuery(["VideoItems"], () => getVideoItems(), { enabled: true, retry: false })
     useEffect(() => {
         if (getVideoData) {
             setVideList(getVideoData?.data);
-            dispatch(updateState({ videList: getVideoData?.data}))
+            dispatch(updateState({ videList: getVideoData?.data }))
 
         }
     }, [getVideoData])
@@ -32,18 +32,17 @@ export const Layout = (props) => {
     useEffect(() => {
         if (budjetSection) {
             setBudjetList(budjetSection?.data)
-            dispatch(updateState({ budjetList: budjetSection?.data}))
+            dispatch(updateState({ budjetList: budjetSection?.data }))
 
         }
     }, [budjetSection])
 
-
     return <>
-        <MainHeader setDrawerOpenFlag={setDrawerOpenFlag} drawerOpenFlag={drawerOpenFlag} footerList={footerList} />
+        <MainHeader setDrawerOpenFlag={setDrawerOpenFlag} drawerOpenFlag={drawerOpenFlag} />
         <Newsupdate videList={videList} budjetList={budjetList} />
         {props.children}
-        <Footer videList={videList} budjetList={budjetList} footerList={footerList} setFooterList={setFooterList} />
-            <Drawer
+        <Footer videList={videList} budjetList={budjetList} footerAPIEnabledFlag={footerAPIEnabledFlag} setFooterAPIEnabledFlag={setFooterAPIEnabledFlag} />
+        <Drawer
             anchor="left"
             open={drawerOpenFlag}
             onClose={() => setDrawerOpenFlag(false)}

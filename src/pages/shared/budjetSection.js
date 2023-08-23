@@ -38,7 +38,7 @@ const BudjetSection = (props) => {
                     budjetList?.map((item) => {
                         return item?.categoryName == "Union Budget" &&
                             <Grid container item xs='12' style={{ paddingBottom: "20px" }}>
-                                <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%",border:"1px solid #000" }}>
+                                <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%", border: "1px solid #efefef" }}>
                                     <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
                                         <Grid alignItems='center' style={{ height: "50px", width: "100%" }}>
                                             <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "40px" }}>

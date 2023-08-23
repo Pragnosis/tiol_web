@@ -17,10 +17,15 @@ const initialValue = {
     genderArr: [],
     candidateStatus: "",
     newRoleDepartment: null,
-    budjetList:[],
-    videList:[],
-    currentDynamicPaedata:{}
+    budjetList: [],
+    videList: [],
+    currentDynamicPaedata: {},
+    getAllFooterData: [],
+    caseLawdata: [],
+    footerData: []
 }
+
+
 export const commonSlice = createSlice({
     name: 'common',
     initialState: initialValue,

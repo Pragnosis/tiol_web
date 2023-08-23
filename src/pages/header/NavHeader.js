@@ -48,13 +48,13 @@ function NavHeader() {
 
   };
 
-  const handleItemClickhandler = (item, routeTo) => {
-    console.log('item', item, routeTo)
-    var routeto = `/${routeTo}/${item.title.replace(" ", "_")}`.toLowerCase()
+  const handleItemClickhandler = (item, routeTo, type) => {
+    var routeto = type === 'nested'
+      ? `/${routeTo}/${item.title.replace(" ", "_")}`.toLowerCase()
+      : `/${item.title.replace(" ", "_")}`.toLowerCase()
     setSubMenuPosition(null);
     setCurrentNavText("")
     // dispatch(updateState({ currentDynamicPaedata: item }));
-    // console.log('routeto', routeto);
     navigate(routeto.replace(" ", "_"), { replace: true })
     setTimeout(() => {
       setAnchorEl(null);
@@ -77,7 +77,6 @@ function NavHeader() {
     setAnchorEl(null);
   };
 
-  console.log('anchorEl', anchorEl)
   const [signin, setSignin] = useState(null);
   const [on, setOn] = useState(false);
 
@@ -103,7 +102,6 @@ function NavHeader() {
 
   useEffect(() => {
     headerData && setHeaderArr(headerData)
-
   }, [headerData])
 
   useEffect(() => {
@@ -131,7 +129,6 @@ function NavHeader() {
       }
 
     });
-    console.log('localArr', localArr)
     dispatch(updateState({ currentDynamicPaedata: localArr[0] }));
 
   }, [headerArr, location?.pathname])
@@ -147,7 +144,6 @@ function NavHeader() {
                 <Grid container justifyContent='flex-end'>
                   {
                     headerArr.length > 0 && headerArr.map((item) => {
-                      // item?.title == "Income Tax" && console.log('item1111111', item)
                       return <>
                         <Box>
                           <CustomButton
@@ -158,7 +154,6 @@ function NavHeader() {
                             variant="text"
                             style={{ padding: '2px 5px 2px 5px', textTransform: "capitalize" }}
                             onClick={(e) => openMenu(e, item.title)}
-                          // endIcon={<KeyboardArrowDownIcon />}
                           />
 
                           {
@@ -172,9 +167,9 @@ function NavHeader() {
                                 {
                                   item.subMenuItems.map((option) => {
                                     return <div key={item.label}>
-                                      <Link href={item?.apipath} target="_blank">
-                                        <MenuItemComp ref={menuItemRef} item={option} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
-                                      </Link>
+                                      {/* <Link href="javascript:void()" onClick={(e) => { e.preventDefault(); navigate(`/${option.title.toLowerCase()}`) }}> */}
+                                      <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
+                                      {/* </Link> */}
                                     </div>
                                   }
 

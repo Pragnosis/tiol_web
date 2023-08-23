@@ -29,7 +29,7 @@ export const NewsdetailModel = (props) => {
         togglerhandler(false)
     }
 
-    return <CustomDialog maxWidth="sm" dialogTitle="News" open="true" handleClose={handleClose} >
+    return <CustomDialog maxWidth="sm" dialogTitle="News" open="true" handleClose={handleClose} className='model-scroll'>
         <Grid container style={{ padding: "20px" }}>
             {
                 Arr.length > 0 &&
