@@ -35,7 +35,7 @@ const App = () => {
       <Route path="/CommonSearch" element={<CommonSearch />} />
 
 
-      <Route path="/" element={<Home />} />
+      <Route path="/tiol-web" element={<Home />} />
       {/* <Route path=":id/details" element={<LandingLayout />} /> */}
     </Routes>
 

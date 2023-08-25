@@ -29,9 +29,9 @@ export const CustomSearch = (props) => {
 
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
-            var A = commonReducer.currentDynamicPaedata.apipathfilter;
-            var replaceFromDate = A.replace("From_Date", datedata.From_Date);
-            var replaceDate = replaceFromDate.replace("To_Date", datedata.To_Date);
+            var A = commonReducer?.currentDynamicPaedata?.apipathfilter;
+            var replaceFromDate = A?.replace("From_Date", datedata.From_Date);
+            var replaceDate = replaceFromDate?.replace("To_Date", datedata.To_Date);
             setFilterDate(replaceDate);
         }
     }, [commonReducer?.currentDynamicPaedata, datedata.From_Date, datedata.To_Date]);

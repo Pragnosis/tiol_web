@@ -32,7 +32,7 @@ export const VideoSection = (props) => {
                 url={`https://www.youtube.com/watch?v=${videoId}`}
                 pip={true}
                 controls={true}
-                playing={true}
+                playing={false}
                 height='200px'
                 width='100%'
             />

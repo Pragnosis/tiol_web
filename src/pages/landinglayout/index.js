@@ -57,7 +57,7 @@ export const LandingLayout = (props) => {
             <Grid container item>
                 <Grid item xs='8'>
                     {
-                        location.pathname == "/notifications" ? <LandingNotification />
+                        location.pathname == "/notifications" || location.pathname == "/viewall" ? <LandingNotification />
                             : location.pathname == "/income_tax/caselaws/sc_cases" ? <LandingCaseLaw />
                                 : null
                     }

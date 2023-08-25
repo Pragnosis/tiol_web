@@ -69,11 +69,11 @@ export const HomeCard = (props) => {
                                     }
                                     <Box pt={2}>
                                         {
-                                            (item?.column_name == "TODAY'S CASE (DIRECT TAX)" || item?.column_name == "TODAY'S CASE (INDIRECT TAX)") &&
+                                            (item?.categoryName == "TODAY'S CASE (DIRECT TAX)" || item?.categoryName == "TODAY'S CASE (INDIRECT TAX)") &&
                                             <>
                                                 <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                                     <Grid item>
-                                                        <CustomButton btnText="View today's updates" btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                        <CustomButton btnText="View today's updates" href={item?.apipathtodayscase} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                                     </Grid>
                                                 </Box>
                                             </>
@@ -82,7 +82,7 @@ export const HomeCard = (props) => {
 
                                         <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                             <Grid item>
-                                                <CustomButton btnText='View all' btnStyle={{ color: "orangered", fontSize: "12px" }} onClick={() => viewAllclickhandler(item, index)} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all' href={`viewall?page=${btoa(item?.apipath)}`} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Box>

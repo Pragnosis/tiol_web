@@ -11,7 +11,7 @@ export const apiConstant = {
   getMenuItems: baseUrl + "/DynamicMenuItem/GetDynamicMenuItem/1",
   getFooterList: baseUrl + "/FooterMenu/GetDynamicFooterItem",
   sectionOne: baseUrl + "/HomePageSectionsData/GetHomePageSectionsData",
-  sectionTwo: baseUrl + "/HomePageSections/GetHomePageSections",
+  sectionTwo: baseUrl + "/HomePageSectionsData/GetHomePageSectionsData",
   getVideoItems: baseUrl + "/HomePageBannerVideo/GetHomePageBannerVideo",
   sectionThree: baseUrl + "/HomePageOtherSectionData/GetHomePageOtherSectionsData",
 

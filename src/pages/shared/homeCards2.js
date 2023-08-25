@@ -24,18 +24,18 @@ export const HomeCards2 = (props) => {
                                             <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
                                                 <Grid container alignItems='center' style={{ height: "40px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                     <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "30px" }}>
-                                                        <Typography variant='h6'>{item?.column_name}</Typography>
+                                                        <Typography variant='h6'>{item?.categoryName}</Typography>
                                                     </Box>
                                                     <Typography variant='h7' >
                                                         {
-                                                            item?.author &&
-                                                            <Box ml={1}>{`${"by"} ${item?.author}`}</Box>
+                                                            item?.categoryAuthor &&
+                                                            <Box ml={1}>{`${"by"} ${item?.categoryAuthor}`}</Box>
                                                         }
                                                     </Typography>
                                                 </Grid>
                                             </Box>
                                             <Box style={{ minHeight: "200px" }}>
-                                                <img src={item?.image_Path} alt='Assets/award.jpg' style={{ width: "100%" }} />
+                                                <img src={item?.categoryImagePath} alt='Assets/award.jpg' style={{ width: "100%" }} />
                                             </Box>
                                             {
                                                 item?.sectionsdata?.length > 0 &&
@@ -52,12 +52,11 @@ export const HomeCards2 = (props) => {
                                                     </Box>
                                                 })
                                             }
-
                                             <Grid container item justifyContent='flex-end' style={{ paddingTop: "10px" }}>
-                                                <CustomButton btnText="View Today's Case" btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                               <div></div>
                                             </Grid>
                                             <Grid container item justifyContent='flex-end'>
-                                                <CustomButton btnText='View all' btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all'href={`viewall?page=${btoa(item?.apipath)}`} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Grid>
@@ -68,12 +67,12 @@ export const HomeCards2 = (props) => {
                                                 <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">
                                                     <Grid container alignItems='center' style={{ height: "40px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                         <Box p={1} justifyContent='center' display='flex' alignItems='center' color="orangered" bgcolor='#efefef' border="1px solid #efefef" borderRadius="20px 20px 0px 0px" style={{ height: "30px" }}>
-                                                            <Typography variant='h6'>{item?.column_name}</Typography>
+                                                            <Typography variant='h6'>{item?.categoryName}</Typography>
                                                         </Box>
                                                         <Typography variant='h7' >
                                                             {
-                                                                item?.author &&
-                                                                <Box ml={1}>{`${"by"} ${item?.author}`}</Box>
+                                                                item?.categoryAuthor &&
+                                                                <Box ml={1}>{`${"by"} ${item?.categoryAuthor}`}</Box>
                                                             }
                                                         </Typography>
                                                     </Grid>

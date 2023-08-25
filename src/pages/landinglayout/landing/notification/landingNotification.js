@@ -28,8 +28,17 @@ const useStyles = makeStyles((theme) => ({
 export const LandingNotification = () => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const location = useLocation()
-    const apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
+    const location = useLocation();
+    console.log("==location==",location);
+ let apipath;  
+if(location?.pathname === '/viewall'){
+    const params = new URLSearchParams(location?.search);
+    const page = params.get('page');
+     apipath = atob(page);
+} else {
+     apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
+}
+  
 
     const commonReducer = useSelector((state) => state.commonReducer);
     const [caseLawdata, setCaseLawdata] = useState([])
@@ -90,8 +99,8 @@ export const LandingNotification = () => {
                         caseLawdata?.length > 0 && caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
-                                    <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.notification_Date}</Typography>
-                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.notification_Number}</Typography>
+                                    <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.notification_Date || item?.auther}</Typography>
+                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.notification_Number || item?.date}</Typography>
                                     <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading}</Typography>
                                 </Box>
                             </Grid>
