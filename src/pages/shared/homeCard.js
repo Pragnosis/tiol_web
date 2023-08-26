@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import CustomButton from '../../component/CustomButton';
 import { ViewAllModel } from './viewAllModel';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom'
 
 
 
 export const HomeCard = (props) => {
     const { sectionOneListList, setSectionOneListList } = props;
+    const navigate = useNavigate();
 
     const [viewData, setViewData] = useState(false)
     const [optionData, setOptionData] = useState({})
@@ -15,6 +17,10 @@ export const HomeCard = (props) => {
     const viewAllclickhandler = (option, viewIndex) => {
         setOptionData(option)
         setViewData(true)
+    }
+
+    const rowDataClickandler = (item) => {
+        navigate(`/viewall?page=${btoa(item)}`)
     }
 
     return <>
@@ -73,7 +79,7 @@ export const HomeCard = (props) => {
                                             <>
                                                 <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                                     <Grid item>
-                                                        <CustomButton btnText="View today's updates" href={item?.apipathtodayscase} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                        <CustomButton btnText="View today's updates" onClick={() => rowDataClickandler(item?.apipathtodayscase)}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                                     </Grid>
                                                 </Box>
                                             </>
@@ -82,7 +88,7 @@ export const HomeCard = (props) => {
 
                                         <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                             <Grid item>
-                                                <CustomButton btnText='View all' href={`viewall?page=${btoa(item?.apipath)}`} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all' onClick={() => rowDataClickandler(item?.apipath)} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Box>

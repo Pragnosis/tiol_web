@@ -25,16 +25,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export const LandingNotification = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
     console.log("==location==",location);
  let apipath;  
+ let  heading= "Notification"
 if(location?.pathname === '/viewall'){
     const params = new URLSearchParams(location?.search);
     const page = params.get('page');
      apipath = atob(page);
+     heading = "View All Details"
 } else {
      apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
 }
@@ -54,6 +57,10 @@ if(location?.pathname === '/viewall'){
             setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
         }
     }, [data])
+
+    useEffect(() => {
+        window.scrollTo(0, 700)
+      }, [])
 
     const pageChange = (e) => {
         const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
@@ -79,7 +86,7 @@ if(location?.pathname === '/viewall'){
                 <CustomSearch getDataFromSearch={getDataFromSearch} />
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
-                <Typography className='caselaw-heading'>Notification</Typography>
+                <Typography className='caselaw-heading'>{heading}</Typography>
             </Grid>
             <Grid item xs='12'>
                 <Grid container item justifyContent='space-between' alignItems='center' style={{ paddingLeft: "20px" }}>
@@ -99,9 +106,9 @@ if(location?.pathname === '/viewall'){
                         caseLawdata?.length > 0 && caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
-                                    <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.notification_Date || item?.auther}</Typography>
-                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.notification_Number || item?.date}</Typography>
-                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading}</Typography>
+                                    <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.notification_Date || item?.date || item?.creationDate}</Typography>
+                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.notification_Number || item?.auther}</Typography>
+                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading || item?.headlines}</Typography>
                                 </Box>
                             </Grid>
                         })

@@ -3,13 +3,17 @@ import React from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomButton from '../../component/CustomButton';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 
 
 
 export const HomeCards2 = (props) => {
     const { budjetList, videList, sectionTwoList, setSectionTwoList } = props;
     const commonReducer = useSelector((state) => state.commonReducer);
-
+    const navigate = useNavigate();
+    const rowDataClickandler = (item) => {
+        navigate(`/viewall?page=${btoa(item)}`)
+    }
     return <Container>
         <Box my={1}>
             <Grid container spacing={2} >
@@ -56,7 +60,7 @@ export const HomeCards2 = (props) => {
                                                <div></div>
                                             </Grid>
                                             <Grid container item justifyContent='flex-end'>
-                                                <CustomButton btnText='View all'href={`viewall?page=${btoa(item?.apipath)}`} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all'  onClick={() => rowDataClickandler(item?.apipath)} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Grid>
