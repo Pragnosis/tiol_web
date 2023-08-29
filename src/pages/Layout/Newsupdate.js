@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,10 +7,8 @@ import "swiper/css/navigation";
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import { Autoplay } from "swiper";
 import { Typography } from '@mui/material';
-import { Box, Container, Grid, makeStyles } from '@material-ui/core';
+import { Box, Container, Grid, makeStyles,Link } from '@material-ui/core';
 import { NewsdetailModel } from './newsdetailModel';
-// import { NewsdetailModel } from './newsdetailModel';
-
 const useStyles = makeStyles(theme => ({
     papermanage: {
         backgroundColor: "#f4f4f4",
@@ -34,15 +32,24 @@ const useStyles = makeStyles(theme => ({
 
 const Newsupdate = (props) => {
     const classes = useStyles();
-    const { videList, budjetList } = props;
+    const { videList, budjetList, sectionData } = props;
 
     const [viewAll, setViewAll] = useState(false)
+    const [updateNews, setUpdateNews] = useState([])
 
     const viewallclickhandler = () => {
         setViewAll(true)
     }
 
-    return (
+    useEffect(()=>{
+        let newArray = sectionData?.filter(function(item)
+        {
+             return  item?.categoryName === "News Update"
+        });
+        setUpdateNews({...newArray,...updateNews})
+    },[updateNews])
+
+    return updateNews && (
         <Container style={{ marginTop: "1px" }}>
             <Box style={{ display: "flex", justifyContent: "space-between", padding: "10px 20px 10px 20px" }} className={classes.papermanage}>
                 <Box color='orangered'>News Update</Box>
@@ -54,51 +61,16 @@ const Newsupdate = (props) => {
                 modules={[Autoplay]}
                 className="swiper"
             >
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
+            {
+                updateNews[0]?.sectionsdata?.length > 0 &&
+                updateNews[0]?.sectionsdata?.map((item) => {
+                return <SwiperSlide className={classes.papermanage}>
+                    <Typography >
+                    <Link  href={item?.url} style={{ whiteSpace: "initial", color:"black", fontSize:"14px" }}>
+                        {item?.headlines}</Link></Typography>
                 </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Doordarshan Launches The Promo Of Its Upcoming Mega Show 'Swaraj'</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>MoS says rich natural resources of Chenab not exploited by previous governments, weirdly!</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>50 MW Solar Power Plant - Coal Secretary lays foundational bricks</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Story of a Speaking order</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
-                <SwiperSlide className={classes.papermanage}>
-                    <Typography>Supply of quality cotton seeds is key to improving productivity of cotton: Goyal</Typography>
-                </SwiperSlide>
+                })
+            }
             </Swiper>
             <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
                 <Box style={{ height: "300px", color: "#fff", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -118,7 +90,7 @@ const Newsupdate = (props) => {
             </Typography>
             {
                 viewAll &&
-                <NewsdetailModel togglerhandler={setViewAll} />
+                <NewsdetailModel togglerhandler={setViewAll} newsUpdate={updateNews}/>
             }
         </Container>
     );

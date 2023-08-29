@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Container, Grid, Typography, Link } from '@material-ui/core'
 import React from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomButton from '../../component/CustomButton';
@@ -12,7 +12,15 @@ export const HomeCards2 = (props) => {
     const commonReducer = useSelector((state) => state.commonReducer);
     const navigate = useNavigate();
     const rowDataClickandler = (item) => {
-        navigate(`/viewall?page=${btoa(item)}`)
+        let pageType
+        if(item.indexOf("GetNewsIndexPages")>0){
+            pageType = 'viewall'
+        }else if(item.indexOf("GetNotificationById")>0){
+            pageType = 'notification_details'
+        } else if(item.indexOf("CaselawIndexPage")>0){
+            pageType = 'caselaws'
+        }
+        navigate(`/${pageType}?page=${btoa(item)}`)
     }
     return <Container>
         <Box my={1}>
@@ -47,7 +55,7 @@ export const HomeCards2 = (props) => {
                                                     return <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                                <Box color='orangered'>{item.date}</Box>
+                                                            <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
                                                             </Typography>
                                                             <Typography>
                                                                 <Box color='#000'>{item.headlines}</Box>
@@ -90,7 +98,7 @@ export const HomeCards2 = (props) => {
                                                                     {item.headlines}
                                                                 </Typography>
                                                                 <Typography>
-                                                                    {item.notificationNo}
+                                                                    <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.notificationNo}</Link>
                                                                 </Typography>
                                                             </Grid>
                                                         </Box>

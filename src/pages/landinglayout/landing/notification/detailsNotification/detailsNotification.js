@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography, makeStyles } from '@material-ui/core'
 import React, { useRef } from 'react'
 import { useMutation, useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // import { dislikeDetails, getBookmarked, getDetailsData, getLikeDetails, likeDetails, postBookmarked, unpostBookmarked } from '../../../services';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ import { CommentModel } from '../../../../comment/commentModel';
 import { ViewAllCommentModel } from '../../../../comment/viewAllCommentModel';
 
 export const NotificationDetails = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const rowData = location?.state
     const caselawUrl = rowData?.caselawDesc?.replace(/\//g, '-')
@@ -31,8 +32,18 @@ export const NotificationDetails = () => {
     const [viewAllComment, setViewAllComment] = useState(false)
     const [dynamicNewsID, setDynamicNewsID] = useState('')
     const [postDone, setPostDone] = useState(0)
+    let apipath;  
+    let  heading= "Notification"
+    if(location?.pathname === '/notification_details' || location?.pathname === '/details'){
+        const params = new URLSearchParams(location?.search);
+        const page = params.get('page');
+        apipath = atob(page);
+        heading = "View All Details2"
+    } else {
+        apipath = rowData?.notication_Url
+    }
 
-    const { data, refetch: allDataRefetch } = useQuery([''], () => getNotificationDetailsData(rowData?.notication_Url), { enabled: true, retry: false })
+    const { data, refetch: allDataRefetch } = useQuery([''], () => getNotificationDetailsData(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setNewsDetailsData(data?.data?.notificationDesc)
@@ -159,17 +170,7 @@ export const NotificationDetails = () => {
                 </Grid>
                 <Box ref={componentRef} m={3} dangerouslySetInnerHTML={{ __html: newsDetailsData }} />
             </Grid>
-            <Grid item xs='12' style={{ paddingTop: "20px" }}>
-                <Grid container item spacing={3} justifyContent='flex-end' style={{ paddingRight: "20px" }}>
-
-                    <Grid item xs='3'>
-                        <Button onClick={ViewAllCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>View All comment</Button>
-                    </Grid>
-                    <Grid item xs='3'>
-                        <Button onClick={postCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>Post your comment</Button>
-                    </Grid>
-                </Grid>
-            </Grid>
+           
         </Grid>
 
         {

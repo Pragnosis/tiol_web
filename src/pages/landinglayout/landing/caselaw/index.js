@@ -9,7 +9,7 @@ import { caseLawDynamicdata, caseLawFilterdata } from '../../../../services'
 import CustomButton from '../../../../component/CustomButton'
 import { Pagination } from '@mui/material'
 import { getErrorMessege } from '../../../../component/Validator'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { CommonSearch } from '../../../home/coomonDate/commonSearch'
 import { CustomSearch } from '../../../shared/search/Search'
 import { useSearchHook } from '../../../shared/search/SearchHook'
@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingCaseLaw = () => {
     const classes = useStyles();
-    const navigate = useNavigate();
     const commonReducer = useSelector((state) => state.commonReducer);
     const [caseLawdata, setCaseLawdata] = useState([])
     const [pageOriData, setPageOriData] = useState([])
@@ -37,19 +36,29 @@ const LandingCaseLaw = () => {
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
 
-
-
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
             setPagedata(commonReducer.currentDynamicPaedata);
         }
     }, [commonReducer?.currentDynamicPaedata]);
-
-    const { data, error } = useQuery(['GetDynamicCaselawData', pagedata?.apipath], () => caseLawDynamicdata(pagedata?.apipath), { enabled: true, retry: false })
+    const navigate = useNavigate();
+    const location = useLocation();
+    let apipath;  
+    let  heading= "Notification"
+    if(location?.pathname === '/caselaws1'){
+        const params = new URLSearchParams(location?.search);
+        const page = params.get('page');
+        apipath = atob(page);
+        heading = "View All news Details"
+    } else {
+        apipath = pagedata?.apipath
+    }
+console.log("==caselow",apipath)
+    const { data, error } = useQuery(['GetDynamicCaselawData', apipath], () => caseLawDynamicdata(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
-            setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
+            setCaseLawdata(data?.data?.filter((o, i) => i <= intialCount))
         }
     }, [data])
 

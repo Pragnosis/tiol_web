@@ -14,6 +14,9 @@ import { Carts } from './landing/carts'
 import LandingCaseLaw from './landing/caselaw'
 import { sectionOne, sectionTwo } from '../../services'
 import { LandingNotification } from './landing/notification/landingNotification'
+import { NotificationDetails} from './landing/notification/detailsNotification/detailsNotification'
+import { NewsDetails } from './landing/news/details/newsDetails'
+import { DetailsCaselaw } from '../detaillayout/detail/caselaw'
 
 
 
@@ -52,14 +55,28 @@ export const LandingLayout = (props) => {
         }
     }, [sectionOneListList, sectionTwoList])
 
+    const renderPage = (page) =>{
+        if(page === "/notifications" || page === "/viewall" ){
+            return <LandingNotification />
+        } else if(page === "/income_tax/caselaws/sc_cases" || page === "/details"){
+            return <LandingCaseLaw />
+        } else if(page==="/notification_details" || page === "/notification" ){
+            return <NotificationDetails />
+        } else if(page === "/news_details"){
+            return <NewsDetails/>
+        } else if(page === "/caselaws_details"){
+            return <DetailsCaselaw />
+        }else {
+            return null
+        }
+    }
+
     return <Container>
         <Layout>
             <Grid container item>
                 <Grid item xs='8'>
                     {
-                        location.pathname == "/notifications" || location.pathname == "/viewall" ? <LandingNotification />
-                            : location.pathname == "/income_tax/caselaws/sc_cases" ? <LandingCaseLaw />
-                                : null
+                        renderPage(location?.pathname)
                     }
                 </Grid>
                 <Grid item xs='4'>

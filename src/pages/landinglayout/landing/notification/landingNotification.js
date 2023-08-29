@@ -37,7 +37,7 @@ if(location?.pathname === '/viewall'){
     const params = new URLSearchParams(location?.search);
     const page = params.get('page');
      apipath = atob(page);
-     heading = "View All Details"
+     heading = "View All Details1"
 } else {
      apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
 }
@@ -51,6 +51,9 @@ if(location?.pathname === '/viewall'){
     const [nextCount, setNextCount] = useState(10)
 
     const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
+   
+   console.log("====data===",data);
+   
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
@@ -73,7 +76,15 @@ if(location?.pathname === '/viewall'){
 
 
     const rowDataClickandler = (item) => {
-        navigate("/notification/details", { state: item })
+        if(item?.caselawUrl?.indexOf("GetCaselawById")>0){
+           const pageType = 'caselaws_details'
+            navigate(`/${pageType}?page=${btoa(item?.caselawUrl)}`)
+        } else if(item?.news_Url?.indexOf("GetNewsById")>0){
+            const pageType = 'news_details'
+            navigate(`/${pageType}?page=${btoa(item?.news_Url)}`)
+        } else {
+            navigate("/notification/details", { state: item })
+        }
     }
 
     const getDataFromSearch = (data) => {
@@ -108,7 +119,7 @@ if(location?.pathname === '/viewall'){
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.notification_Date || item?.date || item?.creationDate}</Typography>
                                     <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.notification_Number || item?.auther}</Typography>
-                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading || item?.headlines}</Typography>
+                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading || item?.headlines}23</Typography>
                                 </Box>
                             </Grid>
                         })

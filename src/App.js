@@ -33,7 +33,8 @@ const App = () => {
 
       <Route path="/newsdetails" element={<NewsDetailedLayout />} />
       <Route path="/CommonSearch" element={<CommonSearch />} />
-
+      
+     
 
       <Route path="/tiol-web" element={<Home />} />
       {/* <Route path=":id/details" element={<LandingLayout />} /> */}

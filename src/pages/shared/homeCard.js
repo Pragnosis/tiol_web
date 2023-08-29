@@ -1,4 +1,4 @@
-import { Box, Button, Card, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Card, Container, Grid, Typography, Link} from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import CustomButton from '../../component/CustomButton';
 import { ViewAllModel } from './viewAllModel';
@@ -19,8 +19,8 @@ export const HomeCard = (props) => {
         setViewData(true)
     }
 
-    const rowDataClickandler = (item) => {
-        navigate(`/viewall?page=${btoa(item)}`)
+    const rowDataClickandler = (pageType, item) => {
+        navigate(`/${pageType}?page=${btoa(item)}`)
     }
 
     return <>
@@ -50,7 +50,7 @@ export const HomeCard = (props) => {
                                                         <Grid item xs='12' sm='8' lg='8' >
                                                             <Box p={2}>
                                                                 <Typography variant='h7'>
-                                                                    <Box color='orangered' style={{ whiteSpace: "initial" }}>{item.date}</Box>
+                                                                    <Link onClick={() => rowDataClickandler('news_details',item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
                                                                 </Typography>
                                                                 <Typography variant='h7'>
                                                                     <Box style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} color='#000'>{item.headlines}</Box>
@@ -62,7 +62,7 @@ export const HomeCard = (props) => {
                                                     : <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                                <Box color='orangered'>{item.date}</Box>
+                                                                <Link onClick={() => rowDataClickandler('caselaws_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
                                                             </Typography>
                                                             <Typography>
                                                                 <Box color='#000' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.headlines}</Box>
@@ -79,7 +79,7 @@ export const HomeCard = (props) => {
                                             <>
                                                 <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                                     <Grid item>
-                                                        <CustomButton btnText="View today's updates" onClick={() => rowDataClickandler(item?.apipathtodayscase)}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                        <CustomButton btnText="View today's updates" onClick={() => rowDataClickandler('viewall',item?.apipathtodayscase)}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                                     </Grid>
                                                 </Box>
                                             </>
@@ -88,7 +88,7 @@ export const HomeCard = (props) => {
 
                                         <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                             <Grid item>
-                                                <CustomButton btnText='View all' onClick={() => rowDataClickandler(item?.apipath)} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all' onClick={() => rowDataClickandler('viewall',item?.apipath)} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Box>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux'
-import { getVideoItems, sectionThree } from '../../services';
+import { getVideoItems, sectionOne, sectionThree } from '../../services';
 import { updateState } from '../../redux/commonSlice';
 import { Footer } from '../footer'
 import Newsupdate from './Newsupdate'
@@ -15,6 +15,7 @@ export const Layout = (props) => {
 
     const [videList, setVideList] = useState([])
     const [budjetList, setBudjetList] = useState([])
+    const [newsUpdateLIst, setNewsUpdateList] = useState([])
     const [footerAPIEnabledFlag, setFooterAPIEnabledFlag] = useState(true)
     const [drawerOpenFlag, setDrawerOpenFlag] = React.useState(false)
 
@@ -37,9 +38,18 @@ export const Layout = (props) => {
         }
     }, [budjetSection])
 
+    const { data: newsUpdate, error: newsUpdateError } = useQuery(["newsDynamicdata"], () => sectionOne(), { enabled: true, retry: false })
+    useEffect(() => {
+        if (newsUpdate) {
+            setNewsUpdateList(newsUpdate?.data)
+            dispatch(updateState({ newsList: newsUpdate?.data }))
+
+        }
+    }, [newsUpdate])
+
     return <>
         <MainHeader setDrawerOpenFlag={setDrawerOpenFlag} drawerOpenFlag={drawerOpenFlag} />
-        <Newsupdate videList={videList} budjetList={budjetList} />
+        <Newsupdate videList={videList} budjetList={budjetList} sectionData={newsUpdateLIst}/>
         {props.children}
         <Footer videList={videList} budjetList={budjetList} footerAPIEnabledFlag={footerAPIEnabledFlag} setFooterAPIEnabledFlag={setFooterAPIEnabledFlag} />
         <Drawer

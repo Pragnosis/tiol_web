@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, makeStyles } from '@material-ui/core'
 import React, { useRef } from 'react'
 import { useMutation, useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom'
+import { useLocation,useNavigate } from 'react-router-dom'
 import { dislikeDetails, getBookmarked, getDetailsData, getLikeDetails, likeDetails, postBookmarked, unpostBookmarked } from '../../../services';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -23,7 +23,20 @@ export const DetailsCaselaw = () => {
     const [allLikes, setAllLikes] = useState(null)
     const [likeEnabled, setLikeEnabled] = useState(true)
 
-    const { data, error } = useQuery(['GetAllDetailsData'], () => getDetailsData(rowData?.caselaw_Url), { enabled: true, retry: false })
+    const navigate = useNavigate();
+
+    let apipath;  
+    let  heading= "Notification"
+    if(location?.pathname === '/caselaws_details'){
+        const params = new URLSearchParams(location?.search);
+        const page = params.get('page');
+        apipath = atob(page);
+        heading = "View All news Details"
+    } else {
+        apipath = rowData?.caselaw_Url
+    }
+
+    const { data, error } = useQuery(['GetAllDetailsData'], () => getDetailsData(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setAllLikes(data?.data?.likecount > 0 ? true : false)

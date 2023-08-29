@@ -32,8 +32,18 @@ export const NewsDetails = () => {
     const [viewAllComment, setViewAllComment] = useState(false)
     const [dynamicNewsID, setDynamicNewsID] = useState('')
     const [postDone, setPostDone] = useState(0)
+    let apipath;  
+    let  heading= "Notification"
+    if(location?.pathname === '/news_details'){
+        const params = new URLSearchParams(location?.search);
+        const page = params.get('page');
+        apipath = atob(page);
+        heading = "View All news Details"
+    } else {
+        apipath = rowData?.news_Url
+    }
 
-    const { data, refetch: allDataRefetch } = useQuery([''], () => getNewsDetailsData(rowData?.news_Url), { enabled: true, retry: false })
+    const { data, refetch: allDataRefetch } = useQuery([''], () => getNewsDetailsData(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setNewsDetailsData(data?.data?.newsDesc)
@@ -164,12 +174,13 @@ export const NewsDetails = () => {
             <Grid item xs='12' style={{ paddingTop: "20px" }}>
                 <Grid container item spacing={3} justifyContent='flex-end' style={{ paddingRight: "20px" }}>
 
-                    <Grid item xs='3'>
+                <Grid item xs='3'>
                         <Button onClick={ViewAllCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>View All comment</Button>
                     </Grid>
                     <Grid item xs='3'>
                         <Button onClick={postCommentClickHandler} variant='contained' style={{ backgroundColor: "orangered", color: "#fff" }}>Post your comment</Button>
                     </Grid>
+                
                 </Grid>
             </Grid>
         </Grid>
