@@ -55,7 +55,8 @@ export const HomeCards2 = (props) => {
                                                     return <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                            <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
+                                                           <Box> <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                           <span style={{fontSize:'14px'}}> {item?.author ? ` | by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
                                                             </Typography>
                                                             <Typography>
                                                                 <Box color='#000'>{item.headlines}</Box>
@@ -117,7 +118,7 @@ export const HomeCards2 = (props) => {
                     {
                         budjetList?.length > 0 &&
                         budjetList?.map((item) => {
-                            return item?.categoryName !== "Union Budget" &&
+                            return item?.categoryName !== "Union Budget" && item?.categoryName !=="TIOL GROUP WEBSITES" &&
                                 <Grid container item xs='12' style={{ marginBottom: "16px" }}>
                                     <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%" }}>
                                         <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">

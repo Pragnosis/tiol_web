@@ -66,8 +66,8 @@ const Newsupdate = (props) => {
                 updateNews[0]?.sectionsdata?.map((item) => {
                 return <SwiperSlide className={classes.papermanage}>
                     <Typography >
-                    <Link  href={item?.url} style={{ whiteSpace: "initial", color:"black", fontSize:"14px" }}>
-                        {item?.headlines}</Link></Typography>
+                   {item?.url!= "" && <Link  href={item?.url} style={{ whiteSpace: "initial", color:"orangered", fontSize:"14px" }}>
+                        {item?.headlines}</Link>}{item?.url== "" && item?.headlines}</Typography>
                 </SwiperSlide>
                 })
             }

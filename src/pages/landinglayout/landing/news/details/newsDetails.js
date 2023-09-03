@@ -33,12 +33,11 @@ export const NewsDetails = () => {
     const [dynamicNewsID, setDynamicNewsID] = useState('')
     const [postDone, setPostDone] = useState(0)
     let apipath;  
-    let  heading= "Notification"
+    let  heading= "New Details"
     if(location?.pathname === '/news_details'){
         const params = new URLSearchParams(location?.search);
         const page = params.get('page');
         apipath = atob(page);
-        heading = "View All news Details"
     } else {
         apipath = rowData?.news_Url
     }

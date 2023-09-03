@@ -26,12 +26,11 @@ export const DetailsCaselaw = () => {
     const navigate = useNavigate();
 
     let apipath;  
-    let  heading= "Notification"
+    let  heading= "Caselaws Details"
     if(location?.pathname === '/caselaws_details'){
         const params = new URLSearchParams(location?.search);
         const page = params.get('page');
         apipath = atob(page);
-        heading = "View All news Details"
     } else {
         apipath = rowData?.caselaw_Url
     }

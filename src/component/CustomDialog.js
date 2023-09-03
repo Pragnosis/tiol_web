@@ -5,6 +5,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import tiol_logo from '../assets/images/tiol_logo.png'
+import { VerticalAlignBottom } from '@material-ui/icons';
 
 const styles = (theme) => ({
     root: {
@@ -44,7 +46,7 @@ const DialogTitle = withStyles(styles)((props) => {
     return (
         children ?
             <MuiDialogTitle disableTypography className={classes.root} {...other}>
-                <Typography variant="h6" textAlign="center">{children}</Typography>
+                       <Typography variant="h6" textAlign="center">{children}</Typography>
                 {onClose ? (
                     <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
                         <CloseIcon />
@@ -98,7 +100,13 @@ export const CustomDialog = (props) => {
         open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             <Box style={{ textAlign: "left" }}>
-                {dialogTitle}
+           <span> <img
+      style={{ width: '55px', height: '100%', verticalAlign:'bottom',
+      paddingRight:'10px'}}
+      src={tiol_logo}
+      alt="news image"
+    /></span>
+         {dialogTitle}
             </Box>
         </DialogTitle>
         <DialogContent dividers={true}>

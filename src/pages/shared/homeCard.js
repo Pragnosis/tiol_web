@@ -50,7 +50,9 @@ export const HomeCard = (props) => {
                                                         <Grid item xs='12' sm='8' lg='8' >
                                                             <Box p={2}>
                                                                 <Typography variant='h7'>
-                                                                    <Link onClick={() => rowDataClickandler('news_details',item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
+                                                                    <Box> <Link onClick={() => rowDataClickandler('news_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                           <span style={{fontSize:'14px'}}> {item?.author ? ` by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
+                                                           
                                                                 </Typography>
                                                                 <Typography variant='h7'>
                                                                     <Box style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} color='#000'>{item.headlines}</Box>
@@ -62,7 +64,9 @@ export const HomeCard = (props) => {
                                                     : <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                                <Link onClick={() => rowDataClickandler('caselaws_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item.date}</Link>
+                                                                 <Box> <Link onClick={() => rowDataClickandler('caselaws_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                           <span style={{fontSize:'14px'}}> {item?.author ? ` by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
+                                                           
                                                             </Typography>
                                                             <Typography>
                                                                 <Box color='#000' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.headlines}</Box>

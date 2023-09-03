@@ -31,16 +31,15 @@ export const LandingNotification = () => {
     const navigate = useNavigate();
     const location = useLocation();
     console.log("==location==",location);
- let apipath;  
- let  heading= "Notification"
-if(location?.pathname === '/viewall'){
-    const params = new URLSearchParams(location?.search);
-    const page = params.get('page');
-     apipath = atob(page);
-     heading = "View All Details1"
-} else {
-     apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
-}
+    let apipath;  
+    const heading= "Notification"
+    if(location?.pathname === '/viewall'){
+        const params = new URLSearchParams(location?.search);
+        const page = params.get('page');
+        apipath = atob(page);
+    } else {
+        apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
+    }
   
 
     const commonReducer = useSelector((state) => state.commonReducer);
