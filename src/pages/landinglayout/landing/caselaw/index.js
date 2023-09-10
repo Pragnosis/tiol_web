@@ -76,6 +76,7 @@ console.log("==caselow",apipath)
     }
 
     const getDataFromSearch = (data) => {
+        console.log("==data1==",data)
         setCaseLawdata(data)
     }
 
@@ -86,7 +87,7 @@ console.log("==caselow",apipath)
                 <CustomSearch getDataFromSearch={getDataFromSearch} />
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
-                <Typography className='caselaw-heading'>Case Laws 1233</Typography>
+                <Typography className='caselaw-heading'>Case Laws 12334</Typography>
             </Grid>
             {
                 caseLawdata?.length > 0 ? <Grid item xs='12' style={{ padding: "0px 10px" }}>

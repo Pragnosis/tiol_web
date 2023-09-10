@@ -6,13 +6,11 @@ import { Grid, Typography, Link } from '@material-ui/core'
 export const NewsdetailModel = (props) => {
     const { togglerhandler, newsUpdate } = props;
 
-    console.log("==newsUpdate==",newsUpdate[0])
-
     const handleClose = () => {
         togglerhandler(false)
     }
 
-    return <CustomDialog maxWidth="md"  dialogTitle="News" open="true" textAlign="center" handleClose={handleClose} className='model-scroll'>
+    return <CustomDialog maxWidth="md"  dialogTitle="News Update" open="true" textAlign="center" handleClose={handleClose} className='model-scroll'>
         <Grid container style={{ padding: "20px" }}>
             {
             newsUpdate[0]?.sectionsdata?.length > 0 &&

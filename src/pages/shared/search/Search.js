@@ -22,11 +22,12 @@ export const CustomSearch = (props) => {
         To_Date: ""
     })
 
-    useEffect(() => {
+   /* useEffect(() => {
+        console.log("==aaa====")
         getDataFromSearch(oriData);
     }, [oriData])
 
-
+*/
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
             var A = commonReducer?.currentDynamicPaedata?.apipathfilter;
@@ -42,8 +43,14 @@ export const CustomSearch = (props) => {
     }
 
     const submitClickHandler = () => {
+        console.log("==filterDate==",datedata.From_Date,datedata.To_Date);
         afterValidate(afterCallBack)
         setSubmitFlag(true)
+        const date = {
+            from:datedata.From_Date,
+            to:datedata.To_Date
+        }
+        getDataFromSearch(date)
     }
 
 

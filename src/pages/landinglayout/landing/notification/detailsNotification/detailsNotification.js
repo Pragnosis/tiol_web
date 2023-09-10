@@ -60,6 +60,9 @@ export const NotificationDetails = () => {
         }
     }, [getAllLikes])
 
+    useEffect(() => {
+        window.scrollTo(0, 400)
+    }, [])
 
     const { mutate: likeMutate } = useMutation(likeDetails, {
         onSuccess: (data, context, variable) => onSuccessLike(data, context, variable),

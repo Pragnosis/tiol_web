@@ -47,12 +47,15 @@ const Newsupdate = (props) => {
              return  item?.categoryName === "News Update"
         });
         setUpdateNews({...newArray,...updateNews})
-    },[updateNews])
+console.log("==updateNews==",updateNews);
+    },[sectionData])
 
     return updateNews && (
         <Container style={{ marginTop: "1px" }}>
             <Box style={{ display: "flex", justifyContent: "space-between", padding: "10px 20px 10px 20px" }} className={classes.papermanage}>
-                <Box color='orangered'>News Update</Box>
+                <Box color='orangered'>
+                News Update
+                </Box>
                 <Box color='orangered'><DensityMediumIcon cursor='pointer' fontSize='small' onClick={viewallclickhandler} /></Box>
             </Box>
             <Swiper spaceBetween={10} centeredSlides={true} autoplay={{ delay: 2500, disableOnInteraction: false, }}

@@ -17,6 +17,7 @@ import { LandingNotification } from './landing/notification/landingNotification'
 import { NotificationDetails} from './landing/notification/detailsNotification/detailsNotification'
 import { NewsDetails } from './landing/news/details/newsDetails'
 import { DetailsCaselaw } from '../detaillayout/detail/caselaw'
+import { LandingNewsList } from './landing/notification/landingNewsList'
 
 
 
@@ -56,7 +57,7 @@ export const LandingLayout = (props) => {
     }, [sectionOneListList, sectionTwoList])
 
     const renderPage = (page) =>{
-        if(page === "/notifications" || page === "/viewall" ){
+        if(page === "/notifications"){
             return <LandingNotification />
         } else if(page === "/income_tax/caselaws/sc_cases" || page === "/details"){
             return <LandingCaseLaw />
@@ -66,6 +67,8 @@ export const LandingLayout = (props) => {
             return <NewsDetails/>
         } else if(page === "/caselaws_details"){
             return <DetailsCaselaw />
+        } else if(page === "/news_list"){
+            return <LandingNewsList />
         }else {
             return null
         }

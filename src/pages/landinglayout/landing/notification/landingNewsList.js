@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import { caseLawDynamicdata, caseLawFilterdata, newsDynamicdata, notificationDynamicdata } from '../../../../services'
+import { caseLawDynamicdata, caseLawFilterdata, newsDynamicdata, notificationDynamicdata,getNotificationDetailsData } from '../../../../services'
 import CustomButton from '../../../../component/CustomButton'
 import { Pagination } from '@mui/material'
 import { getErrorMessege } from '../../../../component/Validator'
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const LandingNotification = () => {
+export const LandingNewsList = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,27 +34,49 @@ export const LandingNotification = () => {
 
     const commonReducer = useSelector((state) => state.commonReducer?.newsList);
     const [caseLawdata, setCaseLawdata] = useState([])
-    const [pageOriData, setPageOriData] = useState([])
+    const [pageOriData, setPageOriData] = useState(null)
     const intialCount = 10
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
+    const [getFilter, setFilter] = useState('');
 
-    const heading= "Notification"
-    const apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
-    const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
+    console.log("commonReducer",commonReducer)
    
-    console.log("==notification==",data)
-   
+    const params = new URLSearchParams(location?.search);
+    const catId = params.get('catid');
+    const catdata = commonReducer.filter(items => items.category == catId )[0]
+    const heading= catdata?.categoryName;
+    let apiPath;
+
+    const getDataFromSearch = (date) => {
+        var filterUrl = catdata?.apipathfilter;
+        var replaceFromDate = filterUrl?.replace("@From_Date", date.from);
+        var replaceDate = replaceFromDate?.replace("@To_Date", date.to);
+        setFilter(replaceDate)
+    }
+
+    const todaysupdate = params.get('todaysupdate');
+    if(getFilter){
+        apiPath = getFilter;
+    } else if(todaysupdate){
+        apiPath = catdata?.apipathtodayscase;
+    } else {
+        apiPath = catdata?.apipath;
+    }
+ 
+const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynamicdata(apiPath), { enabled: true, retry: false })
+ 
+console.log("===data3========",data,apiPath)
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
             setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
-        }
+        } 
     }, [data])
 
     useEffect(() => {
         window.scrollTo(0, 700)
-      }, [])
+    }, [])
 
     const pageChange = (e) => {
         const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
@@ -67,26 +89,23 @@ export const LandingNotification = () => {
 
 
     const rowDataClickandler = (item) => {
-        if(item?.caselawUrl?.indexOf("GetCaselawById")>0){
+        if(item?.url?.indexOf("GetCaselawById")>0){
            const pageType = 'caselaws_details'
-            navigate(`/${pageType}?page=${btoa(item?.caselawUrl)}`)
-        } else if(item?.news_Url?.indexOf("GetNewsById")>0){
+            navigate(`/${pageType}?page=${btoa(item?.url)}`)
+        } else if(item?.url?.indexOf("GetNewsById")>0){
             const pageType = 'news_details'
-            navigate(`/${pageType}?page=${btoa(item?.news_Url)}`)
-        }  else if(item?.caselawUrl?.indexOf("GetTodysCaseAllData")>0){
-            const pageType = 'caselaws_details'
-             navigate(`/${pageType}?page=${btoa(item?.caselawUrl)}`)
-          }else {
+            navigate(`/${pageType}?page=${btoa(item?.url)}`)
+        } else if(item?.url?.indexOf("GetNotificationById")>0){
+            const pageType = 'notification'
+            navigate(`/${pageType}?page=${btoa(item?.url)}`)
+        } else {
             navigate("/notification/details", { state: item })
         }
     }
 
-    const getDataFromSearch = (data) => {
-        setCaseLawdata(data)
-    }
-
     return <Box>
         <Grid container>
+         
             <Grid item xs='12'>
                 <CustomSearch getDataFromSearch={getDataFromSearch} />
             </Grid>
@@ -96,7 +115,7 @@ export const LandingNotification = () => {
             <Grid item xs='12'>
                 <Grid container item justifyContent='space-between' alignItems='center' style={{ paddingLeft: "20px" }}>
                     <Box style={{ display: "flex", alignItems: "center" }}>
-                        <Typography style={{ fontSize: "13px", color: "red" }}>{prevCount}</Typography>&nbsp;--
+                        <Typography style={{ fontSize: "13px", color: "red" }}>{prevCount}</Typography>&nbsp;-
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;{nextCount}</Typography>&nbsp;out of
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
@@ -112,8 +131,8 @@ export const LandingNotification = () => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.date}</Typography>
-                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>Notification No: {item?.notification_Number}</Typography>
-                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading || item?.headlines}23</Typography>
+                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.author}</Typography>
+                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.headlines}</Typography>
                                 </Box>
                             </Grid>
                         })

@@ -11,17 +11,25 @@ export const HomeCards2 = (props) => {
     const { budjetList, videList, sectionTwoList, setSectionTwoList } = props;
     const commonReducer = useSelector((state) => state.commonReducer);
     const navigate = useNavigate();
-    const rowDataClickandler = (item) => {
+    const rowDataClickandler = (item,category) => {
         let pageType
-        if(item.indexOf("GetNewsIndexPages")>0){
-            pageType = 'viewall'
-        }else if(item.indexOf("GetNotificationById")>0){
+        if(item.indexOf("GetNotificationById")>0){
             pageType = 'notification_details'
+            navigate(`/${pageType}?page=${btoa(item)}`)
         } else if(item.indexOf("CaselawIndexPage")>0){
             pageType = 'caselaws'
+            navigate(`/${pageType}?page=${btoa(item)}`)
+        } else if(item.indexOf("GetNewsById")>0){
+            pageType = 'news_details'
+            navigate(`/${pageType}?page=${btoa(item)}`)
         }
-        navigate(`/${pageType}?page=${btoa(item)}`)
+        
     }
+
+    const rowDataClickByCategory = (id)=>{
+        navigate(`/news_list?catid=${id}`)
+    }
+
     return <Container>
         <Box my={1}>
             <Grid container spacing={2} >
@@ -69,7 +77,7 @@ export const HomeCards2 = (props) => {
                                                <div></div>
                                             </Grid>
                                             <Grid container item justifyContent='flex-end'>
-                                                <CustomButton btnText='View all'  onClick={() => rowDataClickandler(item?.apipath)} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all'  onClick={() => rowDataClickByCategory(item?.category)} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Grid>

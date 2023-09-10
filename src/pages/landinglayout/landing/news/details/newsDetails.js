@@ -37,7 +37,9 @@ export const NewsDetails = () => {
     if(location?.pathname === '/news_details'){
         const params = new URLSearchParams(location?.search);
         const page = params.get('page');
+        const cat = params.get('cat');
         apipath = atob(page);
+        heading = atob(cat);
     } else {
         apipath = rowData?.news_Url
     }
@@ -59,6 +61,9 @@ export const NewsDetails = () => {
         }
     }, [getAllLikes])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     const { mutate: likeMutate } = useMutation(likeDetails, {
         onSuccess: (data, context, variable) => onSuccessLike(data, context, variable),
