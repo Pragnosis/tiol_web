@@ -16,8 +16,8 @@ export const NewsdetailModel = (props) => {
             newsUpdate[0]?.sectionsdata?.length > 0 &&
             newsUpdate[0]?.sectionsdata?.map((item) => {
                 return <Grid item xs='12'>
-                <Typography style={{ padding: "0 0 10px 0"}}>
-                   {item?.url!="" && <Link  href={item?.url} style={{ color:"orangered", whiteSpace: "initial",  fontSize:"14px", padding:"10px 0"}}>
+                <Typography style={{ padding: "0 0 10px 0", fontSize:"14px",}}>
+                   {item?.url!="" && <Link  href={item?.url} style={{ color:"orangered", whiteSpace: "initial",  padding:"10px 0"}}>
                         {item?.headlines}</Link>} {item?.url=="" && item?.headlines} </Typography>
                 </Grid>
             })

@@ -35,6 +35,7 @@ const LandingCaseLaw = () => {
     const intialCount = 10
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
+    const [getFilter, setFilter] = useState('')
 
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
@@ -43,17 +44,22 @@ const LandingCaseLaw = () => {
     }, [commonReducer?.currentDynamicPaedata]);
     const navigate = useNavigate();
     const location = useLocation();
-    let apipath;  
-    let  heading= "Notification"
-    if(location?.pathname === '/caselaws1'){
-        const params = new URLSearchParams(location?.search);
-        const page = params.get('page');
-        apipath = atob(page);
-        heading = "View All news Details"
-    } else {
-        apipath = pagedata?.apipath
+
+    const getDataFromSearch = (date) => {
+        var filterUrl = apiPreUrl?.apipathfilter;;
+        var replaceFromDate = filterUrl?.replace("@From_Date", date.from);
+        var replaceDate = replaceFromDate?.replace("@To_Date", date.to);
+        setFilter(replaceDate)
     }
-console.log("==caselow",apipath)
+
+    let apipath;  
+    const apiPreUrl = commonReducer?.currentClickedMenu;
+   
+    if(getFilter){
+        apipath = getFilter;
+    }else {
+        apipath = apiPreUrl?.apipath;
+    }
     const { data, error } = useQuery(['GetDynamicCaselawData', apipath], () => caseLawDynamicdata(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
@@ -75,11 +81,6 @@ console.log("==caselow",apipath)
         navigate("/incometax/caselaw/sccases/details", { state: item })
     }
 
-    const getDataFromSearch = (data) => {
-        console.log("==data1==",data)
-        setCaseLawdata(data)
-    }
-
     return <Box>
 
         <Grid container>
@@ -87,7 +88,7 @@ console.log("==caselow",apipath)
                 <CustomSearch getDataFromSearch={getDataFromSearch} />
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
-                <Typography className='caselaw-heading'>Case Laws 12334</Typography>
+                <Typography className='caselaw-heading'>Case Laws</Typography>
             </Grid>
             {
                 caseLawdata?.length > 0 ? <Grid item xs='12' style={{ padding: "0px 10px" }}>

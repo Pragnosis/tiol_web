@@ -37,14 +37,33 @@ export const LandingNews = () => {
     const intialCount = 10
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
+    const [getFilter, setFilter] = useState('')
 
-    const { data, error } = useQuery(['GetDynamicNewsData'], () => newsDynamicdata(footerApiData?.apipath), { enabled: true, retry: false })
+    const getDataFromSearch = (date) => {
+        var filterUrl = footerApiData?.apipathfilter;;
+        var replaceFromDate = filterUrl?.replace("@From_Date", date.from);
+        var replaceDate = replaceFromDate?.replace("@To_Date", date.to);
+        setFilter(replaceDate)
+    }
+
+    let apipath;  
+    if(getFilter){
+        apipath = getFilter;
+    }else {
+        apipath = footerApiData?.apipath;
+    }
+
+    const { data, error } = useQuery(['GetDynamicNewsData'], () => newsDynamicdata(apipath), { enabled: true, retry: false })
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
             setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
         }
     }, [data])
+
+    useEffect(() => {
+        window.scrollTo(0, 700)
+    }, [])
 
     const pageChange = (e) => {
         const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
@@ -58,10 +77,6 @@ export const LandingNews = () => {
 
     const rowDataClickandler = (item) => {
         navigate("/newsdetails", { state: item })
-    }
-
-    const getDataFromSearch = (data) => {
-        setCaseLawdata(data)
     }
 
     return <Box>
@@ -80,7 +95,7 @@ export const LandingNews = () => {
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
                     <Box style={{ padding: "10px 0px 10px 0px" }}>
-                        <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                    <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                     </Box>
                 </Grid>
             </Grid>
@@ -91,8 +106,8 @@ export const LandingNews = () => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.date}</Typography>
-                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.author}</Typography>
-                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.heading}</Typography>
+                                    <Typography style={{ fontWeight: "bold", textAlign: "justify", padding: "5px 0px", color: "rgb(85 76 76 / 90%)", fontSize: "13px" }}>{item?.author}{item?.place? ` | ${item?.place}` :''}</Typography>
+                                    <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.headlines}</Typography>
                                 </Box>
                             </Grid>
                         })
@@ -101,7 +116,7 @@ export const LandingNews = () => {
             </Grid>
             <Grid item xs='12'>
                 <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                    <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                 </Box>
             </Grid>
         </Grid>

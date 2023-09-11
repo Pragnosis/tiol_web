@@ -65,8 +65,7 @@ export const LandingNewsList = () => {
     }
  
 const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynamicdata(apiPath), { enabled: true, retry: false })
- 
-console.log("===data3========",data,apiPath)
+
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
@@ -120,7 +119,7 @@ console.log("===data3========",data,apiPath)
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
                     <Box style={{ padding: "10px 0px 10px 0px" }}>
-                        <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                    <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                     </Box>
                 </Grid>
             </Grid>
@@ -141,7 +140,7 @@ console.log("===data3========",data,apiPath)
             </Grid>
             <Grid item xs='12'>
                 <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                    <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                 </Box>
             </Grid>
         </Grid>

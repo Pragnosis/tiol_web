@@ -1,16 +1,13 @@
-import { Box, Grid, Paper, TextField, Typography, makeStyles } from '@material-ui/core'
+import { Box, Grid, Typography, makeStyles } from '@material-ui/core'
 import React from 'react'
-import { caseLawArray } from '../../../../component/constant'
+
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { useMutation, useQuery } from 'react-query'
-import { caseLawDynamicdata, caseLawFilterdata, newsDynamicdata, notificationDynamicdata } from '../../../../services'
-import CustomButton from '../../../../component/CustomButton'
+import { useQuery } from 'react-query'
+import { notificationDynamicdata } from '../../../../services'
 import { Pagination } from '@mui/material'
-import { getErrorMessege } from '../../../../component/Validator'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Layout } from '../../../Layout'
 import { CustomSearch } from '../../../shared/search/Search'
 
 const useStyles = makeStyles((theme) => ({
@@ -32,23 +29,37 @@ export const LandingNotification = () => {
     const location = useLocation();
  
 
-    const commonReducer = useSelector((state) => state.commonReducer?.newsList);
+    const commonReducer = useSelector((state) => state.commonReducer);
     const [caseLawdata, setCaseLawdata] = useState([])
     const [pageOriData, setPageOriData] = useState([])
     const intialCount = 10
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
+    const [getFilter, setFilter] = useState('')
 
+    const getDataFromSearch = (date) => {
+        var filterUrl = apiPreUrl?.apipathfilter;;
+        var replaceFromDate = filterUrl?.replace("@From_Date", date.from);
+        var replaceDate = replaceFromDate?.replace("@To_Date", date.to);
+        setFilter(replaceDate)
+    }
+
+    //let apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
+    const apiPreUrl = commonReducer?.currentClickedMenu;
+    let apipath
+   
+    if(getFilter){
+        apipath = getFilter;
+    }else {
+        apipath = apiPreUrl?.apipath;
+    }
     const heading= "Notification"
-    const apipath = "http://34.229.120.75:8081/api/NotificationIndexPage/GetNotificationIndexPages/1/1/0/0/null"
     const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
-   
-    console.log("==notification==",data)
-   
+      
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
-            setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
+            setCaseLawdata(data?.data.filter((o, i) => i < intialCount))
         }
     }, [data])
 
@@ -59,7 +70,7 @@ export const LandingNotification = () => {
     const pageChange = (e) => {
         const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((e.target.textContent)) * intialCount);
+        const Next = (parseInt((e.target.textContent)) * intialCount) ;
         setNextCount(Next)
         const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
         setCaseLawdata(localArray)
@@ -81,10 +92,6 @@ export const LandingNotification = () => {
         }
     }
 
-    const getDataFromSearch = (data) => {
-        setCaseLawdata(data)
-    }
-
     return <Box>
         <Grid container>
             <Grid item xs='12'>
@@ -101,7 +108,7 @@ export const LandingNotification = () => {
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
                     <Box style={{ padding: "10px 0px 10px 0px" }}>
-                        <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                        <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                     </Box>
                 </Grid>
             </Grid>
@@ -122,7 +129,7 @@ export const LandingNotification = () => {
             </Grid>
             <Grid item xs='12'>
                 <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                    <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                    <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
                 </Box>
             </Grid>
         </Grid>

@@ -49,6 +49,7 @@ function NavHeader() {
   };
 
   const handleItemClickhandler = (item, routeTo, type) => {
+    console.log("LinkUrl=",item,routeTo,type)
     var routeto = type === 'nested'
       ? `/${routeTo}/${item.title.replace(" ", "_")}`.toLowerCase()
       : `/${item.title.replace(" ", "_")}`.toLowerCase()
@@ -59,6 +60,7 @@ function NavHeader() {
     setTimeout(() => {
       setAnchorEl(null);
     }, 2000);
+    dispatch(updateState({ currentClickedMenu: item }));
   };
 
   const [drawer1, setDrawer1] = React.useState(false);
@@ -102,6 +104,7 @@ function NavHeader() {
 
   useEffect(() => {
     headerData && setHeaderArr(headerData)
+    dispatch(updateState({ mainMenuData: headerData }));
   }, [headerData])
 
   useEffect(() => {

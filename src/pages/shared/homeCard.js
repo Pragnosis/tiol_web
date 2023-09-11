@@ -1,23 +1,19 @@
-import { Box, Button, Card, Container, Grid, Typography, Link} from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { Box, Container, Grid, Typography, Link} from '@material-ui/core'
+import React, { useState } from 'react'
 import CustomButton from '../../component/CustomButton';
 import { ViewAllModel } from './viewAllModel';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate } from 'react-router-dom'
+import image_placeholder from '../../assets/images/placeholder.png'
 
 
 
 export const HomeCard = (props) => {
-    const { sectionOneListList, setSectionOneListList } = props;
+    const { sectionOneListList } = props;
     const navigate = useNavigate();
 
     const [viewData, setViewData] = useState(false)
     const [optionData, setOptionData] = useState({})
-
-    const viewAllclickhandler = (option, viewIndex) => {
-        setOptionData(option)
-        setViewData(true)
-    }
 
     const rowDataClickandler = (pageType, item) => {
         navigate(`/${pageType}?page=${btoa(item)}`)
@@ -47,12 +43,12 @@ export const HomeCard = (props) => {
                                     {
                                         item?.sectionsdata?.length > 0 &&
                                         item?.sectionsdata?.map((item) => {
-                                            return <> {
-                                                item.image_Path ? <Box >
+                                            return <> { 
+                                                item?.url.indexOf('GetNewsById') > 0 ? <Box >
                                                     <Grid container alignItems='center'>
                                                         <Grid item xs='12' sm='8' lg='4' >
                                                             <Box p={2}>
-                                                                <img src={item.image_Path} style={{ height: "50px", width: "100px" }} />
+                                                                <img src={item.image_Path? item.image_Path:image_placeholder } style={{ height: "50px", width: "100px" }} />
                                                             </Box>
                                                         </Grid>
                                                         <Grid item xs='12' sm='8' lg='8' >
@@ -63,7 +59,7 @@ export const HomeCard = (props) => {
                                                            
                                                                 </Typography>
                                                                 <Typography variant='h7'>
-                                                                    <Box style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} color='#000'>{item.headlines}</Box>
+                                                                    <Box style={{ whiteSpace: "normal", overflow: "hidden", textOverflow: "ellipsis" }} color='#000'>{item.headlines}</Box>
                                                                 </Typography>
                                                             </Box>
                                                         </Grid>
@@ -77,7 +73,7 @@ export const HomeCard = (props) => {
                                                            
                                                             </Typography>
                                                             <Typography>
-                                                                <Box color='#000' style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.headlines}</Box>
+                                                                <Box color='#000' style={{ whiteSpace: "normal", overflow: "hidden", textOverflow: "ellipsis" }}>{item.headlines}</Box>
                                                             </Typography>
                                                         </Grid>
                                                     </Box>

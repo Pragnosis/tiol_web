@@ -22,7 +22,9 @@ const initialValue = {
     currentDynamicPaedata: {},
     getAllFooterData: [],
     caseLawdata: [],
-    footerData: []
+    footerData: [],
+    mainMenuData:[],
+    currentClickedMenu:{}
 }
 
 

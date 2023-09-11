@@ -15,7 +15,7 @@ import ReactToPrint from 'react-to-print';
 export const DetailsCaselaw = () => {
     const location = useLocation();
     const rowData = location?.state
-    const caselawUrl = rowData?.caselaw_Url?.replace(/\//g, '-')
+    const caselawUrl = rowData?.url?.replace(/\//g, '-')
     const userID = 1
     const componentRef = useRef();
 
@@ -32,7 +32,7 @@ export const DetailsCaselaw = () => {
         const page = params.get('page');
         apipath = atob(page);
     } else {
-        apipath = rowData?.caselaw_Url
+        apipath = rowData?.url
     }
 
     const { data, error } = useQuery(['GetAllDetailsData'], () => getDetailsData(apipath), { enabled: true, retry: false })

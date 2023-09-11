@@ -40,7 +40,7 @@ export const NotificationDetails = () => {
         apipath = atob(page);
        // heading = "View All Details2"
     } else {
-        apipath = rowData?.notication_Url
+        apipath = rowData?.url
     }
 
     const { data, refetch: allDataRefetch } = useQuery([''], () => getNotificationDetailsData(apipath), { enabled: true, retry: false })

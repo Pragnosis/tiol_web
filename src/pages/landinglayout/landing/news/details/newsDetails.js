@@ -41,7 +41,7 @@ export const NewsDetails = () => {
         apipath = atob(page);
         heading = atob(cat);
     } else {
-        apipath = rowData?.news_Url
+        apipath = rowData?.url
     }
 
     const { data, refetch: allDataRefetch } = useQuery([''], () => getNewsDetailsData(apipath), { enabled: true, retry: false })
