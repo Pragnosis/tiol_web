@@ -36,6 +36,7 @@ const LandingCaseLaw = () => {
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
     const [getFilter, setFilter] = useState('')
+    const [page,setPage] = useState(1)
 
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
@@ -68,14 +69,17 @@ const LandingCaseLaw = () => {
         }
     }, [data])
 
-    const pageChange = (e) => {
-        const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
+    const pageChange = (e,value) => {
+        setPage(value)
+        const targetCount = value;
+        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((e.target.textContent)) * intialCount);
+        const Next = (parseInt((targetCount)) * intialCount);
         setNextCount(Next)
         const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
         setCaseLawdata(localArray)
     }
+
 
     const rowDataClickandler = (item) => {
         navigate("/incometax/caselaw/sccases/details", { state: item })
@@ -94,12 +98,12 @@ const LandingCaseLaw = () => {
                 caseLawdata?.length > 0 ? <Grid item xs='12' style={{ padding: "0px 10px" }}>
                     <Grid container item justifyContent='space-between' alignItems='center'>
                         <Box style={{ display: "flex", alignItems: "center" }}>
-                            <Typography style={{ fontSize: "13px", color: "red" }}>{prevCount}</Typography>&nbsp;--
+                            <Typography style={{ fontSize: "13px", color: "red" }}>{prevCount}</Typography>&nbsp;-
                             <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;{nextCount}</Typography>&nbsp;out of
                             <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                         </Box>
                         <Box style={{ padding: "10px 0px 10px 0px" }}>
-                            <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                            <Pagination count={((pageOriData?.length) - 6) / 10} page={page} onChange={pageChange} />
                         </Box>
                     </Grid>
                 </Grid>
@@ -127,7 +131,7 @@ const LandingCaseLaw = () => {
                 caseLawdata?.length > 0 &&
                 <Grid item xs='12'>
                     <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                        <Pagination count={((pageOriData?.length) - 6) / 10} onChange={pageChange} />
+                        <Pagination count={((pageOriData?.length) - 6) / 10} page={page} onChange={pageChange} />
                     </Box>
                 </Grid>
             }

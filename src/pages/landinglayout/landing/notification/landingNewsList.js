@@ -39,14 +39,13 @@ export const LandingNewsList = () => {
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
     const [getFilter, setFilter] = useState('');
-
-    console.log("commonReducer",commonReducer)
+    const [page,setPage] = useState(1)
    
     const params = new URLSearchParams(location?.search);
     const catId = params.get('catid');
     const catdata = commonReducer.filter(items => items.category == catId )[0]
     const heading= catdata?.categoryName;
-    let apiPath;
+    let apipath;
 
     const getDataFromSearch = (date) => {
         var filterUrl = catdata?.apipathfilter;
@@ -57,14 +56,14 @@ export const LandingNewsList = () => {
 
     const todaysupdate = params.get('todaysupdate');
     if(getFilter){
-        apiPath = getFilter;
+        apipath = getFilter;
     } else if(todaysupdate){
-        apiPath = catdata?.apipathtodayscase;
+        apipath = catdata?.apipathtodayscase;
     } else {
-        apiPath = catdata?.apipath;
+        apipath = catdata?.apipath;
     }
  
-const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynamicdata(apiPath), { enabled: true, retry: false })
+/*const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynamicdata(apiPath), { enabled: true, retry: false })
 
     useEffect(() => {
         if (data) {
@@ -72,20 +71,35 @@ const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynami
             setCaseLawdata(data?.data.filter((o, i) => i <= intialCount))
         } 
     }, [data])
+*/
+    useEffect(() => {
+       // setSpinner(true);
+        fetch(apipath)  
+        .then(response => response.json())
+        .then(data => {
+            console.log("==data==",data)
+            if (data) {
+                //setSpinner(false);
+                setPageOriData(data)
+                setCaseLawdata(data?.filter((o, i) => i <= intialCount))
+            }
+        });  
+    },[apipath])
 
     useEffect(() => {
         window.scrollTo(0, 700)
     }, [])
 
-    const pageChange = (e) => {
-        const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
+    const pageChange = (e,value) => {
+        setPage(value)
+        const targetCount = value;
+        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((e.target.textContent)) * intialCount);
+        const Next = (parseInt((targetCount)) * intialCount);
         setNextCount(Next)
         const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
         setCaseLawdata(localArray)
     }
-
 
     const rowDataClickandler = (item) => {
         if(item?.url?.indexOf("GetCaselawById")>0){
@@ -119,7 +133,7 @@ const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynami
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
                     <Box style={{ padding: "10px 0px 10px 0px" }}>
-                    <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
+                    <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
                     </Box>
                 </Grid>
             </Grid>
@@ -140,7 +154,7 @@ const { data, error } = useQuery(['GetAllDetailsData'], () => notificationDynami
             </Grid>
             <Grid item xs='12'>
                 <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
+                <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
                 </Box>
             </Grid>
         </Grid>

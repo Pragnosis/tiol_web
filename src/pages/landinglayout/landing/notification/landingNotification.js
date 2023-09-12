@@ -36,6 +36,7 @@ export const LandingNotification = () => {
     const [prevCount, setPrevCount] = useState(1)
     const [nextCount, setNextCount] = useState(10)
     const [getFilter, setFilter] = useState('')
+    const [page,setPage] = useState(1)
 
     const getDataFromSearch = (date) => {
         var filterUrl = apiPreUrl?.apipathfilter;;
@@ -54,28 +55,43 @@ export const LandingNotification = () => {
         apipath = apiPreUrl?.apipath;
     }
     const heading= "Notification"
-    const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
+    /* const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
       
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
             setCaseLawdata(data?.data.filter((o, i) => i < intialCount))
         }
-    }, [data])
+    }, [data]) */
+
+    useEffect(() => {
+        // setSpinner(true);
+         fetch(apipath)  
+         .then(response => response.json())
+         .then(data => {
+             console.log("==data==",data)
+             if (data) {
+                 //setSpinner(false);
+                 setPageOriData(data)
+                 setCaseLawdata(data?.filter((o, i) => i <= intialCount))
+             }
+         });  
+     },[apipath])
 
     useEffect(() => {
         window.scrollTo(0, 700)
       }, [])
 
-    const pageChange = (e) => {
-        const Prev = (parseInt((e.target.textContent) - 1) * intialCount) + 1;
+    const pageChange = (e,value) => {
+        setPage(value)
+        const targetCount = value;
+        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((e.target.textContent)) * intialCount) ;
+        const Next = (parseInt((targetCount)) * intialCount);
         setNextCount(Next)
         const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
         setCaseLawdata(localArray)
     }
-
 
     const rowDataClickandler = (item) => {
         if(item?.caselawUrl?.indexOf("GetCaselawById")>0){
@@ -108,7 +124,7 @@ export const LandingNotification = () => {
                         <Typography style={{ fontSize: "13px", color: "red" }}>&nbsp;...{pageOriData?.length}</Typography>&nbsp;
                     </Box>
                     <Box style={{ padding: "10px 0px 10px 0px" }}>
-                        <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
+                        <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
                     </Box>
                 </Grid>
             </Grid>
@@ -129,7 +145,7 @@ export const LandingNotification = () => {
             </Grid>
             <Grid item xs='12'>
                 <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
-                    <Pagination count={Math.floor((pageOriData?.length) / 10)} onChange={pageChange} />
+                    <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
                 </Box>
             </Grid>
         </Grid>
