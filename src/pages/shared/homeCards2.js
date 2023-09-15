@@ -11,20 +11,23 @@ export const HomeCards2 = (props) => {
     const commonReducer = useSelector((state) => state.commonReducer);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const rowDataClickandler = (item,category) => {
-        let pageType
-        if(item.indexOf("GetNotificationById")>0){
-            pageType = 'notification_details'
-            navigate(`/${pageType}?page=${btoa(item)}`)
-        } else if(item.indexOf("CaselawIndexPage")>0){
-            pageType = 'caselaws'
-            navigate(`/${pageType}?page=${btoa(item)}`)
-        } else if(item.indexOf("GetNewsById")>0){
-            pageType = 'news_details'
-            navigate(`/${pageType}?page=${btoa(item)}`)
+    const rowDataClickandler = (item) => {
+        if(item?.url.indexOf("GetNotificationById")>0){
+            navigate("/notification/details", { state: item })
+        } else if(item?.url.indexOf("CaselawIndexPage")>0){
+            navigate("/incometax/caselaw/sccases/details", { state: item })
+        } else if(item?.url.indexOf("GetNewsById")>0){
+            navigate("/newsdetails", { state: item })
         }
-        
     }
+
+    /*
+    const rowDataClickandler = (item) => {
+        navigate("/newsdetails", { state: item })
+    }*/
+
+    
+
 
     /*const rowDataClickByCategory = (id)=>{
         navigate(`/news_list?catid=${id}`)
@@ -69,7 +72,7 @@ export const HomeCards2 = (props) => {
                                                     return <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                           <Box> <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                           <Box> <Link onClick={() => rowDataClickandler(item)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
                                                            <span style={{fontSize:'14px'}}> {item?.author ? ` | by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
                                                             </Typography>
                                                             <Typography>
@@ -113,7 +116,7 @@ export const HomeCards2 = (props) => {
                                                                     {item.headlines}
                                                                 </Typography>
                                                                 <Typography>
-                                                                    <Link onClick={() => rowDataClickandler(item?.url)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.notificationNo}</Link>
+                                                                    <Link onClick={() => rowDataClickandler(item)}  style={{ whiteSpace: "initial", color:"orangered" }}>{item?.notificationNo}</Link>
                                                                 </Typography>
                                                             </Grid>
                                                         </Box>
