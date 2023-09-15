@@ -62,7 +62,7 @@ export const CustomSearch = (props) => {
                         <Grid item xs='4'>
                             <Typography>From Date*</Typography>
                             <TextField
-                                id="date"
+                                id="fromdate"
                                 type="date"
                                 fullWidth
                                 value={datedata?.From_Date}
@@ -85,7 +85,7 @@ export const CustomSearch = (props) => {
                         <Grid item xs='4'>
                             <Typography>To Date*</Typography>
                             <TextField
-                                id="date"
+                                id="todate"
                                 type="date"
                                 fullWidth
                                 value={datedata?.To_Date}

@@ -27,7 +27,8 @@ export const LandingLayout = (props) => {
     const [sectionTwoList, setSectionTwoList] = useState([])
     const [sectionAllList, setSectionAllList] = useState([])
     const commonReducer = useSelector((state) => state.commonReducer);
-
+    const apiPreUrl = commonReducer?.currentClickedMenu;
+    const apipath = apiPreUrl?.apipath;
     const { data: sectionOneData } = useQuery(["SectionOne"], () => sectionOne(), { enabled: true, retry: false })
 
     useEffect(() => {
@@ -57,7 +58,8 @@ export const LandingLayout = (props) => {
     }, [sectionOneListList, sectionTwoList])
 
     const renderPage = (page) =>{
-        if(page === "/notifications"){
+        console.log("==apipath==",apipath)
+        /*if(apipath.indexOf('NotificationIndexPage')>0){
             return <LandingNotification />
         } else if(page === "/income_tax/caselaws/sc_cases" || page === "/details"){
             return <LandingCaseLaw />
@@ -69,9 +71,9 @@ export const LandingLayout = (props) => {
             return <DetailsCaselaw />
         } else if(page === "/news_list"){
             return <LandingNewsList />
-        }else {
-            return null
-        }
+        }else { */
+            return <LandingNotification />
+       // }
     }
 
     return <Container>

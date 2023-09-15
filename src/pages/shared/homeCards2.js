@@ -2,15 +2,15 @@ import { Box, Container, Grid, Typography, Link } from '@material-ui/core'
 import React from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomButton from '../../component/CustomButton';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-
-
+import { updateState } from '../../redux/commonSlice';
 
 export const HomeCards2 = (props) => {
     const { budjetList, videList, sectionTwoList, setSectionTwoList } = props;
     const commonReducer = useSelector((state) => state.commonReducer);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const rowDataClickandler = (item,category) => {
         let pageType
         if(item.indexOf("GetNotificationById")>0){
@@ -26,8 +26,14 @@ export const HomeCards2 = (props) => {
         
     }
 
-    const rowDataClickByCategory = (id)=>{
+    /*const rowDataClickByCategory = (id)=>{
         navigate(`/news_list?catid=${id}`)
+    }*/
+
+
+    const rowDataClickByCategory = (item)=>{
+        navigate(`/${(item?.categoryName).toLowerCase().replace(/\s/g, '')}/news`, { state: item })
+        dispatch(updateState({ currentClickedMenu: item }));
     }
 
     return <Container>
@@ -77,7 +83,7 @@ export const HomeCards2 = (props) => {
                                                <div></div>
                                             </Grid>
                                             <Grid container item justifyContent='flex-end'>
-                                                <CustomButton btnText='View all'  onClick={() => rowDataClickByCategory(item?.category)} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all'  onClick={() => rowDataClickByCategory(item)} btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Grid>

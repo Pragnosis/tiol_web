@@ -65,18 +65,18 @@ const LandingCaseLaw = () => {
     useEffect(() => {
         if (data) {
             setPageOriData(data?.data)
-            setCaseLawdata(data?.data?.filter((o, i) => i <= intialCount))
+            setCaseLawdata(data?.data?.filter((o, i) => i < intialCount))
         }
     }, [data])
 
     const pageChange = (e,value) => {
         setPage(value)
         const targetCount = value;
-        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
+        const Prev = (parseInt(targetCount) - 1) * intialCount + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((targetCount)) * intialCount);
+        const Next =  parseInt(targetCount * intialCount);;
         setNextCount(Next)
-        const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
+        const localArray = pageOriData.slice(Prev-1, Next);
         setCaseLawdata(localArray)
     }
 

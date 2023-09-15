@@ -5,12 +5,14 @@ import { ViewAllModel } from './viewAllModel';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate } from 'react-router-dom'
 import image_placeholder from '../../assets/images/placeholder.png'
-
+import { updateState } from '../../redux/commonSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export const HomeCard = (props) => {
     const { sectionOneListList } = props;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [viewData, setViewData] = useState(false)
     const [optionData, setOptionData] = useState({})
@@ -19,14 +21,18 @@ export const HomeCard = (props) => {
         navigate(`/${pageType}?page=${btoa(item)}`)
     }
 
-    const rowDataClickByCategory = (id,todaysupdate="")=>{
-        if(todaysupdate){
-            navigate(`/news_list?catid=${id}&todaysupdate=true`)
-        }else {
-            navigate(`/news_list?catid=${id}`)
+    const rowDataClickByCategory = (item,todaysupdate="")=>{
+        if(todaysupdate === 'news') {
+            navigate(`/${(item?.categoryName).toLowerCase().replace(/\s/g, '')}/news`, { state: item })
+            dispatch(updateState({ currentClickedMenu: item }));
+        } else if(todaysupdate === 'todaysupdate'){
+            navigate('home/caselaw/todaysUpdate')
+            dispatch(updateState({ currentClickedMenu: {...item, todays:true} }));
+        } else {
+            navigate('home/caselaw')
+            dispatch(updateState({ currentClickedMenu: {...item, todays:true} }));
         }
     }
-
     return <>
         <Container>
             <Grid container justifyContent='space-between'>
@@ -87,7 +93,7 @@ export const HomeCard = (props) => {
                                             <>
                                                 <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                                     <Grid item>
-                                                        <CustomButton btnText="View today's updates" onClick={() => rowDataClickByCategory(item?.category,'todaysupdate')}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                        <CustomButton btnText="View today's updates" onClick={() => rowDataClickByCategory(item,'todaysupdate')}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                                     </Grid>
                                                 </Box>
                                             </>
@@ -96,7 +102,7 @@ export const HomeCard = (props) => {
 
                                         <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                             <Grid item>
-                                                <CustomButton btnText='View all' onClick={() => rowDataClickByCategory(item?.category)} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                                <CustomButton btnText='View all' onClick={() => rowDataClickByCategory(item,'news')} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
                                     </Box>

@@ -2,10 +2,10 @@ import { Box, Grid,Typography, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import CircularProgress from '@mui/material/CircularProgress';
 import { Pagination } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CustomSearch } from '../../../shared/search/Search'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -57,7 +57,7 @@ export const LandingNews = () => {
             if (data) {
                 setSpinner(false);
                 setPageOriData(data)
-                setCaseLawdata(data?.filter((o, i) => i <= intialCount))
+                setCaseLawdata(data?.filter((o, i) => i < intialCount))
             }
         });  
     },[apipath])
@@ -69,11 +69,11 @@ export const LandingNews = () => {
     const pageChange = (e,value) => {
         setPage(value)
         const targetCount = value;
-        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
+        const Prev = (parseInt(targetCount) - 1) * intialCount + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((targetCount)) * intialCount);
+        const Next =  parseInt(targetCount * intialCount);;
         setNextCount(Next)
-        const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
+        const localArray = pageOriData.slice(Prev-1, Next);
         setCaseLawdata(localArray)
     }
 
@@ -89,16 +89,16 @@ export const LandingNews = () => {
                 <CustomSearch getDataFromSearch={getDataFromSearch} />
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
-                <Typography className='caselaw-heading'>{footerApiData?.title}</Typography>
+                <Typography className='caselaw-heading'>{footerApiData?.title || footerApiData?.categoryName}</Typography>
             </Grid>
 
         {
-            spinner && <Box sx={{ display: 'flex', color:'orangered', margin:'50px, auto' }}>
+            spinner && <Box sx={{ display: 'flex', color:'orangered', margin:'50px auto' }}>
             <CircularProgress color="inherit"/>
             </Box>
          }
 
-            { pageOriData?.length>1 && <>
+{pageOriData?.length > intialCount &&
             <Grid item xs='12'>
                 <Grid container item justifyContent='space-between' alignItems='center' style={{ paddingLeft: "20px" }}>
                     <Box style={{ display: "flex", alignItems: "center" }}>
@@ -112,7 +112,7 @@ export const LandingNews = () => {
                     </Box> 
                 </Grid>
             </Grid>
-            
+}
             <Grid item xs='12'>
                 <Grid container item>
                     {
@@ -134,7 +134,7 @@ export const LandingNews = () => {
                 <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
                 </Box>
             </Grid>
-            }</>}
+            }
         </Grid>
     </Box>
 }

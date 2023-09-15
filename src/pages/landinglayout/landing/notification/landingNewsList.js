@@ -81,7 +81,7 @@ export const LandingNewsList = () => {
             if (data) {
                 //setSpinner(false);
                 setPageOriData(data)
-                setCaseLawdata(data?.filter((o, i) => i <= intialCount))
+                setCaseLawdata(data?.filter((o, i) => i < intialCount))
             }
         });  
     },[apipath])
@@ -93,11 +93,11 @@ export const LandingNewsList = () => {
     const pageChange = (e,value) => {
         setPage(value)
         const targetCount = value;
-        const Prev = (parseInt((targetCount) - 1) * intialCount) + 1;
+        const Prev = (parseInt(targetCount) - 1) * intialCount + 1;
         setPrevCount(Prev)
-        const Next = (parseInt((targetCount)) * intialCount);
+        const Next =  parseInt(targetCount * intialCount);;
         setNextCount(Next)
-        const localArray = pageOriData?.filter((o, i) => (Prev < i && i <= Next))
+        const localArray = pageOriData.slice(Prev-1, Next);
         setCaseLawdata(localArray)
     }
 
