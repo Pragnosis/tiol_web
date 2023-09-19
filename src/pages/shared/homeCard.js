@@ -17,9 +17,14 @@ export const HomeCard = (props) => {
     const [viewData, setViewData] = useState(false)
     const [optionData, setOptionData] = useState({})
 
-    const rowDataClickandler = (pageType, item) => {
-        navigate(`/${pageType}?page=${btoa(item)}`)
+    const rowDataClickandler = (item) => {
+        if(item?.url?.indexOf('GetCaselawById')>0){
+            navigate("/incometax/caselaw/sccases/details", { state: item })
+        } else if(item?.url?.indexOf('GetNewsById')>0){
+            navigate("/newsdetails", { state: item })
+        } 
     }
+
 
     const rowDataClickByCategory = (item,todaysupdate="")=>{
         if(todaysupdate === 'news') {
@@ -30,7 +35,7 @@ export const HomeCard = (props) => {
             dispatch(updateState({ currentClickedMenu: {...item, todays:true} }));
         } else {
             navigate('home/caselaw')
-            dispatch(updateState({ currentClickedMenu: {...item, todays:true} }));
+            dispatch(updateState({ currentClickedMenu: item }));
         }
     }
     return <>
@@ -60,7 +65,7 @@ export const HomeCard = (props) => {
                                                         <Grid item xs='12' sm='8' lg='8' >
                                                             <Box p={2}>
                                                                 <Typography variant='h7'>
-                                                                    <Box> <Link onClick={() => rowDataClickandler('news_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                                    <Box> <Link onClick={() => rowDataClickandler(item)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
                                                            <span style={{fontSize:'14px'}}> {item?.author ? ` by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
                                                            
                                                                 </Typography>
@@ -74,7 +79,7 @@ export const HomeCard = (props) => {
                                                     : <Box p={2} >
                                                         <Grid item xs='12'>
                                                             <Typography>
-                                                                 <Box> <Link onClick={() => rowDataClickandler('caselaws_details',item?.url)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
+                                                                 <Box> <Link onClick={() => rowDataClickandler(item)} style={{ whiteSpace: "initial", color:"orangered" }}>{item?.date}</Link>
                                                            <span style={{fontSize:'14px'}}> {item?.author ? ` by ${item?.author}`: ''}{item?.place ? ` | ${item?.place}`: ''}</span></Box>
                                                            
                                                             </Typography>
@@ -89,22 +94,29 @@ export const HomeCard = (props) => {
                                     }
                                     <Box pt={2}>
                                         {
-                                            (item?.categoryName == "TODAY'S CASE (DIRECT TAX)" || item?.categoryName == "TODAY'S CASE (INDIRECT TAX)") &&
+                                            (item?.categoryName == "TODAY'S CASE (DIRECT TAX)" || item?.categoryName == "TODAY'S CASE (INDIRECT TAX)") ?
                                             <>
                                                 <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                                     <Grid item>
                                                         <CustomButton btnText="View today's updates" onClick={() => rowDataClickByCategory(item,'todaysupdate')}  btnStyle={{ color: "orangered", fontSize: "12px" }} endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                                     </Grid>
                                                 </Box>
+                                                <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
+                                            <Grid item>
+                                                <CustomButton btnText='View all' onClick={() => rowDataClickByCategory(item,'')} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
+                                            </Grid>
+                                        </Box>
                                             </>
 
-                                        }
-
-                                        <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
+                                        :
+                                            <Box style={{ display: "flex", justifyContent: "flex-end", marginRight: "20px" }}>
                                             <Grid item>
                                                 <CustomButton btnText='View all' onClick={() => rowDataClickByCategory(item,'news')} btnStyle={{ color: "orangered", fontSize: "12px" }} /*onClick={() => viewAllclickhandler(item, index)}*/ endIcon={<ArrowForwardIosIcon color='orangered' style={{ fontSize: "small" }} />} />
                                             </Grid>
                                         </Box>
+                                        }
+
+                                       
                                     </Box>
                                 </Box>
                             </Grid>

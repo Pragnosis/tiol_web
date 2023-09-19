@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import { useSearchHook } from './SearchHook'
 
 export const CustomSearch = (props) => {
-    const { getDataFromSearch } = props;
+    const { getDataFromSearch, clearDataFromSearch } = props;
     const { dateFilterMutate, oriData, afterValidate } = useSearchHook();
 
     const commonReducer = useSelector((state) => state.commonReducer);
@@ -22,12 +22,6 @@ export const CustomSearch = (props) => {
         To_Date: ""
     })
 
-   /* useEffect(() => {
-        console.log("==aaa====")
-        getDataFromSearch(oriData);
-    }, [oriData])
-
-*/
     useEffect(() => {
         if (commonReducer?.currentDynamicPaedata) {
             var A = commonReducer?.currentDynamicPaedata?.apipathfilter;
@@ -43,7 +37,6 @@ export const CustomSearch = (props) => {
     }
 
     const submitClickHandler = () => {
-        console.log("==filterDate==",datedata.From_Date,datedata.To_Date);
         afterValidate(afterCallBack)
         setSubmitFlag(true)
         const date = {
@@ -51,6 +44,14 @@ export const CustomSearch = (props) => {
             to:datedata.To_Date
         }
         getDataFromSearch(date)
+    }
+
+    const clearClickHandler = () =>{
+        setDatedata({
+            From_Date: "",
+            To_Date: ""
+        })
+        clearDataFromSearch()
     }
 
 
@@ -104,6 +105,14 @@ export const CustomSearch = (props) => {
                                 variant='contained'
                                 btnText='Search'
                                 onClick={submitClickHandler}
+                                style={{ marginTop: "20px", backgroundColor: "orangered", color: "#fff" }}
+                            />
+                        </Grid>
+                        <Grid item xs='2'>
+                            <CustomButton
+                                variant='contained'
+                                btnText='Clear'
+                                onClick={clearClickHandler}
                                 style={{ marginTop: "20px", backgroundColor: "orangered", color: "#fff" }}
                             />
                         </Grid>

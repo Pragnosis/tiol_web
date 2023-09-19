@@ -12,6 +12,7 @@ import { getErrorMessege } from '../../../../component/Validator'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Layout } from '../../../Layout'
 import { CustomSearch } from '../../../shared/search/Search'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -40,12 +41,22 @@ export const LandingNewsList = () => {
     const [nextCount, setNextCount] = useState(10)
     const [getFilter, setFilter] = useState('');
     const [page,setPage] = useState(1)
-   
+    const [spinner, setSpinner] = useState(false); 
     const params = new URLSearchParams(location?.search);
     const catId = params.get('catid');
     const catdata = commonReducer.filter(items => items.category == catId )[0]
     const heading= catdata?.categoryName;
     let apipath;
+
+    const todaysupdate = params.get('todaysupdate');
+    const clearDataFromSearch = () =>{
+        setFilter(false)
+        if(todaysupdate){
+            apipath = catdata?.apipathtodayscase
+           }else{
+            apipath = catdata?.apipath; 
+         }  
+    }
 
     const getDataFromSearch = (date) => {
         var filterUrl = catdata?.apipathfilter;
@@ -54,7 +65,7 @@ export const LandingNewsList = () => {
         setFilter(replaceDate)
     }
 
-    const todaysupdate = params.get('todaysupdate');
+    
     if(getFilter){
         apipath = getFilter;
     } else if(todaysupdate){
@@ -73,13 +84,13 @@ export const LandingNewsList = () => {
     }, [data])
 */
     useEffect(() => {
-       // setSpinner(true);
+       setSpinner(true);
         fetch(apipath)  
         .then(response => response.json())
         .then(data => {
             console.log("==data==",data)
             if (data) {
-                //setSpinner(false);
+                setSpinner(false);
                 setPageOriData(data)
                 setCaseLawdata(data?.filter((o, i) => i < intialCount))
             }
@@ -120,11 +131,17 @@ export const LandingNewsList = () => {
         <Grid container>
          
             <Grid item xs='12'>
-                <CustomSearch getDataFromSearch={getDataFromSearch} />
+                <CustomSearch getDataFromSearch={getDataFromSearch} clearDataFromSearch={clearDataFromSearch}/>
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
                 <Typography className='caselaw-heading'>{heading}</Typography>
             </Grid>
+            {
+                 spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', color:'orangered',position:'absolute', marginTop:'5%', marginLeft:'20%' }}>
+                 <CircularProgress sx={{ color:'inherit' }}/>
+                 </Box>
+                 </Grid>
+            }
             <Grid item xs='12'>
                 <Grid container item justifyContent='space-between' alignItems='center' style={{ paddingLeft: "20px" }}>
                     <Box style={{ display: "flex", alignItems: "center" }}>

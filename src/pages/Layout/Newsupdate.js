@@ -68,8 +68,8 @@ console.log("==updateNews==",updateNews);
                 updateNews[0]?.sectionsdata?.length > 0 &&
                 updateNews[0]?.sectionsdata?.map((item) => {
                 return <SwiperSlide className={classes.papermanage}>
-                    <Typography >
-                   {item?.url!= "" && <Link  href={item?.url} style={{ whiteSpace: "initial", color:"orangered", fontSize:"14px" }}>
+                    <Typography style={{fontSize:"14px"}}>
+                   {item?.url!= "" && <Link  href={item?.url} style={{ whiteSpace: "initial", color:"orangered" }}>
                         {item?.headlines}</Link>}{item?.url== "" && item?.headlines}</Typography>
                 </SwiperSlide>
                 })

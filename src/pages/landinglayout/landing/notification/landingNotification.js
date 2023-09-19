@@ -36,6 +36,16 @@ export const LandingNotification = () => {
     const commonReducer = useSelector((state) => state.commonReducer);
     const navigate = useNavigate();
     const location = useLocation();
+
+    const clearDataFromSearch = () =>{
+        setFilter(false)
+        if(apiPreUrl?.todays){
+            apipath = apiPreUrl?.apipathtodayscase
+           }else{
+            apipath = apiPreUrl?.apipath; 
+         }  
+    }
+
  
     const getDataFromSearch = (date) => {
         var filterUrl = apiPreUrl?.apipathfilter;;
@@ -47,12 +57,8 @@ export const LandingNotification = () => {
 
     const apiPreUrl = commonReducer?.currentClickedMenu;
     let apipath
-
-    if(preUrl === location?.pathname){
-        setFilter()
-    } 
    
-    if(getFilter){
+    if(getFilter && preUrl === location?.pathname){
         apipath = getFilter;
        }else if(apiPreUrl?.todays){
         apipath = apiPreUrl?.apipathtodayscase
@@ -106,15 +112,16 @@ export const LandingNotification = () => {
     return <Box>
         <Grid container>
             <Grid item xs='12'>
-                <CustomSearch getDataFromSearch={getDataFromSearch} />
+                <CustomSearch getDataFromSearch={getDataFromSearch}  clearDataFromSearch={clearDataFromSearch}/>
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
                 <Typography className='caselaw-heading'>{apiPreUrl?.title || apiPreUrl?.categoryName}</Typography>
             </Grid>
             {
-                spinner && <Box sx={{ display: 'flex', color:'orangered', margin:'50px auto' }}>
-                <CircularProgress color="inherit"/>
+                spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', color:'orangered',position:'absolute', marginTop:'5%', marginLeft:'20%' }}>
+                <CircularProgress sx={{ color:'inherit' }}/>
                 </Box>
+                </Grid>
             }
             {pageOriData?.length > intialCount &&
             <Grid item xs='12'>
@@ -132,7 +139,7 @@ export const LandingNotification = () => {
             <Grid item xs='12'>
                 <Grid container item>
                     {
-                        caseLawdata?.length > 0 && caseLawdata?.map((item) => {
+                        caseLawdata?.length > 0 ? caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.date || item?.tiolCitation}</Typography>
@@ -141,9 +148,7 @@ export const LandingNotification = () => {
                                 </Box>
                             </Grid>
                         })
-                    }
-                    {
-                    caseLawdata?.length ==0 && <Grid item xs='12'>
+                   : <Grid item xs='12'>
                         <Typography className='no-data-found'>No Data Found</Typography>
                     </Grid>
                     }

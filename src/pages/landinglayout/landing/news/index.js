@@ -41,7 +41,12 @@ export const LandingNews = () => {
         setFilter(replaceDate)
     }
 
-    let apipath;  
+    let apipath; 
+    const clearDataFromSearch = () =>{
+        setFilter(false)
+        apipath = footerApiData?.apipath;
+    }
+ 
     if(getFilter){
         apipath = getFilter;
     }else {
@@ -86,16 +91,17 @@ export const LandingNews = () => {
     return <Box>
         <Grid container key={footerApiData?.title}>
             <Grid item xs='12'>
-                <CustomSearch getDataFromSearch={getDataFromSearch} />
+                <CustomSearch getDataFromSearch={getDataFromSearch} clearDataFromSearch={clearDataFromSearch}/>
             </Grid>
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
                 <Typography className='caselaw-heading'>{footerApiData?.title || footerApiData?.categoryName}</Typography>
             </Grid>
 
         {
-            spinner && <Box sx={{ display: 'flex', color:'orangered', margin:'50px auto' }}>
-            <CircularProgress color="inherit"/>
-            </Box>
+             spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', color:'orangered',position:'absolute', marginTop:'5%', marginLeft:'20%' }}>
+             <CircularProgress sx={{ color:'inherit' }}/>
+             </Box>
+             </Grid>
          }
 
 {pageOriData?.length > intialCount &&
