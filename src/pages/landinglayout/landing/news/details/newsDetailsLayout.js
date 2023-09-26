@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 // import { Footer } from '../footer'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { Grid ,Box, Container} from '@material-ui/core'
 import { NewsDetails } from './newsDetails'
 import { sectionOne, sectionTwo } from '../../../../../services'
 import { Layout } from '../../../../Layout'
@@ -48,6 +48,8 @@ export const NewsDetailedLayout = () => {
     }, [sectionOneListList, sectionTwoList])
 
     return <Layout>
+        <Container>
+        <Box my={1}>
         <Grid container item>
             <Grid item xs='8'>
                 <NewsDetails />
@@ -56,6 +58,6 @@ export const NewsDetailedLayout = () => {
                 <Carts budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
             </Grid>
         </Grid>
-
+</Box></Container>
     </Layout>
 }

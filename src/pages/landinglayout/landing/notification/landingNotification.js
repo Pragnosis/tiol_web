@@ -71,13 +71,14 @@ export const LandingNotification = () => {
          fetch(apipath)  
          .then(response => response.json())
          .then(data => {
-             console.log("==data==",data)
              if (data) {
-                 setSpinner(false);
                  setPageOriData(data)
                  setCaseLawdata(data?.filter((o, i) => i < intialCount))
              }
-         });  
+         })
+         .finally(() => {
+            setSpinner(false);
+        }); 
         
      },[apipath])
 
@@ -111,15 +112,17 @@ export const LandingNotification = () => {
 
     return <Box>
         <Grid container>
-            <Grid item xs='12'>
+            {
+            (caseLawdata?.length > 0 || getFilter) && <Grid item xs='12'>
                 <CustomSearch getDataFromSearch={getDataFromSearch}  clearDataFromSearch={clearDataFromSearch}/>
-            </Grid>
+            </Grid> 
+            }
             <Grid item xs='12' style={{ padding: "15px 0px" }}>
                 <Typography className='caselaw-heading'>{apiPreUrl?.title || apiPreUrl?.categoryName}</Typography>
             </Grid>
             {
-                spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', color:'orangered',position:'absolute', marginTop:'5%', marginLeft:'20%' }}>
-                <CircularProgress sx={{ color:'inherit' }}/>
+                spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', position:'absolute', left:'38%' }}>
+                <CircularProgress sx={{ color:'orangered'  }}/>
                 </Box>
                 </Grid>
             }
@@ -139,7 +142,7 @@ export const LandingNotification = () => {
             <Grid item xs='12'>
                 <Grid container item>
                     {
-                        caseLawdata?.length > 0 ? caseLawdata?.map((item) => {
+                       caseLawdata?.length > 0 ? caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.date || item?.tiolCitation}</Typography>
@@ -148,8 +151,8 @@ export const LandingNotification = () => {
                                 </Box>
                             </Grid>
                         })
-                   : <Grid item xs='12'>
-                        <Typography className='no-data-found'>No Data Found</Typography>
+                   :  !spinner && <Grid item xs='12'>
+                        <Typography className='no-data-found'>{getFilter ? 'No data was found for the selection criteria, please try with other criteria.':'No Data Found'}</Typography>
                     </Grid>
                     }
                 </Grid>

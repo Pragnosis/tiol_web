@@ -5,7 +5,7 @@ import { HomeCards2 } from '../shared/homeCards2'
 import { VideoSection } from '../shared/videoSection'
 import { sectionOne, sectionTwo } from '../../services'
 import { useQuery } from 'react-query'
-// import { Footer } from '../footer'
+import { Box, Container } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import BudjetSection from '../shared/budjetSection'
 
@@ -46,9 +46,12 @@ export const Home = () => {
     }, [sectionOneListList, sectionTwoList])
 
     return <Layout>
+         <Container>
+        <Box my={1}>
         <BudjetSection budjetList={commonReducer.budjetList} />
         <HomeCard sectionOneListList={sectionAllList} setSectionOneListList={setSectionOneListList} />
         <VideoSection videList={commonReducer.videList} />
         <HomeCards2 budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionTwoList} setSectionTwoList={setSectionTwoList} />
+        </Box></Container>
     </Layout>
 }

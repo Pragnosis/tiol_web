@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
-import { Grid } from '@material-ui/core'
+import { Grid ,Box, Container} from '@material-ui/core'
 import { sectionOne, sectionTwo } from '../../../../../services'
 import { Layout } from '../../../../Layout'
 import { Carts } from '../../carts'
@@ -45,6 +45,8 @@ export const NotificationDetailedLayout = () => {
     }, [sectionOneListList, sectionTwoList])
 
     return <Layout>
+        <Container>
+        <Box my={1}>
         <Grid container item>
             <Grid item xs='8'>
                 <NotificationDetails />
@@ -53,6 +55,7 @@ export const NotificationDetailedLayout = () => {
                 <Carts budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
             </Grid>
         </Grid>
-
+        </Box>
+        </Container>
     </Layout>
 }

@@ -9,7 +9,7 @@ import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import BudjetSection from '../shared/budjetSection'
 import { useLocation } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { Grid, Box, Container } from '@material-ui/core'
 import { Carts } from '../landinglayout/landing/carts'
 import { DetailsCaselaw } from './detail/caselaw'
 import { NotificationDetailedLayout } from '../landinglayout/landing/notification/detailsNotification/notificationDetailsLayout'
@@ -53,6 +53,8 @@ export const DetailedLayout = () => {
     }, [sectionOneListList, sectionTwoList])
 
     return <Layout>
+        <Container>
+        <Box my={1}>
         <Grid container item>
             <Grid item xs='8'>
                 {
@@ -66,6 +68,6 @@ export const DetailedLayout = () => {
                 <Carts budjetList={commonReducer.budjetList} videList={commonReducer.videList} sectionTwoList={sectionAllList} setSectionTwoList={setSectionTwoList} />
             </Grid>
         </Grid>
-
+</Box></Container>
     </Layout>
 }

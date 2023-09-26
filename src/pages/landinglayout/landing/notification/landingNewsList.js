@@ -137,10 +137,10 @@ export const LandingNewsList = () => {
                 <Typography className='caselaw-heading'>{heading}</Typography>
             </Grid>
             {
-                 spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', color:'orangered',position:'absolute', marginTop:'5%', marginLeft:'20%' }}>
-                 <CircularProgress sx={{ color:'inherit' }}/>
-                 </Box>
-                 </Grid>
+               spinner &&  <Grid item xs='12'><Box sx={{ display: 'flex', position:'absolute', left:'38%' }}>
+               <CircularProgress sx={{ color:'orangered'  }}/>
+               </Box>
+               </Grid>
             }
             <Grid item xs='12'>
                 <Grid container item justifyContent='space-between' alignItems='center' style={{ paddingLeft: "20px" }}>
@@ -157,7 +157,7 @@ export const LandingNewsList = () => {
             <Grid item xs='12'>
                 <Grid container item>
                     {
-                        caseLawdata?.length > 0 && caseLawdata?.map((item) => {
+                        caseLawdata?.length > 0 ? caseLawdata?.map((item) => {
                             return <Grid item xs='12' style={{ margin: "10px", border: "1px solid #ccc", borderRadius: "20px", padding: "10px" }}>
                                 <Box elevation={1} style={{ borderRadius: "20px 20px 0px 0px" }}>
                                     <Typography style={{ color: "#f86e38", padding: "5px 0px", cursor: "pointer" }} onClick={() => rowDataClickandler(item)} >{item?.date}</Typography>
@@ -165,7 +165,10 @@ export const LandingNewsList = () => {
                                     <Typography style={{ textAlign: "justify", padding: "5px 0px", fontSize: "13px" }}>Cx - {item?.headlines}</Typography>
                                 </Box>
                             </Grid>
-                        })
+                        }) 
+                        :  !spinner && <Grid item xs='12'>
+                        <Typography className='no-data-found'>{getFilter ? 'No data was found for the selection criteria, please try with other criteria.':'No Data Found'}</Typography>
+                    </Grid>
                     }
                 </Grid>
             </Grid>
