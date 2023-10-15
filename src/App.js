@@ -10,7 +10,7 @@ import { CommonSearch } from "./pages/home/coomonDate/commonSearch";
 import { NotificationLandingLayout } from "./pages/landinglayout/landing/notification/notificationLayout";
 import { NotificationDetailedLayout } from "./pages/landinglayout/landing/notification/detailsNotification/notificationDetailsLayout";
 import { ColumnSearch } from "./pages/Search/ColumnSearch";
-
+import { NotificaionsCirculars } from "./pages/Search/NotificationsCirculars";
 
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
       <Route path="/tiol-web" element={<Home />} />
       <Route path="/incometax/notifications" element={<LandingLayout />} />
       <Route path="/search/column" element={<ColumnSearch />} />
+      <Route path="/search/circulars" element={<NotificaionsCirculars />} />
     </Routes>
 
   );

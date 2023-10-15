@@ -7,6 +7,7 @@ import {
     Select,
     InputLabel,
     FormControl,
+    Container
   } from "@material-ui/core";
   import axios from "axios";
   import React, { useState } from "react";
@@ -15,8 +16,9 @@ import {
   import CircularProgress from "@mui/material/CircularProgress";
   import { Alert, Stack } from "@mui/material";
   import { useEffect } from "react";
+  import { Layout } from '../Layout'
   
-  const NotificaionsCirculars = () => {
+  export const NotificaionsCirculars = () => {
     const [formData, setFormData] = useState({
       keyword: "",
       header: "",
@@ -140,7 +142,8 @@ import {
     }
   
   
-    return (
+    return <Container>
+    <Layout> 
       <>
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -340,9 +343,9 @@ import {
           </Grid>
         </form>
         <SearchLanding searchData={searchData} />
-      </>
-    );
+      </>   
+    </Layout>
+    </Container>
   };
   
-  export default NotificaionsCirculars;
   
