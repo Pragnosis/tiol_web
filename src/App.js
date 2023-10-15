@@ -9,6 +9,7 @@ import { NewsDetailedLayout } from "./pages/landinglayout/landing/news/details/n
 import { CommonSearch } from "./pages/home/coomonDate/commonSearch";
 import { NotificationLandingLayout } from "./pages/landinglayout/landing/notification/notificationLayout";
 import { NotificationDetailedLayout } from "./pages/landinglayout/landing/notification/detailsNotification/notificationDetailsLayout";
+import { ColumnSearch } from "./pages/Search/ColumnSearch";
 
 
 const App = () => {
@@ -29,15 +30,11 @@ const App = () => {
       <Route path="/bookmark" element={<CaselawBookMark />} />
       {/* <Route path="/notification" element={<NotificationLandingLayout />} /> */}
       <Route path="/notification/details" element={<NotificationDetailedLayout />} />
-
-
       <Route path="/newsdetails" element={<NewsDetailedLayout />} />
       <Route path="/CommonSearch" element={<CommonSearch />} />
-      
-     
-
       <Route path="/tiol-web" element={<Home />} />
-      {/* <Route path=":id/details" element={<LandingLayout />} /> */}
+      <Route path="/incometax/notifications" element={<LandingLayout />} />
+      <Route path="/search/column" element={<ColumnSearch />} />
     </Routes>
 
   );

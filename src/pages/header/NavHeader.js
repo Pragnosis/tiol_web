@@ -56,7 +56,7 @@ function NavHeader() {
     setSubMenuPosition(null);
     setCurrentNavText("")
     // dispatch(updateState({ currentDynamicPaedata: item }));
-    navigate(routeto.replace(" ", "_"), { replace: true })
+    navigate('/'+item?.webpath)
     setTimeout(() => {
       setAnchorEl(null);
     }, 2000);

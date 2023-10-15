@@ -65,8 +65,8 @@ const MainHeader = (props) => {
     return (
         <>
             <Box>
-                <Grid container style={{ borderBottom: '1px solid orangered' }}>
-                    <Container>
+                <Grid >
+                    <Container style={{ borderBottom: '1px solid orangered' }}>
                         <Grid item xs={12}>
                             <Grid container alignItems='flex-end' style={{ position: "relative", height: "90px" }}>
                                 <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -135,10 +135,10 @@ const MainHeader = (props) => {
                                             <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose}
                                                 MenuListProps={{ 'aria-labelledby': 'basic-button', }}
                                             >
-                                                <MenuItem onClick={() => { handleClose(); setDrawer1(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW ADVANCE SEARCH</Typography></MenuItem>
+                                                <MenuItem onClick={() => { navigate('/search/column') }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW ADVANCE SEARCH</Typography></MenuItem>
                                                 <MenuItem onClick={() => { handleClose(); setDrawer2(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW QUICK SEARCH</Typography></MenuItem>
                                                 <MenuItem onClick={() => { handleClose(); setDrawer3(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>NOTIFICATIONS/ CIRCULARS</Typography></MenuItem>
-                                                <MenuItem onClick={() => { handleClose(); setDrawer4(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>COLUMN SEARCH</Typography></MenuItem>
+                                                <MenuItem onClick={() => { handleClose(); setDrawer4(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>COLUMN SEARCH1</Typography></MenuItem>
                                                 <MenuItem onClick={() => { handleClose(); setDrawer5(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE STORIES/ TOP NEWS</Typography></MenuItem>
                                             </Menu>
                                         </Box>

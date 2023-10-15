@@ -6,16 +6,18 @@ import {
   Typography,
   Select,
   FormControl,
+  Container,
 } from "@material-ui/core";
 import axios from "axios";
 import React, { useState } from "react";
+import { Layout } from '../Layout'
 import { SearchLanding } from "./searchLanding";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Alert, Stack } from "@mui/material";
 import { useEffect } from "react";
 
-const ColumnSearch = () => {
+export const ColumnSearch = () => {
   const [formData, setFormData] = useState({
     keyword: "",
     category: "",
@@ -92,8 +94,10 @@ const ColumnSearch = () => {
         });
   }
 
-  return (
-    <>
+  return <Container>
+  <Layout>
+      <Grid container item>
+          <Grid item xs='8'>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -199,11 +203,13 @@ const ColumnSearch = () => {
         </Grid>
       </form>
             <SearchLanding searchData={searchData} />
-    </>
-  );
-};
+            </Grid>
+            </Grid>
 
-export default ColumnSearch;
+        </Layout>
+    </Container>
+}
+
 
 
 

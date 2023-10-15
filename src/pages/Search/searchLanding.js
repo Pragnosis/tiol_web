@@ -16,7 +16,6 @@ export const SearchLanding = (props) => {
 
   //const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
 
-  console.warn("====data===", props);
   useEffect(() => {
     if (props) {
       setPageOriData(props?.searchData?.data);
