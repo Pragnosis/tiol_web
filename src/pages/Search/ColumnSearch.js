@@ -16,6 +16,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Alert, Stack } from "@mui/material";
 import { useEffect } from "react";
+import './Captchaverification.css';
 
 export const ColumnSearch = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,9 @@ export const ColumnSearch = () => {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState("")
   const [authour, setAuthour] = useState("")
+  const [number1] = useState(Math.floor(Math.random() * 10));
+  const [number2] = useState(Math.floor(Math.random() * 10));
+  const [userAnswer, setUserAnswer] = useState('');
 
   const dropdownVal = [{ newsTypeId: 123, newsType: "Budget" }];
 
@@ -55,6 +59,8 @@ export const ColumnSearch = () => {
 
   const onsubmitHandler = (e) => {
     e.preventDefault();
+    const resultValue = checkCaptcha();
+    if(resultValue == "true"){
     if (
       formData.keyword ||
       formData.keyword == null ||
@@ -79,9 +85,22 @@ export const ColumnSearch = () => {
         });
     } else {
       return alert("Please select a anyone option");
+    }}
+    else
+    {
+      return alert("Please enter the Correct Numeric captcha");
     }
   };
+  const checkCaptcha = () => {
+    const correctAnswer = number1 + number2;
+    const parsedUserAnswer = parseInt(userAnswer, 10);
 
+    if (parsedUserAnswer === correctAnswer) {
+      return "true";
+    } else {
+      return "false";     
+    }
+  };
   const handleChangeEvent = (e) => {
     setCategory(e.target.value);
     const val = e.target.value;
@@ -191,6 +210,14 @@ export const ColumnSearch = () => {
           </Grid>
           <br />
           <br />
+          <p className="captcha-image">        
+        {number1} + {number2}  &nbsp;&nbsp;&nbsp;&nbsp; <input
+        type="text"
+        value={userAnswer}
+        onChange={(e) => setUserAnswer(e.target.value)}
+        className="captcha-input"
+      />
+      </p>
           <Button
             variant="contained"
             color="primary"
