@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 const Newsupdate = (props) => {
     const classes = useStyles();
-    const { videList, budjetList, sectionData } = props;
+    const { videList, budjetList, sectionData, pageType } = props;
 
     const [viewAll, setViewAll] = useState(false)
     const [updateNews, setUpdateNews] = useState([])
@@ -75,7 +75,7 @@ console.log("==updateNews==",updateNews);
                 })
             }
             </Swiper>
-            <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
+           {pageType =>0 && <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
                 <Box style={{ height: "300px", color: "#fff", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     {
                         videList?.length > 0 &&
@@ -91,6 +91,7 @@ console.log("==updateNews==",updateNews);
                     }
                 </Box>
             </Typography>
+        }
             {
                 viewAll &&
                 <NewsdetailModel togglerhandler={setViewAll} newsUpdate={updateNews}/>

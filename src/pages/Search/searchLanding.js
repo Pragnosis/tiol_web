@@ -1,7 +1,7 @@
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography,FormControl,TextField } from "@material-ui/core";
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -13,9 +13,20 @@ export const SearchLanding = (props) => {
   const intialCount = 10;
   const [prevCount, setPrevCount] = useState(1);
   const [nextCount, setNextCount] = useState(10);
-
+  const [page,setPage] = useState(0);
+  const [refineData,setRefineData] = useState("");
+  const [refineItem,setRefineItem] = useState("")
   //const { data, error } = useQuery(['GetDynamicNewsData'], () => notificationDynamicdata(apipath), { enabled: true, retry: false })
 
+  function handleClick(e) {
+    setRefineData(e.target.value);
+    var newArray = props?.searchData?.data.filter(function (item) {
+      return item.author.toLowerCase().includes(e.target.value.toLowerCase())
+       || item.headlines.toLowerCase().includes(e.target.value.toLowerCase())
+       || item.place.toLowerCase().includes(e.target.value.toLowerCase())   
+    });
+    setRefineItem(newArray);
+  }
   useEffect(() => {
     if (props) {
       setPageOriData(props?.searchData?.data);
@@ -26,17 +37,28 @@ export const SearchLanding = (props) => {
   }, [props]);
 
   useEffect(() => {
+    if (refineItem) {
+      setPageOriData(refineItem);
+      setCaseLawdata(
+        refineItem?.filter((o, i) => i <= intialCount)
+      );
+    }
+  }, [refineItem]);
+
+  useEffect(() => {
     window.scrollTo(0, 700);
   }, []);
 
-  const pageChange = (e) => {
-    const Prev = parseInt(e.target.textContent - 1) * intialCount + 1;
-    setPrevCount(Prev);
-    const Next = parseInt(e.target.textContent) * intialCount;
-    setNextCount(Next);
-    const localArray = pageOriData?.filter((o, i) => Prev < i && i <= Next);
-    setCaseLawdata(localArray);
-  };
+  const pageChange = (e,value) => {
+    setPage(value)
+    const targetCount = value;
+    const Prev = (parseInt(targetCount) - 1) * intialCount + 1;
+    setPrevCount(Prev)
+    const Next =  parseInt(targetCount * intialCount);;
+    setNextCount(Next)
+    const localArray = pageOriData.slice(Prev-1, Next);
+    setCaseLawdata(localArray)
+}
 
   const rowDataClickandler = (item) => {
     if (item?.caselawUrl?.indexOf("GetCaselawById") > 0) {
@@ -45,6 +67,9 @@ export const SearchLanding = (props) => {
     } else if (item?.news_Url?.indexOf("GetNewsById") > 0) {
       const pageType = "news_details";
       navigate(`/${pageType}?page=${btoa(item?.news_Url)}`);
+    } else if (item?.url?.indexOf("GetNewsSearchById") > 0) {
+      const pageType = "news_details";
+      navigate(`/${pageType}?page=${btoa(item?.url)}`);
     } else {
       navigate("/notification/details", { state: item });
     }
@@ -53,6 +78,25 @@ export const SearchLanding = (props) => {
     return (
       <Box>
         <Grid container>
+        <Grid container justifyContent="flex-end"
+           
+            xs={12}
+            
+           // spacing={3}
+          >
+            <FormControl >
+            <TextField
+              label=" Refine Search"
+              name="keyword"
+              variant="outlined"
+             // xs={3}
+             onChange={e =>
+              handleClick(e)
+            }
+              id="keyword"
+            />
+            </FormControl>
+          </Grid>
           <Grid item xs="12">
             <Grid
               container
@@ -75,12 +119,10 @@ export const SearchLanding = (props) => {
                 </Typography>
                 &nbsp;
               </Box>
+             
               <Box style={{ padding: "10px 0px 10px 0px" }}>
-                <Pagination
-                  count={(pageOriData?.length - 6) / 10}
-                  onChange={pageChange}
-                />
-              </Box>
+                        <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
+                    </Box>
             </Grid>
           </Grid>
           <Grid item xs="12">
@@ -110,7 +152,7 @@ export const SearchLanding = (props) => {
                           }}
                           onClick={() => rowDataClickandler(item)}
                         >
-                          {item?.date || item?.date || item?.date}
+                          {item?.date} {item?.author ? `| ${item.author}`:''} {item?.place ? `| ${item.place}`:''}
                         </Typography>
                         <Typography
                           style={{
@@ -121,7 +163,7 @@ export const SearchLanding = (props) => {
                             fontSize: "13px",
                           }}
                         >
-                          {item?.notification_Number || item?.url}
+                          {item?.notification_Number}
                         </Typography>
                         <Typography
                           style={{
@@ -130,7 +172,7 @@ export const SearchLanding = (props) => {
                             fontSize: "13px",
                           }}
                         >
-                          Cx - {item?.headlines || item?.headlines}23
+                        {item?.headlines || item?.headlines}
                         </Typography>
                       </Box>
                     </Grid>
@@ -138,20 +180,12 @@ export const SearchLanding = (props) => {
                 })}
             </Grid>
           </Grid>
-          <Grid item xs="12">
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: "10px 0px 10px 0px",
-              }}
-            >
-              <Pagination
-                count={(pageOriData?.length - 6) / 10}
-                onChange={pageChange}
-              />
-            </Box>
-          </Grid>
+          {pageOriData?.length > intialCount &&
+            <Grid item xs='12'>
+                <Box style={{ display: "flex", justifyContent: "flex-end", padding: "10px 0px 10px 0px" }}>
+                    <Pagination count={Math.ceil((pageOriData?.length) / 10)} page={page} onChange={pageChange} />
+                </Box>
+            </Grid>}
         </Grid>
       </Box>
     );

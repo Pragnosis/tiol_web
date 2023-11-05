@@ -34,6 +34,7 @@ export const ColumnSearch = () => {
   const [number1] = useState(Math.floor(Math.random() * 10));
   const [number2] = useState(Math.floor(Math.random() * 10));
   const [userAnswer, setUserAnswer] = useState('');
+  const [warn, setWarn] = useState('');
 
   const dropdownVal = [{ newsTypeId: 123, newsType: "Budget" }];
 
@@ -59,20 +60,13 @@ export const ColumnSearch = () => {
 
   const onsubmitHandler = (e) => {
     e.preventDefault();
+    setOpen(true);
     const resultValue = checkCaptcha();
     if(resultValue == "true"){
     if (
-      formData.keyword ||
-      formData.keyword == null ||
-      formData.authour ||
-      formData.authour == null ||
-      formData.category ||
-      formData.category == null
+     
+      formData.category || formData.keyword
     ) {
-      setOpen(!open);
-      console.warn(formData.keyword);
-      console.warn(category);
-      console.warn(authour);
       axios
         .get(
           `http://34.229.120.75:8081/api/AdvSearchNews/GetNewsIndexPagesAdvSearch/${
@@ -82,13 +76,20 @@ export const ColumnSearch = () => {
         .then((response) => {
           setSearchData(response);
           setOpen(false);
+          setWarn(false)
         });
     } else {
-      return alert("Please select a anyone option");
+      //return alert("Please select a anyone option");
+      setWarn("Please select at least one filter criteria");
+      setOpen(false);
+      window.scrollTo(0, 0)
     }}
     else
     {
-      return alert("Please enter the Correct Numeric captcha");
+     // return alert("Please enter the Correct Numeric captcha");
+     setWarn("Please enter the correct numeric captcha");
+     setOpen(false);
+     window.scrollTo(0, 0)
     }
   };
   const checkCaptcha = () => {
@@ -104,6 +105,7 @@ export const ColumnSearch = () => {
   const handleChangeEvent = (e) => {
     setCategory(e.target.value);
     const val = e.target.value;
+    setFormData({ ...formData, category: e.target.value })
     axios
         .get(
           `http://34.229.120.75:8081/api/Utility/GetNewsTypeAuthor/${val}`
@@ -115,17 +117,19 @@ export const ColumnSearch = () => {
 
   return <Container>
   <Layout>
-      <Grid container item>
+      <Grid container item style={{marginLeft:'20px',padding:'5px 0 20px 5px',marginTop:'10px'}}>
           <Grid item xs='8'>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+          <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+     
       <Typography variant="h5">Column Search</Typography>
       <br />
+     { warn && <Alert severity="error">{warn}</Alert> }
       <br />
       <form noValidate autoComplete="off">
         <Grid
@@ -143,18 +147,21 @@ export const ColumnSearch = () => {
             xs={12}
             spacing={3}
           >
+            <FormControl fullWidth>
             <Typography variant="label">Keyword</Typography>
             <TextField
               label=""
               name="keyword"
               variant="outlined"
-              size="small"
+              xs={12}
+             // size="small"
               onChange={(e) =>
                 setFormData({ ...formData, keyword: e.target.value })
               }
               value={formData.keyword}
               id="keyword"
             />
+            </FormControl>
           </Grid>
           <br />
           <br />
@@ -172,7 +179,11 @@ export const ColumnSearch = () => {
               <Select
                 variant="outlined"
                 onChange={handleChangeEvent}
+                id='category'
+                name='cateory'
+                defaultValue={0}
               >
+                 <MenuItem value={0}>Select</MenuItem>
                 {dropDownCat?.map((item) => (
                   <MenuItem value={item?.newsTypeId}>{item?.newsType}</MenuItem>
                 ))}
@@ -195,13 +206,17 @@ export const ColumnSearch = () => {
             alignItems="center"
             xs={12}
             spacing={3}
+            
           >
             <FormControl fullWidth>
               <Typography variant="label">Authour</Typography>
               <Select
                 variant="outlined"
                 onChange={e => setAuthour(e.target.value)}
-                >              
+                defaultValue={0}
+                disabled={category== 0? true : false}
+              >
+                 <MenuItem value={0}>Select</MenuItem>              
                 {selectionData?.map((item) => (
                   <MenuItem value={item?.author}>{item.author}</MenuItem>
                 ))}            
@@ -210,17 +225,27 @@ export const ColumnSearch = () => {
           </Grid>
           <br />
           <br />
+          <FormControl fullWidth>
+          <Typography variant="label">Captcha</Typography>
           <p className="captcha-image">        
-        {number1} + {number2}  &nbsp;&nbsp;&nbsp;&nbsp; <input
-        type="text"
-        value={userAnswer}
-        onChange={(e) => setUserAnswer(e.target.value)}
-        className="captcha-input"
-      />
+        {number1} + {number2}  = &nbsp;
+      
+       <TextField
+              label=""
+              name="captcha"
+              variant="outlined"
+              xs={12}
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+              id="keyword"
+            />
       </p>
+      </FormControl>
           <Button
             variant="contained"
             color="primary"
+            xs={12}
+            size='medium'
             onClick={(e) => {
               onsubmitHandler(e);
             }}

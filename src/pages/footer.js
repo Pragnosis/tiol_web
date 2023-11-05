@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const Footer = (props) => {
-    const { videList, budjetList, footerAPIEnabledFlag, setFooterAPIEnabledFlag } = props;
+    const { videList, budjetList, footerAPIEnabledFlag, setFooterAPIEnabledFlag,pageType } = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ export const Footer = (props) => {
     }
 
     return <Container>
-        <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
+        {pageType=>0 && <Typography style={{ backgroundColor: "#1d1d1c", margin: "20px 0px 20px 0px", borderRadius: "30px" }}>
             <Box style={{ height: "250px", color: "#fff", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 {
                     videList?.length > 0 &&
@@ -54,6 +54,7 @@ export const Footer = (props) => {
                 }
             </Box>
         </Typography>
+        }
         <Box bgcolor='#e3763c' className={classes.footerWrap}>
             <Box p={5}>
                 <Grid container justifyContent='space-between'>

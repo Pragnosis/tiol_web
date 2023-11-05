@@ -9,6 +9,7 @@ import MainHeader from '../header/MainHeader'
 // import { Footer } from '../footer'
 import { Drawer } from '@mui/material'
 import Sidebar from '../header/MobileHeader'
+import { useLocation } from 'react-router-dom';
 
 export const Layout = (props) => {
     const dispatch = useDispatch();
@@ -19,6 +20,9 @@ export const Layout = (props) => {
     const [footerAPIEnabledFlag, setFooterAPIEnabledFlag] = useState(true)
     const [drawerOpenFlag, setDrawerOpenFlag] = React.useState(false)
 
+    const location = useLocation()
+    const pageType = location?.pathname.indexOf('/search/');
+    
     const { data: getVideoData, error: getVideoError } = useQuery(["VideoItems"], () => getVideoItems(), { enabled: true, retry: false })
     useEffect(() => {
         if (getVideoData) {
@@ -49,9 +53,9 @@ export const Layout = (props) => {
 
     return <>
         <MainHeader setDrawerOpenFlag={setDrawerOpenFlag} drawerOpenFlag={drawerOpenFlag} />
-        <Newsupdate videList={videList} budjetList={budjetList} sectionData={newsUpdateLIst}/>
+        <Newsupdate pageType={pageType} videList={videList} budjetList={budjetList} sectionData={newsUpdateLIst}/>
         {props.children}
-        <Footer videList={videList} budjetList={budjetList} footerAPIEnabledFlag={footerAPIEnabledFlag} setFooterAPIEnabledFlag={setFooterAPIEnabledFlag} />
+        <Footer pageType={pageType} videList={videList} budjetList={budjetList} footerAPIEnabledFlag={footerAPIEnabledFlag} setFooterAPIEnabledFlag={setFooterAPIEnabledFlag} />
         <Drawer
             anchor="left"
             open={drawerOpenFlag}
