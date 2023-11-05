@@ -29,12 +29,18 @@ export const getVideoItems = () => {
 export const caseLawDynamicdata = (params) => {
     return Request(params, "Get",);
 }
+export const SGSTDynamicdata = (params) => {
+    return Request(params, "Get",);
+}
 
 export const getDetailsData = (params) => {
     return Request(params, "Post",);
 }
 
 export const caseLawFilterdata = (params) => {
+    return Request(params, "Get",);
+}
+export const SGSTFilterdata = (params) => {
     return Request(params, "Get",);
 }
 

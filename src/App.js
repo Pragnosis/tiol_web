@@ -11,7 +11,7 @@ import { NotificationLandingLayout } from "./pages/landinglayout/landing/notific
 import { NotificationDetailedLayout } from "./pages/landinglayout/landing/notification/detailsNotification/notificationDetailsLayout";
 import { ColumnSearch } from "./pages/Search/ColumnSearch";
 import { NotificaionsCirculars } from "./pages/Search/NotificationsCirculars";
-
+import { SGSTPage } from "./pages/SGST";
 const App = () => {
   return (
 
@@ -36,6 +36,8 @@ const App = () => {
       <Route path="/incometax/notifications" element={<LandingLayout />} />
       <Route path="/search/column" element={<ColumnSearch />} />
       <Route path="/search/circulars" element={<NotificaionsCirculars />} />
+      <Route path="/gst/sgst" element={<SGSTPage />} />
+
     </Routes>
 
   );
