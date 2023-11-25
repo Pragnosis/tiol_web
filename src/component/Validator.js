@@ -1,11 +1,11 @@
 export const getErrorMessege = (type, value, value2) => {
 
-    if (type == "From_Date") {
+    if (type === "From_Date") {
         console.log('type', type)
-        return value == "" ? "please enter from Date" : ""
+        return value === "" ? "please enter from Date" : ""
     }
-    if (type == "To_Date") {
-        if (value == "") {
+    if (type === "To_Date") {
+        if (value === "") {
             return "please enter to Date";
         } else if (value < value2) {
             return 'to date must be greater than from date';

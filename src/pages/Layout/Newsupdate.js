@@ -69,8 +69,8 @@ console.log("==updateNews==",updateNews);
                 updateNews[0]?.sectionsdata?.map((item) => {
                 return <SwiperSlide className={classes.papermanage}>
                     <Typography style={{fontSize:"14px"}}>
-                   {item?.url!= "" && <Link  href={item?.url} style={{ whiteSpace: "initial", color:"orangered" }}>
-                        {item?.headlines}</Link>}{item?.url== "" && item?.headlines}</Typography>
+                   {item?.url!== "" && <Link  href={item?.url} style={{ whiteSpace: "initial", color:"orangered" }}>
+                        {item?.headlines}</Link>}{item?.url=== "" && item?.headlines}</Typography>
                 </SwiperSlide>
                 })
             }
@@ -81,9 +81,9 @@ console.log("==updateNews==",updateNews);
                         videList?.length > 0 &&
                         videList?.map((item) => {
                             return item?.sectionsdata?.map((section) => {
-                                return section?.type == "Banner" && section?.secBannerVideo?.length > 0 &&
+                                return section?.type === "Banner" && section?.secBannerVideo?.length > 0 &&
                                     section?.secBannerVideo?.map((itemImage) => {
-                                        return itemImage?.section == "Banner Top" &&
+                                        return itemImage?.section === "Banner Top" &&
                                             <img src={itemImage?.path} style={{ height: "300px", width: "100%", borderRadius: "30px" }} />
                                     })
                             })

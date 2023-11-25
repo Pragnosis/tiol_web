@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+//import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -65,7 +65,7 @@ export const VideoSection = (props) => {
                                 </Box>
                                 <Carousel infinite={true} deviceType={"Desktop"} itemClass="image-item" responsive={responsive}>
                                     {
-                                        video.type == "Video" && video?.secBannerVideo?.length > 0 && video?.secBannerVideo?.map((videoList) => {
+                                        video.type === "Video" && video?.secBannerVideo?.length > 0 && video?.secBannerVideo?.map((videoList) => {
                                             return _renderCarouselHtml(videoList?.video_Id, videoList)
                                         })
                                     }
@@ -73,7 +73,7 @@ export const VideoSection = (props) => {
 
                             </Box>
                         </Grid>
-                        : video.type == "Video" &&
+                        : video.type === "Video" &&
                         <Grid container item xs='12' style={{ paddingBottom: "10px" }}>
                             <Box border="1px solid #efefef" borderRadius="20px" style={{ width: "100%" }}>
                                 <Box p={1} textAlign='center' bgcolor='#efefef' borderRadius="20px 20px 0px 0px">

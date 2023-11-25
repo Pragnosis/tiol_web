@@ -20,7 +20,7 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     let res = error.response;
-    if (res.status == 401) {
+    if (res.status === 401) {
     }
     return Promise.reject(error);
   }

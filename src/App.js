@@ -12,6 +12,10 @@ import { NotificationDetailedLayout } from "./pages/landinglayout/landing/notifi
 import { ColumnSearch } from "./pages/Search/ColumnSearch";
 import { NotificaionsCirculars } from "./pages/Search/NotificationsCirculars";
 import { SGSTPage } from "./pages/SGST";
+import { Registration } from "./pages/UserManagment/Registration";
+import{ ForgotPassword } from "./pages/UserManagment/ForgotPassword";
+import{ ChangePassword } from "./pages/UserManagment/ChangePassword";
+import{ SignIn } from "./pages/UserManagment/SignIn";
 const App = () => {
   return (
 
@@ -37,7 +41,10 @@ const App = () => {
       <Route path="/search/column" element={<ColumnSearch />} />
       <Route path="/search/circulars" element={<NotificaionsCirculars />} />
       <Route path="/gst/sgst" element={<SGSTPage />} />
-
+      <Route path="/registration" element={<Registration />} />
+      <Route path="/forgotpassword" element={<ForgotPassword />} />
+      <Route path="/changepassword" element={<ChangePassword />} />
+      <Route path="/signin" element={<SignIn />} />
     </Routes>
 
   );

@@ -46,7 +46,7 @@ export const SearchLanding = (props) => {
   }, [refineItem]);
 
   useEffect(() => {
-    window.scrollTo(0, 700);
+    window.scrollTo(0, 0);
   }, []);
 
   const pageChange = (e,value) => {

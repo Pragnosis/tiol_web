@@ -32,3 +32,9 @@
   .captcha-submit:hover {
     background-color: #0056b3;
   }
+
+  .required:after {
+    content: "*";
+    color: red;
+    margin-left:2px
+  }
