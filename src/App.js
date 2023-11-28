@@ -12,7 +12,7 @@ import { NotificationDetailedLayout } from "./pages/landinglayout/landing/notifi
 import { ColumnSearch } from "./pages/Search/ColumnSearch";
 import { NotificaionsCirculars } from "./pages/Search/NotificationsCirculars";
 import { SGSTPage } from "./pages/SGST";
-import { Registration } from "./pages/UserManagment/Registration";
+import { Registration } from "./pages/UserManagment/register/Registration";
 import{ ForgotPassword } from "./pages/UserManagment/ForgotPassword";
 import{ ChangePassword } from "./pages/UserManagment/ChangePassword";
 import{ SignIn } from "./pages/UserManagment/SignIn";

@@ -30,6 +30,7 @@ import IconButton from '@mui/material/IconButton';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 //import { useSession } from 'react-client-session';
 import { ReactSession } from 'react-client-session';
+import { useNavigate } from 'react-router-dom';
 import { ChangePassword } from "./ChangePassword";
   
 export const SignIn = () => {
@@ -46,6 +47,7 @@ export const SignIn = () => {
   const [userAnswer, setUserAnswer] = useState('');
   const [warn, setWarn] = useState('');
   const [data, setData] = useState('');
+  const navigate = useNavigate();
   const onsubmitHandler = (e) => {
     e.preventDefault();
     setOpen(true);
@@ -239,7 +241,7 @@ return false;
     Forgot Password
   </Link>
   &ensp;
-  <Button variant="contained" endIcon={<HowToRegIcon />} color="primary">
+  <Button onClick={()=>{navigate('/registration')}} variant="contained" endIcon={<HowToRegIcon />} color="primary">
 Register
 </Button>
   </div>
