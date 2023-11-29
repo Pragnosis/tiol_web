@@ -7,6 +7,7 @@ import {
     Select,
     FormControl,
     Container,
+    stack
   } from "@material-ui/core";
   import axios from "axios";
   import React, { useState } from "react";
@@ -179,7 +180,8 @@ import { apiConstant } from "../../../services/apiConstants";
   
     return <Container>
     <Layout>
-        <Grid container item style={{marginLeft:'20px',padding:'5px 0 20px 5px',marginTop:'10px'}}>
+    
+        {/* <Grid container item style={{marginLeft:'20px',padding:'5px 0 20px 5px',marginTop:'10px'}}>
             <Grid item xs='8'>
             <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -187,7 +189,7 @@ import { apiConstant } from "../../../services/apiConstants";
             // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
-          </Backdrop>
+          </Backdrop> */}
        
         <Typography variant="h5">New Registration</Typography>
         <br />
@@ -196,195 +198,193 @@ import { apiConstant } from "../../../services/apiConstants";
         <form onSubmit={handleSubmit(onsubmitHandler)}>
           <Grid
             container
-            direction="column"
-            justifyContent="center"
+            item
+            justifyContent="space-around"
             alignItems="center"
+            xs={12}
+            spacing={3}
+            direction={{xs: "column", md: "row"}}
           >
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" class="required">First Name</Typography>
-                <TextField
-                  label=""
-                  name="fname"
-                  variant="outlined"
-                  {...register("firstName", {
-                    required: true,
-                    pattern: /^[A-Za-z]+$/i
-                  })}
-                />
-                {errors?.firstName?.type === "required" && <p className="error">First Name is mandatory</p>}
-                {errors?.firstName?.type === "pattern" && (
-                  <p>Alphabetical characters only</p>
-                )}
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" >Middle Name</Typography>
-                <TextField
-                  label=""
-                  name="mname"
-                  variant="outlined"
-                  {...register("middleName", {
-                    pattern: /^[A-Za-z]+$/i
-                  })}
-                />
-                {errors?.lastName?.type === "pattern" && (
-                  <p className="error">Alphabetical characters only</p>
-                )}
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" class="required">Last Name</Typography>
-                <TextField
-                  label=""
-                  name="lname"
-                  variant="outlined"
-                  {...register("lastName", {
-                    required: true,
-                    pattern: /^[A-Za-z]+$/i
-                  })}
-                />
-                {errors?.lastName?.type === "required" && <p className="error">Last Name is mandatory</p>}
-                {errors?.lastName?.type === "pattern" && (
-                  <p className="error">Alphabetical characters only</p>
-                )}
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" class="required">Email</Typography>
-                <TextField
-                  label=""
-                  name="email"
-                  variant="outlined"
-                  {...register("email", {
-                    required: true,
-                    pattern: patternEmail
-                  })}
-                />
-                {errors?.email?.type === "required" && <p className="error">Email is mandatory</p>}
-                {errors?.email?.type === "pattern" && (
-                  <p className="error">Please, enter valid email</p>
-                )}
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" class="required">Mobile Number</Typography>
-                <TextField
-                  label=""
-                  name="mnumber"
-                  variant="outlined"
-                  {...register("mobileNumber", {
-                    required: true,
-                    minLength:1,
-                    maxLength: 10,
-                    pattern: mpattern
-                  })}
-                />
-                {errors?.mobileNumber?.type === "required" && <p className="error">Mobile Number is mandatory</p>}
-                {errors?.mobileNumber?.type === "minLength" && (
-                  <p className="error">Please, enter valid Mobile number</p>
-                )}
-                {errors?.mobileNumber?.type === "maxLength" && (
-                  <p className="error">Please, enter valid Mobile number</p>
-                )}
-                {errors?.mobileNumber?.type === "pattern" && (
-                  <p className="error">Please, enter only number</p>
-                )}
-              </FormControl>
-            </Grid>
-            <br />
-            <br />
-
-            <Grid
-              direction="row"
-              container
-              item
-              justifyContent="space-between"
-              alignItems="center"
-              xs={12}
-              spacing={3}
-            >
-              <FormControl fullWidth>
-                <Typography variant="label" class="required">User Name</Typography>
-                <TextField
-                  label=""
-                  name="uname"
-                  variant="outlined"
-                  {...register("userName", {
-                    required: true
-                  })}
-                />
-                {errors?.userName?.type === "required" && <p className="error">User Name is mandatory</p>}
+            
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                xs={12}
+                sm={6}
+                direction={{xs: "column", md: "row"}}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" class="required">First Name</Typography>
+                  <TextField
+                    label=""
+                    name="fname"
+                    variant="outlined"
+                    {...register("firstName", {
+                      required: true,
+                      pattern: /^[A-Za-z]+$/i
+                    })}
+                    
+                  />
+                  {errors?.firstName?.type === "required" && <p className="error">First Name is mandatory</p>}
+                  {errors?.firstName?.type === "pattern" && (
+                    <p>Alphabetical characters only</p>
+                  )}
+                  
+                </FormControl>
                 
-              </FormControl>
-            </Grid>
+              </Grid>
+              
+
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" >Middle Name</Typography>
+                  <TextField
+                    label=""
+                    name="mname"
+                    variant="outlined"
+                    {...register("middleName", {
+                      pattern: /^[A-Za-z]+$/i
+                    })}
+                  />
+                  {errors?.lastName?.type === "pattern" && (
+                    <p className="error">Alphabetical characters only</p>
+                  )}
+                </FormControl>
+              </Grid>
             <br />
             <br />
 
+           
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" class="required">Last Name</Typography>
+                  <TextField
+                    label=""
+                    name="lname"
+                    variant="outlined"
+                    {...register("lastName", {
+                      required: true,
+                      pattern: /^[A-Za-z]+$/i
+                    })}
+                  />
+                  {errors?.lastName?.type === "required" && <p className="error">Last Name is mandatory</p>}
+                  {errors?.lastName?.type === "pattern" && (
+                    <p className="error">Alphabetical characters only</p>
+                  )}
+                </FormControl>
+              </Grid>
+              
+
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" class="required">Email</Typography>
+                  <TextField
+                    label=""
+                    name="email"
+                    variant="outlined"
+                    {...register("email", {
+                      required: true,
+                      pattern: patternEmail
+                    })}
+                  />
+                  {errors?.email?.type === "required" && <p className="error">Email is mandatory</p>}
+                  {errors?.email?.type === "pattern" && (
+                    <p className="error">Please, enter valid email</p>
+                  )}
+                </FormControl>
+              </Grid>
+            <br />
+            <br />
+
+            
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" class="required">Mobile Number</Typography>
+                  <TextField
+                    label=""
+                    name="mnumber"
+                    variant="outlined"
+                    {...register("mobileNumber", {
+                      required: true,
+                      minLength:1,
+                      maxLength: 10,
+                      pattern: mpattern
+                    })}
+                  />
+                  {errors?.mobileNumber?.type === "required" && <p className="error">Mobile Number is mandatory</p>}
+                  {errors?.mobileNumber?.type === "minLength" && (
+                    <p className="error">Please, enter valid Mobile number</p>
+                  )}
+                  {errors?.mobileNumber?.type === "maxLength" && (
+                    <p className="error">Please, enter valid Mobile number</p>
+                  )}
+                  {errors?.mobileNumber?.type === "pattern" && (
+                    <p className="error">Please, enter only number</p>
+                  )}
+                </FormControl>
+              </Grid>
+
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+              >
+                <FormControl fullWidth>
+                  <Typography variant="label" class="required">User Name</Typography>
+                  <TextField
+                    label=""
+                    name="uname"
+                    variant="outlined"
+                    {...register("userName", {
+                      required: true
+                    })}
+                  />
+                  {errors?.userName?.type === "required" && <p className="error">User Name is mandatory</p>}
+                  
+                </FormControl>
+              </Grid>
+            <br />
+            <br />
+            
             <Grid
-              direction="row"
               container
               item
               justifyContent="space-between"
               alignItems="center"
               xs={12}
-              spacing={3}
+              sm={6}
             >
               <FormControl fullWidth>
                 <Typography variant="label" class="required">Password</Typography>
@@ -407,44 +407,62 @@ import { apiConstant } from "../../../services/apiConstants";
             <br />
             <br />
           
-            <FormControl fullWidth>
-              <Typography variant="label">Captcha</Typography>
-              <p className="captcha-image">        
-                {number1} + {number2}  = &nbsp;
-          
-                <TextField
-                  label=""
-                  name="captcha"
-                  variant="outlined"
-                  xs={12}
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  id="keyword"
-                />
-              </p>
-            </FormControl>
+            <Grid
+              container
+              item
+              justifyContent="space-between"
+              alignItems="center"
+              xs={12}
+              sm={6}
+            >
+              <FormControl fullWidth>
+                <Typography variant="label">Captcha</Typography>
+                <Stack direction="row" spacing={2}>
+                <p className="captcha-image" >        
+                  {number1} + {number2}  = &nbsp;</p>
+                  <TextField 
+                    label=""
+                    name="captcha"
+                    variant="outlined"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                    id="keyword"
+                    xs={6}
+                    
+                  />
+                </Stack>
+                
+            
+                  
+              </FormControl>
+            </Grid>
+            
 
             <Button
               variant="contained"
               color="primary"
               xs={12}
-              size='medium'
+              size='large'
               type="submit"
               // onClick={(e) => {
               //   onsubmitHandler(e);
               // }}
+              style={{paddingLeft:"50px", paddingRight:"50px", fontSize:"17", borderRadius:"10px"}}
             >
               Save
             </Button>
   
       
           </Grid>
+          <br />
+          <br />
         </form>
         
-      </Grid>
-    </Grid>
+      {/* </Grid>
+    </Grid> */}
 
   </Layout>
+  
 </Container>
   }
   
