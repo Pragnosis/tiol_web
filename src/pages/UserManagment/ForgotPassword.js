@@ -18,6 +18,7 @@ import {
   import { useEffect } from "react";
   import '../Search/Captchaverification.css';
   import validator from 'validator';
+import { apiConstant } from "../../services/apiConstants";
   //import isEmpty from '../../validation/is-empty';
     export const ForgotPassword = () => {
     const [formData, setFormData] = useState({
@@ -57,7 +58,7 @@ import {
         {
             axios
         .get(
-          `http://34.229.120.75:8091/api/LoginMasters/ForgetPassword/${
+          `${apiConstant.userForgotPassword}/${
             formData.uname
           }`
         )

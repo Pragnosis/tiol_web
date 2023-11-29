@@ -16,6 +16,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Alert, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { apiConstant } from "../../services/apiConstants";
 
 
 export const SGSTPage = () => {
@@ -36,7 +37,7 @@ export const SGSTPage = () => {
   useEffect(() => {
     if (!dropDownState.length) {
       axios
-        .get("http://34.229.120.75:8081/api/SGSTIndexPage/GetSGSTState")
+        .get(apiConstant.getSGSTState)
         .then((response) => {
           setDropDownState(response.data);
         });
@@ -46,7 +47,7 @@ export const SGSTPage = () => {
   useEffect(() => {
     if (!dropDownUT.length) {
       axios
-        .get("http://34.229.120.75:8081/api/SGSTIndexPage/GetSGSTUT")
+        .get(apiConstant.getSGSTUT)
         .then((response) => {
           setDropDownUT(response.data);
           console.log('UT-', response);
@@ -68,7 +69,7 @@ export const SGSTPage = () => {
       ut = val;
     }
 
-    const url = encodeURI(`http://34.229.120.75:8081/api/SGSTIndexPage/GetSGSTIndexPage/GST Act (multiple years)/${state}/${ut}`);
+    const url = encodeURI(`${apiConstant.getSGSTIndexPage}/${state}/${ut}`);
     //const newUrl =`http://34.229.120.75:8081/api/SGSTIndexPage/GetSGSTIndexPage/${url}`
     /*setFormData({ ...formData, category: e.target.value })*/
     console.log('==url==', url)

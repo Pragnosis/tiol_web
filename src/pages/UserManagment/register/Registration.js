@@ -20,6 +20,7 @@ import {
   import { useNavigate } from 'react-router-dom';
   import '../../Search/Captchaverification.css';
   import validator from 'validator';
+import { apiConstant } from "../../../services/apiConstants";
   //import isEmpty from '../../validation/is-empty';
     export const Registration = () => {
       const {
@@ -90,7 +91,7 @@ import {
         {
             axios
         .get(
-          `http://34.229.120.75:8081/api/Utility/BoolUsername/${
+          `${apiConstant.boolUserName}/${
             data.userName
           }`
         )
@@ -113,7 +114,7 @@ import {
 
     axios
         .post(
-          `http://34.229.120.75:8091/api/RegisterOnline/PostTblRegistrationOnline/${
+          `${apiConstant.userRegistration}/${
             data.firstName }/${
                 data.middleName || null}/${
                     data.lastName }/${

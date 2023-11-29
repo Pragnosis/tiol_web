@@ -32,6 +32,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { ReactSession } from 'react-client-session';
 import { useNavigate } from 'react-router-dom';
 import { ChangePassword } from "./ChangePassword";
+import { apiConstant } from "../../services/apiConstants";
   
 export const SignIn = () => {
       
@@ -68,7 +69,7 @@ return false;
       
       axios
       .get(
-        `http://34.229.120.75:8091/api/LoginMasters/ChangePasswordPolicy/${
+        `${apiConstant.userChangePasswordPolicy}/${
           formData.uname
         }`
       )
@@ -94,7 +95,7 @@ return false;
           {
                           axios
       .get(
-        `http://34.229.120.75:8091/api/Login?userName=${
+        `${apiConstant.userLogin}=${
           formData.uname
         }&password=${
           formData.pass

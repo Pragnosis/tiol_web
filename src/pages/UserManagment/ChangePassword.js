@@ -107,7 +107,7 @@ return false;
         console.log("get from session on another page:-",ReactSession.get("loginsession"));
 /*        axios
         .put(
-          `http://34.229.120.75:8091/api/LoginMasters/ChangePassword/@username/${
+          `${apiConstant.userChangePassword}/@username/${
             formData.pass }/${
                 formData.oldpass || null}`
         )

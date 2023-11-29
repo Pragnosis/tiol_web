@@ -16,6 +16,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Alert, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { apiConstant } from "../../services/apiConstants";
 import './Captchaverification.css';
 
 export const ColumnSearch = () => {
@@ -41,7 +42,7 @@ export const ColumnSearch = () => {
   useEffect(() => {
     if (!dropDownCat.length) {
       axios
-        .get("http://34.229.120.75:8081/api/Utility/GetNewsCategory")
+        .get(apiConstant.getNewsCategory)
         .then((response) => {
           setDropDownCat(response.data);
         });
@@ -51,7 +52,7 @@ export const ColumnSearch = () => {
   useEffect(() => {
     if (!dropDownCat.length) {
       axios
-        .get("http://34.229.120.75:8081/api/Utility/GetNewsCategory")
+        .get(apiConstant.getNewsCategory)
         .then((response) => {
           setDropDownCat(response.data);
         });
@@ -69,7 +70,7 @@ export const ColumnSearch = () => {
     ) {
       axios
         .get(
-          `http://34.229.120.75:8081/api/AdvSearchNews/GetNewsIndexPagesAdvSearch/${
+          `${apiConstant.getNewsIndexPagesAdvSearch}/${
             formData.keyword || null
           }/${category || "0"}/${authour || null}`
         )
@@ -108,7 +109,7 @@ export const ColumnSearch = () => {
     setFormData({ ...formData, category: e.target.value })
     axios
         .get(
-          `http://34.229.120.75:8081/api/Utility/GetNewsTypeAuthor/${val}`
+          `${apiConstant.getNewsTypeAuthor}/${val}`
         )
         .then((response) => {
           setSelectionData(response.data)

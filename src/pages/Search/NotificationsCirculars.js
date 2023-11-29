@@ -17,6 +17,7 @@ import {
   import { Alert, Stack } from "@mui/material";
   import { useEffect } from "react";
   import { Layout } from '../Layout'
+  import { apiConstant } from "../../services/apiConstants";
   import './Captchaverification.css';
   
   
@@ -48,7 +49,7 @@ import {
     useEffect(() => {
       if (!dropDownCat.length) {
         axios
-          .get("http://34.229.120.75:8081/api/Utility/GetNotificationCategory")
+          .get(apiConstant.getNotificationCategory)
           .then((response) => {
             setDropDownCat(response.data);
             console.warn("Testing" + response.data);
@@ -59,7 +60,7 @@ import {
     useEffect(() => {
       if (!dropDownCat.length) {
         axios
-          .get("http://34.229.120.75:8081/api/Utility/GetNotificationCategory")
+          .get(apiConstant.getNotificationCategory)
           .then((response) => {
             setDropDownCat(response.data);
             console.warn(response.data);
@@ -91,7 +92,7 @@ import {
         setOpen(!open);
         axios
           .get(
-            `http://34.229.120.75:8081/api/AdvSearchNotification/GetNotificationAdvSearch/
+            `${apiConstant.getNotificationAdvSearch}/
             ${formData.keyword || null}/
             ${formData.header || null}/
             ${formData.ordernumber || null}/
@@ -133,7 +134,7 @@ import {
       const val = e.target.value;
       axios
           .get(
-            `http://34.229.120.75:8081/api/Utility/GetNotificationSubCategory/${val}`
+            `${apiConstant.getNotificationSubCategory}/${val}`
           )
           .then((response) => {
             setDropDownSubCat(response.data)          
@@ -145,7 +146,7 @@ import {
       const val = e.target.value;
       axios
           .get(
-            `http://34.229.120.75:8081/api/Utility/GetNotificationLevel1/${val}`
+            `${apiConstant.getNotificationLevel1}/${val}`
           )
           .then((response) => {
             setDropDownSubSubCat(response.data)
@@ -157,7 +158,7 @@ import {
       const val = e.target.value;
       axios
           .get(
-            `http://34.229.120.75:8081/api/Utility/GetNotificationLevel2/${val}`
+            `${apiConstant.getNotificationLevel2}/${val}`
           )
           .then((response) => {
             setDropDownSubSubSubCat(response.data)
