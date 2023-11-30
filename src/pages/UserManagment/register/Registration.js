@@ -138,10 +138,10 @@ import { apiConstant } from "../../../services/apiConstants";
            else if (response.data>0)
            {
             setWarn("User Created");
+            setOpen(false);
             setTimeout(()=>{
               navigate('/signin');
-            },100)
-            setOpen(false);
+            },500)
             window.scrollTo(0, 0);
             return false;
            }
@@ -394,7 +394,7 @@ import { apiConstant } from "../../../services/apiConstants";
                   variant="outlined"
                   {...register("password", {
                     required: true,
-                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$/
                   })}
                   type="password"
                 />

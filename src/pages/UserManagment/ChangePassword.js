@@ -21,6 +21,8 @@ import {
   //import { useSession } from 'react-client-session';
   //import isEmpty from '../../validation/is-empty';
   import { ReactSession } from 'react-client-session';
+  import { apiConstant } from "../../services/apiConstants";
+  import { useNavigate, useSearchParams } from 'react-router-dom';
   //export default ChildComponent;
   export const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -39,12 +41,16 @@ import {
     const [number2] = useState(Math.floor(Math.random() * 10));
     const [userAnswer, setUserAnswer] = useState('');
     const [warn, setWarn] = useState('');
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     //const [mnumber, setMobile] = useState();
     //const mpattern = new RegExp(/^[0-9\b]+$/);
     //const patternEmail = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
       
     //const { session, setSession } = useSession();
-    
+  //   useEffect(() => {
+  //     console.log(searchParams.get('user'));
+  // })
   
     const onsubmitHandler = (e) => {
       e.preventDefault();
@@ -104,38 +110,44 @@ return false;
           
         
         
-        console.log("get from session on another page:-",ReactSession.get("loginsession"));
-/*        axios
+        // console.log("get from session on another page:-",ReactSession.get("loginsession"));
+       axios
         .put(
-          `${apiConstant.userChangePassword}/@username/${
+          `${apiConstant.userChangePassword}/${searchParams.get('user')}/${
             formData.pass }/${
                 formData.oldpass || null}`
         )
         .then((response) => {
           // setRegData(response);
            console.log("==regData==",response);
-           if(response ===0)
+           if(response.data ===0)
            {
             setWarn("Old Password does not matched");
             setOpen(false);
             window.scrollTo(0, 0);
             return false;
            }
-           else if (response===-1)
+           else if (response.data===-1)
            {
             setWarn("The new password should not be same as earlier three passwords");
             setOpen(false);
             window.scrollTo(0, 0);
             return false;
            }
-           else
+           else 
            {
+            console.log("Password has been successfully changed");
             setWarn("Password has been successfully changed");
            setOpen(false);
-          setWarn(false)
+           window.scrollTo(0, 0);
+           setTimeout(() => {
+            navigate('/signin');
+           }, 500);
+          
+           
         }
         });
-*/
+
       
     }
       else
@@ -170,9 +182,10 @@ return false;
             <CircularProgress color="inherit" />
           </Backdrop>
        
+          { warn && <Alert severity="error">{warn}</Alert> }
         <Typography variant="h5">Change Password</Typography>
         <br />
-       { warn && <Alert severity="error">{warn}</Alert> }
+       
         <br />
         <form noValidate autoComplete="off">
           

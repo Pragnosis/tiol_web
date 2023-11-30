@@ -79,17 +79,18 @@ return false;
           if(response.data===true)
           {
               console.log("redirect:",response);
+              navigate({pathname:'/changepassword', search:`?user=${formData.uname}` });
              // ReactSession.setStoreType("localStorage");
              // ReactSession.set("uname",  formData.uname);
-             <Router>
-             <Routes>
-<Route
-                      path="/changepassword"
-                      element={<Navigate to="<ChangePassword>"/>}
-                  />
+//              <Router>
+//              <Routes>
+// <Route
+//                       path="/changepassword"
+//                       element={<Navigate to="<ChangePassword>"/>}
+//                   />
           
-          </Routes>
-          </Router>
+//           </Routes>
+//           </Router>
               }  
           else
           {
