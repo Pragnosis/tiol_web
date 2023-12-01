@@ -228,7 +228,7 @@ import { apiConstant } from "../../../services/apiConstants";
                   />
                   {errors?.firstName?.type === "required" && <p className="error">First Name is mandatory</p>}
                   {errors?.firstName?.type === "pattern" && (
-                    <p>Alphabetical characters only</p>
+                    <p className="error">Alphabetical characters only</p>
                   )}
                   
                 </FormControl>
@@ -400,7 +400,7 @@ import { apiConstant } from "../../../services/apiConstants";
                 />
                 {errors?.password?.type === "required" && <p className="error">Password is mandatory</p>}
                 {errors?.password?.type === "pattern" && (
-                  <p className="error">Please, enter 8 digit password contaning lowercase,uppercase,numbers & special character</p>
+                  <p className="error">Please, enter 8 digit password contaning minimum 1 lowercase, 1 uppercase, 1 numbers & 1 special character (@#$!%*?&)</p>
                 )}
               </FormControl>
             </Grid>
