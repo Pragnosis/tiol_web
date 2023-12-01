@@ -111,8 +111,10 @@ return false;
           console.log("Succesfuly login redirect to index page");
          console.log("get from session init");
          console.log("get from session:-",ReactSession.get("loginsession"));
+         debugger
          setOpen(false);
          setWarn(false)
+         navigate('/tiol-web');
          }
          else
          {
@@ -232,12 +234,12 @@ return false;
         <br />
         <br />
         <div>
-        <FormControlLabel control={<Checkbox  />} label="Remember me" />
+        {/* <FormControlLabel control={<Checkbox  />} label="Remember me" /> */}
         <Link
     component="button"
     variant="body2"
     onClick={() => {
-      console.info("call forgot password page");
+      navigate('/forgotpassword');
     }}
   >
     Forgot Password
