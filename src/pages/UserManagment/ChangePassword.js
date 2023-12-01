@@ -23,6 +23,7 @@ import {
   import { ReactSession } from 'react-client-session';
   import { apiConstant } from "../../services/apiConstants";
   import { useNavigate, useSearchParams } from 'react-router-dom';
+  import { useForm } from "react-hook-form";
   //export default ChildComponent;
   export const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -31,6 +32,14 @@ import {
         confpass:""
 
     });
+
+    const {
+      register,
+      handleSubmit,
+      watch,
+      setFocus,
+      formState: { errors }
+    } = useForm({mode: "onChange"});
   
    // const [regData, setRegData] = useState(null);
     //const [unameavailability, setuname] = useState(null);
@@ -52,38 +61,38 @@ import {
   //     console.log(searchParams.get('user'));
   // })
   
-    const onsubmitHandler = (e) => {
-      e.preventDefault();
+    const onsubmitHandler = (data) => {
+      // e.preventDefault();
       setOpen(true);
       const resultValue = checkCaptcha();
-      if(!formData.oldpass)
-      {setWarn("Old Password is mandatory");
-      setOpen(false);
-      window.scrollTo(0, 0);
-      return false;
-  }
+//       if(!formData.oldpass)
+//       {setWarn("Old Password is mandatory");
+//       setOpen(false);
+//       window.scrollTo(0, 0);
+//       return false;
+//   }
       
-      if(!formData.pass)
-    {setWarn("Password is mandatory");
-    setOpen(false);
-    window.scrollTo(0, 0);
-    return false;
-}
-if (!validator.isStrongPassword(formData.pass, { 
-    minLength: 8, minLowercase: 1, 
-    minUppercase: 1, minNumbers: 1, minSymbols: 1 
-})) { 
-    setWarn("Please, enter 8 digit password contaning lowercase,uppercase,numbers & special character");
-    setOpen(false);
-    window.scrollTo(0, 0);
-    return false;
-} 
-if(!formData.confpass)
-{setWarn("Confirm Password is mandatory");
-setOpen(false);
-window.scrollTo(0, 0);
-return false;
-}
+//       if(!formData.pass)
+//     {setWarn("Password is mandatory");
+//     setOpen(false);
+//     window.scrollTo(0, 0);
+//     return false;
+// }
+// if (!validator.isStrongPassword(formData.pass, { 
+//     minLength: 8, minLowercase: 1, 
+//     minUppercase: 1, minNumbers: 1, minSymbols: 1 
+// })) { 
+//     setWarn("Please, enter 8 digit password contaning lowercase,uppercase,numbers & special character");
+//     setOpen(false);
+//     window.scrollTo(0, 0);
+//     return false;
+// } 
+// if(!formData.confpass)
+// {setWarn("Confirm Password is mandatory");
+// setOpen(false);
+// window.scrollTo(0, 0);
+// return false;
+// }
 //console.log("password=",formData.pass);
   //  console.log("confirm password=",formData.confpass);
 //if(formData.pass & formData.confpass)
@@ -91,7 +100,7 @@ return false;
    // console.log("password=",formData.pass);
   //  console.log("confirm password=",formData.confpass);
    
-  if(! (formData.pass === formData.confpass))
+  if(! (data.password === data.confPassword))
   {
       setWarn("Password and confirm password should be same");
       setOpen(false);
@@ -114,8 +123,8 @@ return false;
        axios
         .put(
           `${apiConstant.userChangePassword}/${searchParams.get('user')}/${
-            formData.pass }/${
-                formData.oldpass || null}`
+            data.password }/${
+                data.oldPassword || null}`
         )
         .then((response) => {
           // setRegData(response);
@@ -187,7 +196,7 @@ return false;
         <br />
        
         <br />
-        <form noValidate autoComplete="off">
+        <form onSubmit={handleSubmit(onsubmitHandler)}>
           
           <Grid
             container
@@ -211,15 +220,19 @@ return false;
               label=""
               name="oldpass"
               variant="outlined"
+              {...register("oldPassword", {
+                required: true,
+              })}
               xs={12}
              // size="small"
-              onChange={(e) =>
-                setFormData({ ...formData, oldpass: e.target.value })
-              }
-              value={formData.oldpass}
+              // onChange={(e) =>
+              //   setFormData({ ...formData, oldpass: e.target.value })
+              // }
+              // value={formData.oldpass}
               id="oldpass"
               type="password"
             />
+            {errors?.oldPassword?.type === "required" && <p className="error">Old Password is mandatory</p>}
             </FormControl>
           </Grid>
           <br />
@@ -239,15 +252,16 @@ return false;
               label=""
               name="pass"
               variant="outlined"
-              xs={12}
-             // size="small"
-              onChange={(e) =>
-                setFormData({ ...formData, pass: e.target.value })
-              }
-              value={formData.pass}
-              id="pass"
+              {...register("password", {
+                required: true,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$/
+              })}
               type="password"
             />
+            {errors?.password?.type === "required" && <p className="error">Password is mandatory</p>}
+            {errors?.password?.type === "pattern" && (
+              <p className="error">Please, enter 8 digit password contaning minimum 1 lowercase, 1 uppercase, 1 numbers & 1 special character (@#$!%*?&)</p>
+            )}
             </FormControl>
           </Grid>
           <br />
@@ -267,15 +281,18 @@ return false;
               label=""
               name="confpass"
               variant="outlined"
+              {...register("confPassword", {
+                required: true,
+              })}
               xs={12}
              // size="small"
-              onChange={(e) =>
-                setFormData({ ...formData, confpass: e.target.value })
-              }
-              value={formData.confpass}
+              // onChange={(e) =>
+              //   setFormData({ ...formData, confpass: e.target.value })
+              // }
               id="confpass"
               type="password"
             />
+            {errors?.confPassword?.type === "required" && <p className="error">Confirm Password is mandatory</p>}
             </FormControl>
           </Grid>
           <br />
@@ -302,9 +319,10 @@ return false;
               color="primary"
               xs={12}
               size='medium'
-              onClick={(e) => {
-                onsubmitHandler(e);
-              }}
+              type="submit"
+              // onClick={(e) => {
+              //   onsubmitHandler(e);
+              // }}
             >
               Submit
             </Button>
