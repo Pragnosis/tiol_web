@@ -198,7 +198,7 @@ function NavHeader() {
           <Box mr={2}>
             <Button
               id='signin-button'
-              onClick={show}
+              onClick={()=>{navigate('/signin');}}
               startIcon={<PersonIcon />}
               style={{ backgroundColor: 'transparent', color: 'orangered', fontWeight: 400, fontSize: '14px' }}
             >
