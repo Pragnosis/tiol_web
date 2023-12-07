@@ -18,57 +18,60 @@ export const apiConstant = {
   sectionThree: baseUrl + "/HomePageOtherSectionData/GetHomePageOtherSectionsData",
 
 
-  getLikeDetails: baseUrl + "/CaselawIndexPage/GetCaselawById",
-  likeDetails: baseUrl + "/Utility/PostLike",
-  dislikeDetails: baseUrl + "/Utility/PostDisLike",
+  getLikeDetails: baseUrl + "/CaselawIndexPage/GetCaselawById",//auth
+  likeDetails: baseUrl + "/Utility/PostLike",//auth
+  dislikeDetails: baseUrl + "/Utility/PostDisLike",//auth
 
 
-  getAllBookmarked: baseUrl + "/Utility/GetBooKMark",
-  postBookmarked: baseUrl + "/Utility/PostBookMark",
-  deleteBookmarked: baseUrl + "/Utility/DeleteBooKMark",
+  getAllBookmarked: baseUrl + "/Utility/GetBooKMark",//auth
+  postBookmarked: baseUrl + "/Utility/PostBookMark",//auth
+  deleteBookmarked: baseUrl + "/Utility/DeleteBooKMark",//auth
 
 
-  getAllComments: baseUrl + "/Utility/GetComments",
-  postComments: baseUrl + "/Utility/PostComment",
-  postCommentsReplyOneLevel: baseUrl + "/Utility/PostCommentReply",
-  postCommentsReplySecondLevel: baseUrl + "/Utility/PostCommentReReply",
+  getAllComments: baseUrl + "/Utility/GetComments",//auth
+  postComments: baseUrl + "/Utility/PostComment",//auth
+  postCommentsReplyOneLevel: baseUrl + "/Utility/PostCommentReply",//auth
+  postCommentsReplySecondLevel: baseUrl + "/Utility/PostCommentReReply",//auth
 
 
-  getCommentsReplyOneLevel: baseUrl + "/Utility/GetCommentReply",
-  getCommentsReReplySecondLevel: baseUrl + "/Utility/GetCommentReReply",
+  getCommentsReplyOneLevel: baseUrl + "/Utility/GetCommentReply",//auth
+  getCommentsReReplySecondLevel: baseUrl + "/Utility/GetCommentReReply",//auth
 
 
-  updateComment: baseUrl + "/Utility/UpdateComment",
-  updateCommentReply: baseUrl + "/Utility/UpdateCommentReply",
-  updateCommentReReply: baseUrl + "/Utility/UpdateCommentReReply",
-  deleteCommentReply: baseUrl + "/Utility/DeleteCommentReply",
-  deleteCommentReeReply: baseUrl + "/Utility/DeleteCommentReReply",
+  updateComment: baseUrl + "/Utility/UpdateComment",//auth
+  updateCommentReply: baseUrl + "/Utility/UpdateCommentReply",//auth
+  updateCommentReReply: baseUrl + "/Utility/UpdateCommentReReply",//auth
+  deleteCommentReply: baseUrl + "/Utility/DeleteCommentReply",//auth
+  deleteCommentReeReply: baseUrl + "/Utility/DeleteCommentReReply",//auth
 
 
   ///////
   getNewsCategory: baseUrl + "/Utility/GetNewsCategory",
-  getNewsIndexPagesAdvSearch: baseUrl + "/AdvSearchNews/GetNewsIndexPagesAdvSearch",
+  getNewsIndexPagesAdvSearch: baseUrl + "/AdvSearchNews/GetNewsIndexPagesAdvSearch",//auth
   getNewsTypeAuthor: baseUrl + "/Utility/GetNewsTypeAuthor",
 
-  getNotificationCategory: baseUrl + "/Utility/GetNotificationCategory",
-  getNotificationAdvSearch: baseUrl + "/AdvSearchNotification/GetNotificationAdvSearch",
+  getNotificationCategory: baseUrl + "/Utility/GetNotificationCategory",//auth
+  getNotificationAdvSearch: baseUrl + "/AdvSearchNotification/GetNotificationAdvSearch",//auth
   getNotificationSubCategory: baseUrl + "/Utility/GetNotificationSubCategory",
-  getNotificationLevel1: baseUrl + "/Utility/GetNotificationLevel1",
-  getNotificationLevel2: baseUrl + "/Utility/GetNotificationLevel2",
+  getNotificationLevel1: baseUrl + "/Utility/GetNotificationLevel1",//auth
+  getNotificationLevel2: baseUrl + "/Utility/GetNotificationLevel2",//auth
 
-  getSGSTState: baseUrl + "/SGSTIndexPage/GetSGSTState",
-  getSGSTUT: baseUrl + "/SGSTIndexPage/GetSGSTUT",
-  getSGSTIndexPage: baseUrl + "/SGSTIndexPage/GetSGSTIndexPage/GST Act (multiple years)",
+  getSGSTState: baseUrl + "/SGSTIndexPage/GetSGSTState",//auth
+  getSGSTUT: baseUrl + "/SGSTIndexPage/GetSGSTUT",//auth
+  getSGSTIndexPage: baseUrl + "/SGSTIndexPage/GetSGSTIndexPage/GST Act (multiple years)",//auth
 
 
-  userChangePassword: userBaseUrl + "/LoginMasters/ChangePassword",
+  userChangePassword: userBaseUrl + "/LoginMasters/ChangePassword",//auth
   userForgotPassword: userBaseUrl + "/LoginMasters/ForgetPassword",
   userChangePasswordPolicy: userBaseUrl + "/LoginMasters/ChangePasswordPolicy",
-  userLogin: userBaseUrl + "/Login?userName",
+
+  // userLogin: userBaseUrl + "/Login?userName",
+  userLogin: baseUrl + "/login/ValidateUser",
+
   boolUserName: baseUrl + "/Utility/BoolUsername",
-  userRegistration: userBaseUrl + "/RegisterOnline/PostTblRegistrationOnline"
 
-
+  // userRegistration: userBaseUrl + "/RegisterOnline/PostTblRegistrationOnline",
+  userRegistration: baseUrl + "/UserManagement/RegisterOnline",
 
 }
 

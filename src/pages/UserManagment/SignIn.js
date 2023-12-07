@@ -95,10 +95,10 @@ return false;
           else
           {
                           axios
-      .get(
-        `${apiConstant.userLogin}=${
+      .post(
+        `${apiConstant.userLogin}/${
           formData.uname
-        }&password=${
+        }/${
           formData.pass
         }`
       )
@@ -108,6 +108,7 @@ return false;
          {
          ReactSession.setStoreType("localStorage");
           ReactSession.set("loginsession",  response);
+          localStorage.setItem("token",response.data.token);
           console.log("Succesfuly login redirect to index page");
          console.log("get from session init");
          console.log("get from session:-",ReactSession.get("loginsession"));

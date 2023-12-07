@@ -67,8 +67,17 @@ export const LandingNotification = () => {
      }  
     
     useEffect(() => {
+        // if(!apipath)
+        // {
+        //     let currentData = JSON.parse(window.localStorage.getItem('persist:root')); 
+        //     apipath= currentData?.apipath;
+        // }
         setSpinner(true);
-         fetch(apipath)  
+        console.log(localStorage.getItem('token')+"\napiPath==>"+apipath);
+         fetch(apipath,
+            {
+                headers:{'authorization':`bearer ${localStorage.getItem('token')}`}
+            })  
          .then(response => response.json())
          .then(data => {
              if (data) {
