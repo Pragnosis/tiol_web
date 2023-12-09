@@ -30,7 +30,7 @@ import IconButton from '@mui/material/IconButton';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 //import { useSession } from 'react-client-session';
 import { ReactSession } from 'react-client-session';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ChangePassword } from "./ChangePassword";
 import { apiConstant } from "../../services/apiConstants";
   
@@ -49,6 +49,7 @@ export const SignIn = () => {
   const [warn, setWarn] = useState('');
   const [data, setData] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const onsubmitHandler = (e) => {
     e.preventDefault();
     setOpen(true);
@@ -115,7 +116,7 @@ return false;
          debugger
          setOpen(false);
          setWarn(false)
-         navigate('/tiol-web');
+         searchParams.get('redirectTo')?.length > 0 ? navigate(`${searchParams.get('redirectTo')}`) : navigate('/tiol-web');
          }
          else
          {
