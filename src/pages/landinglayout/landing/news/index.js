@@ -55,7 +55,10 @@ export const LandingNews = () => {
    
     useEffect(() => {
         setSpinner(true);
-        fetch(apipath)  
+        fetch(apipath,
+            {
+                headers:{'authorization':`bearer ${localStorage.getItem('token')}`}
+            })  
         .then(response => response.json())
         .then(data => {
             console.log("==data==",data)

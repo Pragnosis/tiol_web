@@ -29,14 +29,14 @@ const App = () => {
         <Route path="/:parent/:submenu1/details" element={<ProtectedRoute><DetailedLayout /></ProtectedRoute>} />
         <Route path="/:parent/:submenu1" element={<ProtectedRoute><LandingLayout /></ProtectedRoute>} />
         <Route path="/:parent/details" element={<ProtectedRoute><DetailedLayout /></ProtectedRoute>} />
-        <Route path="/:parent/news" element={<ProtectedRoute><NewsLandingLayout /></ProtectedRoute>} />
+        <Route path="/:parent/news" element={<NewsLandingLayout />} />
         <Route path="/:parent" element={<ProtectedRoute><LandingLayout /></ProtectedRoute>} />
         <Route path="/bookmark" element={<ProtectedRoute><CaselawBookMark /></ProtectedRoute>} />
         {/* <Route path="/notification" element={<ProtectedRoute><NotificationLandingLayout /></ProtectedRoute>} /> */}
         <Route path="/notification/details" element={<ProtectedRoute><NotificationDetailedLayout /></ProtectedRoute>} />
         <Route path="/newsdetails" element={<ProtectedRoute><NewsDetailedLayout /></ProtectedRoute>} />
         <Route path="/CommonSearch" element={<ProtectedRoute><CommonSearch /></ProtectedRoute>} />
-        <Route path="/tiol-web" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/incometax/notifications" element={<ProtectedRoute><LandingLayout /></ProtectedRoute>} />
         <Route path="/search/column" element={<ProtectedRoute><ColumnSearch /></ProtectedRoute>} />
         <Route path="/search/circulars" element={<ProtectedRoute><NotificaionsCirculars /></ProtectedRoute>} />

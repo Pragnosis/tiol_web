@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Container, Button, Menu, MenuItem, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Grid, Container, Button, Menu, MenuItem, Typography, SvgIcon } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Card, Hidden, Link } from '@material-ui/core';
@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import tiol_logo from "../../assets/images/tiol_logo.png"
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+import { ReactSession } from 'react-client-session';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
@@ -22,21 +24,34 @@ const MainHeader = (props) => {
     const { drawerOpenFlag, setDrawerOpenFlag } = props;
     const commonReducer = useSelector((state) => state.commonReducer);
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorE1, setAnchorE1] = React.useState(null);
+    const [anchorE2, setAnchorE2] = React.useState(null);
     const [drawer1, setDrawer1] = React.useState(false);
     const [drawer2, setDrawer2] = React.useState(false);
     const [drawer3, setDrawer3] = React.useState(false);
     const [drawer4, setDrawer4] = React.useState(false);
     const [drawer5, setDrawer5] = React.useState(false);
+    const [userData, setUserData] = React.useState();
 
-    const open = Boolean(anchorEl);
+    const token = window.localStorage.getItem('token')||null;
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const open1 = Boolean(anchorE1);
+    const open2 = Boolean(anchorE2);
+
+    const handleClick1 = (event) => {
+        setAnchorE1(event.currentTarget);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleClick2 = (event) => {
+        setAnchorE2(event.currentTarget);
+    };
+
+    const handleClose1 = () => {
+        setAnchorE1(null);
+    };
+
+    const handleClose2 = () => {
+        setAnchorE2(null);
     };
 
     const [signin, setSignin] = useState(null);
@@ -59,8 +74,17 @@ const MainHeader = (props) => {
         setHideDrawer(!hideDrawer)
     }
     const navigate = useNavigate();
-    const gotoHome = () => navigate('/tiol-web')
+    const gotoHome = () => navigate('/')
 
+    const logOut = () => {
+        window.localStorage.clear();
+    }
+
+    useEffect(()=>{
+        ReactSession.setStoreType("localStorage");
+        setUserData(ReactSession.get("loginsession"));
+        console.log(JSON.stringify(userData));
+    },[token]);
 
     return (
         <>
@@ -71,12 +95,12 @@ const MainHeader = (props) => {
                             <Grid container alignItems='flex-end' style={{ position: "relative", height: "90px" }}>
                                 <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Grid item style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 1200, margin: "0 auto", width: "155px", height: "105px", backgroundColor: "#fff", textAlign: "center" }}>
-                                        <img src={tiol_logo} onClick={gotoHome} alt="logo" style={{ width: "92%", margin: "15px auto" }}></img>
+                                        <img src={tiol_logo} onClick={gotoHome} alt="logo" style={{ width: "92%", margin: "15px auto", cursor: "pointer" }}></img>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs='6' style={{ justifyContent: 'flex-end' }} spacing={2}>
                                     <Hidden only={['xs', 'sm']}>
-                                        <Box mr={2}>
+                                        {token==null && <Box mr={2}>
                                             <Button
                                                 id='signin-button'
                                                 onClick={()=>{navigate('/signin');}}
@@ -108,9 +132,9 @@ const MainHeader = (props) => {
                                                 </Grid>
 
                                             </Menu>
-                                        </Box>
-                                        <Box border='1px solid orangered' mb={0.8} mt={1}></Box>
-                                        <Box mr={2} >
+                                        </Box>}
+                                        {token==null && <Box border='1px solid orangered' mb={0.8} mt={1}></Box>}
+                                        {token==null && <Box mr={2} >
                                             <Button
                                                 id='signin-button'
                                                 onClick={show}
@@ -119,27 +143,47 @@ const MainHeader = (props) => {
                                             >
                                                 Subscribe
                                             </Button>
-                                        </Box>
+                                        </Box>}
+                                        {token && <Box mr={2}>
+                                            <Button
+                                                id="user-button"
+                                                aria-controls={open1 ? 'user-menu' : undefined}
+                                                aria-haspopup="true"
+                                                aria-expanded={open1 ? 'true' : undefined}
+                                                onClick={handleClick1}
+                                                style={{ backgroundColor: 'transparent', color: 'orangered', fontWeight: 400, fontSize: '14px' }}
+                                            >
+                                                {`${userData?.data.userName} [${userData?.data.accessCosumed} OF ${userData?.data.noOfAccess}]`} 
+                                                <ArrowDropDownIcon />
+                                            </Button>
+                                            <Menu id="user-menu" anchorEl={anchorE1} open={open1} onClose={handleClose1}
+                                                MenuListProps={{ 'aria-labelledby': 'user-button', }}
+                                            >
+                                                <MenuItem onClick={() => { navigate({pathname:'/changepassword', search:`?user=${userData?.data.userName}` }) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CHANGE PASSWORD</Typography></MenuItem>
+                                                <MenuItem onClick={() => { logOut(); navigate("/") }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>LOGOUT</Typography></MenuItem>
+                                            
+                                            </Menu>
+                                        </Box>}
                                         <Box>
                                             <Button
                                                 id="basic-button"
-                                                aria-controls={open ? 'basic-menu' : undefined}
+                                                aria-controls={open2 ? 'basic-menu' : undefined}
                                                 aria-haspopup="true"
-                                                aria-expanded={open ? 'true' : undefined}
-                                                onClick={handleClick}
+                                                aria-expanded={open2 ? 'true' : undefined}
+                                                onClick={handleClick2}
                                                 startIcon={<SearchIcon />}
-                                                style={{ backgroundColor: 'orangered', color: '#fff', fontWeight: 400, fontSize: '14px', borderRadius: "10px 10px 0px 0px", marginBottom: "-10px" }}
+                                                style={{ backgroundColor: 'orangered', color: '#fff', fontWeight: 400, fontSize: '14px', borderRadius: "10px 10px 0px 0px"}}
                                             >
                                                 SEARCH
                                             </Button>
-                                            <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose}
+                                            <Menu id="basic-menu" anchorEl={anchorE2} open={open2} onClose={handleClose2}
                                                 MenuListProps={{ 'aria-labelledby': 'basic-button', }}
                                             >
                                                 <MenuItem onClick={() => { navigate('/search/column') }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW ADVANCE SEARCH</Typography></MenuItem>
-                                                <MenuItem onClick={() => { handleClose(); setDrawer2(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW QUICK SEARCH</Typography></MenuItem>
+                                                <MenuItem onClick={() => { handleClose2(); setDrawer2(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE LAW QUICK SEARCH</Typography></MenuItem>
                                                 <MenuItem onClick={() => { navigate('/search/circulars') }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>NOTIFICATIONS/ CIRCULARS</Typography></MenuItem>
                                                 <MenuItem onClick={() => { navigate('/search/column') }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>COLUMN SEARCH</Typography></MenuItem>
-                                                <MenuItem onClick={() => { handleClose(); setDrawer5(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE STORIES/ TOP NEWS</Typography></MenuItem>
+                                                <MenuItem onClick={() => { handleClose2(); setDrawer5(true) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CASE STORIES/ TOP NEWS</Typography></MenuItem>
                                             </Menu>
                                         </Box>
                                     </Hidden>

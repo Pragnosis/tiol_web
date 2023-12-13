@@ -116,7 +116,7 @@ return false;
          debugger
          setOpen(false);
          setWarn(false)
-         searchParams.get('redirectTo')?.length > 0 ? navigate(`${searchParams.get('redirectTo')}`) : navigate('/tiol-web');
+         searchParams.get('redirectTo')?.length > 0 ? navigate(`${searchParams.get('redirectTo')}`) : navigate('/');
          }
          else
          {

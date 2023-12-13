@@ -18,6 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { updateState } from '../../redux/commonSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 function NavHeader() {
@@ -33,6 +35,10 @@ function NavHeader() {
   const [currentNavText, setCurrentNavText] = useState('')
   const [subMenuPosition, setSubMenuPosition] = useState(null)
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE1, setAnchorE1] = React.useState(null);
+  const [userData, setUserData] = React.useState();
+
+  const token = window.localStorage.getItem('token')||null;
 
   const openMenu = (e, title) => {
     setCurrentNavText(title)
@@ -70,14 +76,23 @@ function NavHeader() {
   const [drawer5, setDrawer5] = React.useState(false);
 
   const open = Boolean(anchorEl);
+  const open1 = Boolean(anchorE1);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleClick1 = (event) => {
+    setAnchorE1(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClose1 = () => {
+    setAnchorE1(null);
+  };  
 
   const [signin, setSignin] = useState(null);
   const [on, setOn] = useState(false);
@@ -99,8 +114,17 @@ function NavHeader() {
     setHideDrawer(!hideDrawer)
   }
 
+  const logOut = () => {
+    window.localStorage.clear();
+  } 
 
   const { data: headerData } = useQuery(["Header"], () => getMenuItems(), { enabled: true, retry: false })
+
+  useEffect(()=>{
+    ReactSession.setStoreType("localStorage");
+    setUserData(ReactSession.get("loginsession"));
+    console.log(JSON.stringify(userData));
+  },[token]);
 
   useEffect(() => {
     headerData && setHeaderArr(headerData)
@@ -171,7 +195,8 @@ function NavHeader() {
                                   item.subMenuItems.map((option) => {
                                     return <div key={item.label}>
                                       {/* <Link href="javascript:void()" onClick={(e) => { e.preventDefault(); navigate(`/${option.title.toLowerCase()}`) }}> */}
-                                      <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
+                                      {/* <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} /> */}
+                                      <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={item.webpath} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
                                       {/* </Link> */}
                                     </div>
                                   }
@@ -195,30 +220,49 @@ function NavHeader() {
       </Hidden>
       <Hidden only={['lg', 'md', 'xl']}>
         <Grid container item xs='12' style={{ justifyContent: 'flex-end', padding: "30px 20px 10px 0px" }} spacing={2}>
-          <Box mr={2}>
+        {token==null && <Box mr={2}>
             <Button
-              id='signin-button'
+              id='signin1-button'
               onClick={()=>{navigate('/signin');}}
               startIcon={<PersonIcon />}
               style={{ backgroundColor: 'transparent', color: 'orangered', fontWeight: 400, fontSize: '14px' }}
             >
               sign in
             </Button>
-            <Menu id='signin-menu' anchorEl={signin} open={on} onClose={hide}>
+            {/* <Menu id='signin-menu' anchorEl={signin} open={on} onClose={hide}>
               <MenuItem onClick={hide} divider><Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CHANGE PASSWORD</Typography></MenuItem>
               <MenuItem onClick={hide} divider><Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>LOGOUT</Typography></MenuItem>
-            </Menu>
-          </Box>
-          <Box mr={2} borderLeft='1px solid orangered' >
+            </Menu> */}
+          </Box>}
+          {token==null && <Box mr={2} borderLeft='1px solid orangered' >
             <Button
-              id='signin-button'
-              onClick={show}
+              id='signin2-button'
               startIcon={<LanguageIcon />}
               style={{ backgroundColor: 'transparent', color: 'orangered', fontWeight: 400, fontSize: '14px', marginLeft: "15px" }}
             >
               Subscribe
             </Button>
-          </Box>
+          </Box>}
+          {token && <Box mr={2}>
+                <Button
+                    id="user-button"
+                    aria-controls={open1 ? 'user-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open1 ? 'true' : undefined}
+                    onClick={handleClick1}
+                    style={{ backgroundColor: 'transparent', color: 'orangered', fontWeight: 400, fontSize: '14px' }}
+                >
+                    {`${userData?.data.userName} [${userData?.data.accessCosumed} OF ${userData?.data.noOfAccess}]`} 
+                    <ArrowDropDownIcon />
+                </Button>
+                <Menu id="user-menu" anchorEl={anchorE1} open={open1} onClose={handleClose1}
+                    MenuListProps={{ 'aria-labelledby': 'user-button', }}
+                >
+                    <MenuItem onClick={() => { navigate({pathname:'/changepassword', search:`?user=${userData?.data.userName}` }) }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>CHANGE PASSWORD</Typography></MenuItem>
+                    <MenuItem onClick={() => { logOut(); navigate("/") }} divider> <Typography component='h6' variant='h6' style={{ fontWeight: 400, fontSize: '14px' }}>LOGOUT</Typography></MenuItem>
+                
+                </Menu>
+            </Box>}
           <Box>
             <Button
               id="basic-button"
