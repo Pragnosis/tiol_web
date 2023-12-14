@@ -55,18 +55,25 @@ function NavHeader() {
   };
 
   const handleItemClickhandler = (item, routeTo, type) => {
-    console.log("LinkUrl=",item,routeTo,type)
-    var routeto = type === 'nested'
-      ? `/${routeTo}/${item.title.replace(" ", "_")}`.toLowerCase()
-      : `/${item.title.replace(" ", "_")}`.toLowerCase()
-    setSubMenuPosition(null);
-    setCurrentNavText("")
+    console.log("LinkUrl=",item,routeTo,type);
+    debugger
+    // var routeto = type === 'nested'
+    //   ? `/${routeTo}/${item?.title.replace(" ", "_")}`.toLowerCase()
+    //   : `/${item?.title.replace(" ", "_")}`.toLowerCase()
+    
     // dispatch(updateState({ currentDynamicPaedata: item }));
-    navigate('/'+item?.webpath)
-    setTimeout(() => {
-      setAnchorEl(null);
-    }, 2000);
-    dispatch(updateState({ currentClickedMenu: item }));
+    if(item?.webpath?.length>0)
+    {
+      setSubMenuPosition(null);
+    setCurrentNavText("")
+      navigate('/'+item?.webpath)
+      setTimeout(() => {
+        setAnchorEl(null);
+      }, 2000);
+      dispatch(updateState({ currentClickedMenu: item }));
+    }
+    
+    
   };
 
   const [drawer1, setDrawer1] = React.useState(false);
@@ -159,7 +166,7 @@ function NavHeader() {
     dispatch(updateState({ currentDynamicPaedata: localArr[0] }));
 
   }, [headerArr, location?.pathname])
-
+  // console.log("headerArr:==>"+headerArr);
   return (
     <>
 
@@ -193,10 +200,21 @@ function NavHeader() {
                               >
                                 {
                                   item.subMenuItems.map((option) => {
+
                                     return <div key={item.label}>
                                       {/* <Link href="javascript:void()" onClick={(e) => { e.preventDefault(); navigate(`/${option.title.toLowerCase()}`) }}> */}
                                       {/* <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={`${item.title}/${option.title}`} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} /> */}
-                                      <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={item.webpath} position={subMenuPosition} handleItemClickhandler={handleItemClickhandler} />
+                                      
+                                      <MenuItemComp ref={menuItemRef} item={option} itemTitle={item.title} routeTo={item?.webpath} position={subMenuPosition} handleItemClickhandler={(handleItemClickhandler)} >
+                                        {
+                                          option.subMenuItems.map((optionSubItem)=>{
+                                            console.log(optionSubItem)
+                                            return <div key={option.label}>
+                                              <MenuItemComp ref={menuItemRef} item={optionSubItem} itemTitle={option.title} routeTo={optionSubItem?.webpath} position={2} handleItemClickhandler={(handleItemClickhandler)} ></MenuItemComp>
+                                            </div>
+                                          })
+                                        }
+                                      </MenuItemComp>
                                       {/* </Link> */}
                                     </div>
                                   }

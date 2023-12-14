@@ -17,10 +17,35 @@ const MenuItemComp = ({ item, position, routeTo, handleItemClickhandler, ref }) 
           label={title}
           parentMenuOpen={position}
           onClick={handleItemClickhandler}
-
         >
           {subMenuItems.map((option) => (
-            <MenuItemComp
+            option.subMenuItems.length > 0 ? (
+              <NestedMenuItem
+                ref={ref}
+                label={option.title}
+                parentMenuOpen={position}
+                onClick={handleItemClickhandler}
+      
+              >
+                {option.subMenuItems.map((nestedOption) => (
+                  <MenuItemComp
+                    ref={ref}
+                    item={nestedOption}
+                    position={position}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    handleItemClickhandler={() => handleItemClickhandler(nestedOption, routeTo, 'subNested')}
+                  />
+                ))}
+              </NestedMenuItem>
+            ) : (
+              <MenuItemComp
               ref={ref}
               item={option}
               position={position}
@@ -34,6 +59,8 @@ const MenuItemComp = ({ item, position, routeTo, handleItemClickhandler, ref }) 
               }}
               handleItemClickhandler={() => handleItemClickhandler(option, routeTo, 'nested')}
             />
+            )
+            
           ))}
         </NestedMenuItem>
       ) : (
